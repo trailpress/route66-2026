@@ -57,7 +57,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 #rp{display:flex;flex-direction:column;background:var(--sur);overflow:hidden}
 /* Tab bar */
 #tabs{display:flex;flex-shrink:0;border-bottom:2px solid var(--bd2);background:var(--sur2)}
-.tab{flex:1;padding:7px 2px;font-size:8.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--mu);cursor:pointer;text-align:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab{flex:1;padding:9px 2px;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--mu);cursor:pointer;text-align:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
 .tab:hover{color:var(--cream)}
 .tab.on{color:var(--gold);border-bottom-color:var(--gold)}
 /* State selector */
@@ -177,12 +177,40 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .empty .big{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:6px}
 /* Mobile */
 @media(max-width:768px){
-  #body{grid-template-columns:1fr;grid-template-rows:50vh 1fr;height:calc(100vh - 58px)}
-  #hdr{height:58px;gap:4px}
-  #htop{gap:6px}.tb h1{font-size:14px}.sep,.hstat{display:none}
-  #irow{padding-bottom:4px}.ib{padding:2px 7px;font-size:9px}.hbtn{padding:2px 7px;font-size:9px}
+  #hdr{height:auto;padding:6px 10px 0;gap:3px}
+  #htop{gap:6px}
+  .tb h1{font-size:13px;letter-spacing:2px}
+  .tb p{display:none}
+  .sep,.hstat{display:none}
+  .shield{width:30px;height:36px}
+  .shield span{font-size:7px}
+
+  /* irow: flex-wrap so buttons stack into 2 rows */
+  #irow{
+    display:flex;flex-wrap:wrap;gap:3px;
+    padding-bottom:5px;overflow-x:visible;align-items:stretch
+  }
+  .il{display:none}  /* hide "Itinerary:" text label */
+
+  /* Itinerary buttons — row 1, each takes 1/3 of width */
+  .ib{
+    flex:1;min-width:0;padding:7px 2px;font-size:10px;font-weight:700;
+    text-align:center;letter-spacing:0;border-radius:2px;
+  }
+
+  /* vsep acts as 100% width spacer — forces hbtn onto new row */
+  .vsep{width:100%;height:0;margin:0;flex-shrink:0}
+
+  /* Action buttons — row 2, each takes 1/3 */
+  .hbtn{
+    flex:1;min-width:0;padding:6px 2px;font-size:9.5px;font-weight:700;
+    text-align:center;letter-spacing:0;border-radius:2px;
+  }
+
+  #body{grid-template-columns:1fr;grid-template-rows:46vh 1fr;height:calc(100vh - var(--hdr-h,88px))}
   #mc{border-right:none;border-bottom:1px solid var(--bd)}
-  #dlpanel{width:100%;top:58px}
+  #dlpanel{width:100%;top:var(--hdr-h,88px)}
+  #cent-panel{width:100%;top:var(--hdr-h,88px)}
 }
 @media(max-width:900px)and(orientation:landscape)and(max-height:500px){
   #body{grid-template-columns:55% 1fr;grid-template-rows:1fr;height:calc(100vh - 52px)}
@@ -985,6 +1013,17 @@ let map=null, curState=null, curItin=7, popupRef=null;
 const allMarkers=[], fuelMarkers=[];
 const ORDER=['IL','MO','KS','OK','TX','NM','AZ','CA'];
 let activeIdx=null, fuelOn=false;
+
+// ── Sync header height CSS var ──
+function syncHdrH(){
+  var h = document.getElementById('hdr');
+  if(h) document.documentElement.style.setProperty('--hdr-h', h.offsetHeight+'px');
+}
+window.addEventListener('resize', syncHdrH);
+document.addEventListener('DOMContentLoaded', function(){
+  syncHdrH();
+  setTimeout(syncHdrH, 300); // after fonts load
+});
 
 // ── Init map ──
 
