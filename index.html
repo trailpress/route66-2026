@@ -177,40 +177,103 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .empty .big{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:6px}
 /* Mobile */
 @media(max-width:768px){
-  #hdr{height:auto;padding:6px 10px 0;gap:3px}
-  #htop{gap:6px}
-  .tb h1{font-size:13px;letter-spacing:2px}
-  .tb p{display:none}
+
+  /* ── HEADER ── */
+  #hdr{height:auto;padding:8px 12px 0;gap:4px}
+  #htop{gap:8px}
+  .shield{width:34px;height:40px}
+  .shield span{font-size:8px}
+  .tb h1{font-size:16px;letter-spacing:2px}
+  .tb p{font-size:10px;display:block}
   .sep,.hstat{display:none}
-  .shield{width:30px;height:36px}
-  .shield span{font-size:7px}
 
-  /* irow: flex-wrap so buttons stack into 2 rows */
-  #irow{
-    display:flex;flex-wrap:wrap;gap:3px;
-    padding-bottom:5px;overflow-x:visible;align-items:stretch
-  }
-  .il{display:none}  /* hide "Itinerary:" text label */
+  /* ── ITINERARY ROW: split into 2 clear rows ── */
+  #irow{display:flex;flex-wrap:wrap;gap:5px;padding-bottom:8px;overflow-x:visible;align-items:stretch}
+  .il{display:none}
 
-  /* Itinerary buttons — row 1, each takes 1/3 of width */
+  /* Row 1: itinerary buttons — each 1/3 width, 2-line text allowed */
   .ib{
-    flex:1;min-width:0;padding:7px 2px;font-size:10px;font-weight:700;
-    text-align:center;letter-spacing:0;border-radius:2px;
+    flex:1;min-width:0;
+    padding:10px 4px;
+    font-size:13px;font-weight:700;
+    text-align:center;white-space:normal;line-height:1.25;
+    letter-spacing:0;border-radius:3px;
   }
 
-  /* vsep acts as 100% width spacer — forces hbtn onto new row */
-  .vsep{width:100%;height:0;margin:0;flex-shrink:0}
+  /* Full-width spacer between .ib and .hbtn groups */
+  .vsep{width:100%;height:1px;background:rgba(255,255,255,.06);flex-shrink:0;margin:0}
 
-  /* Action buttons — row 2, each takes 1/3 */
+  /* Row 2: action buttons — each 1/3 width */
   .hbtn{
-    flex:1;min-width:0;padding:6px 2px;font-size:9.5px;font-weight:700;
-    text-align:center;letter-spacing:0;border-radius:2px;
+    flex:1;min-width:0;
+    padding:9px 4px;
+    font-size:11px;font-weight:700;
+    text-align:center;white-space:normal;line-height:1.25;
+    letter-spacing:0;border-radius:3px;
   }
 
-  #body{grid-template-columns:1fr;grid-template-rows:46vh 1fr;height:calc(100vh - var(--hdr-h,88px))}
+  /* ── BODY LAYOUT ── */
+  #body{grid-template-columns:1fr;grid-template-rows:44vh 1fr;height:calc(100vh - var(--hdr-h,100px))}
   #mc{border-right:none;border-bottom:1px solid var(--bd)}
-  #dlpanel{width:100%;top:var(--hdr-h,88px)}
-  #cent-panel{width:100%;top:var(--hdr-h,88px)}
+  #dlpanel{width:100%;top:var(--hdr-h,100px)}
+  #cent-panel{width:100%;top:var(--hdr-h,100px)}
+
+  /* ── RIGHT PANEL TABS ── */
+  .tab{padding:12px 4px;font-size:12px;font-weight:700;letter-spacing:.2px}
+
+  /* ── STATE SELECTOR ── */
+  #stsel{padding:8px 12px}
+  .stbtn{padding:6px 12px;font-size:12px;font-weight:700;margin-right:6px}
+
+  /* ── STOP LIST ITEMS ── */
+  .si{padding:11px 13px;cursor:pointer}
+  .sr{gap:8px}
+  .sn{font-size:11px;min-width:20px}
+  .nm{font-size:15px;font-weight:700;line-height:1.3}
+  .cy{font-size:13px;margin-top:2px}
+  .ds{font-size:13px;line-height:1.55;margin-top:7px}
+  .sb{font-size:10px;letter-spacing:.5px;padding:3px 7px}
+
+  /* ── STOP POPUP ── */
+  .pnv{font-size:13px;padding:10px;letter-spacing:1px}
+
+  /* ── PANEL CONTENT (Offline & GPX, Centennial) ── */
+  .dls-t{font-size:12px;letter-spacing:2px;padding-bottom:8px;margin-bottom:10px}
+  .dls{margin-bottom:14px}
+
+  /* Fuel list items */
+  .fi{padding:10px 0}
+  .fi-n{font-size:14px;font-weight:700;margin-bottom:4px}
+  .fi-d{font-size:12px;line-height:1.5;margin-bottom:6px}
+  .fi-nav{font-size:12px;padding:7px 12px}
+
+  /* GPX download items */
+  .gpx-item{padding:10px 0}
+  .gpx-name{font-size:14px}
+  .gpx-desc{font-size:12px}
+  .gpx-btn{font-size:12px;padding:8px 14px}
+
+  /* Lodging items */
+  .lodge-item{padding:10px 0}
+  .lodge-name{font-size:14px;font-weight:700}
+  .lodge-desc{font-size:12px;line-height:1.5}
+  .lodge-nav{font-size:12px;padding:7px}
+
+  /* Museum items */
+  .museum-name{font-size:14px;font-weight:700}
+  .museum-verdict{font-size:12px}
+
+  /* Centennial panel */
+  #cent-title{font-size:20px;letter-spacing:3px}
+  #cent-sub{font-size:11px}
+  .cent-intro{font-size:12px;line-height:1.65}
+  .evt-main-name{font-size:14px}
+  .evt-main-desc{font-size:11px;line-height:1.5}
+  .state-evt-name{font-size:13px}
+  .state-evt-hint{font-size:11px;line-height:1.45}
+  .state-evt-link{font-size:11px;padding:5px 10px}
+  .evt-main-link{margin-bottom:10px}
+  #cent-body{padding:14px 16px 24px}
 }
 @media(max-width:900px)and(orientation:landscape)and(max-height:500px){
   #body{grid-template-columns:55% 1fr;grid-template-rows:1fr;height:calc(100vh - 52px)}
