@@ -180,102 +180,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .empty{padding:28px 14px;text-align:center;color:var(--mu);font-size:12px;line-height:2.2}
 .empty .big{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:6px}
 /* Mobile */
-@media(max-width:768px){
 
-  /* ── HEADER ── */
-  #hdr{height:auto!important;padding:8px 12px 0;gap:4px}
-  #htop{gap:8px}
-  .shield{width:34px;height:40px}
-  .shield span{font-size:8px}
-  .tb h1{font-size:16px!important;letter-spacing:1.5px}
-  .tb p{font-size:11px!important;display:block;letter-spacing:1px}
-  .sep,.hstat{display:none!important}
-
-  /* ── ITINERARY ROW: 2 rows ── */
-  #irow{display:flex!important;flex-wrap:wrap;gap:5px;
-        padding-bottom:8px;overflow:visible;align-items:stretch}
-  .il{display:none!important}
-  .ib{flex:1!important;min-width:0;padding:10px 4px!important;
-      font-size:13px!important;font-weight:700!important;
-      text-align:center;white-space:normal;line-height:1.25;
-      letter-spacing:0;border-radius:3px}
-  .vsep{width:100%!important;height:1px!important;
-        background:rgba(255,255,255,.08);flex-shrink:0;margin:2px 0}
-  .hbtn{flex:1!important;min-width:0;padding:9px 4px!important;
-        font-size:11px!important;font-weight:700!important;
-        text-align:center;white-space:normal;line-height:1.2;
-        letter-spacing:0;border-radius:3px}
-
-  /* ── BODY LAYOUT ── */
-  #body{grid-template-columns:1fr!important;
-        grid-template-rows:40vh 1fr!important;
-        height:calc(100vh - var(--hdr-h,100px))!important}
-  #mc{border-right:none!important;border-bottom:1px solid var(--bd)}
-
-  /* ── PANELS ── */
-  #dlpanel{width:100%!important;top:var(--hdr-h,100px)!important}
-  #cent-panel{width:100%!important;top:var(--hdr-h,100px)!important}
-
-  /* ── RIGHT PANEL: tabs ── */
-  #rp{overflow:hidden}
-  .tab{padding:13px 4px!important;font-size:13px!important;
-       font-weight:700!important;letter-spacing:.2px}
-
-  /* ── STATE SELECTOR ── */
-  #stsel{padding:10px 12px!important}
-  .stbtn{padding:7px 13px!important;font-size:13px!important;
-         font-weight:700!important;margin-right:6px}
-
-  /* ── STATE HEADER ── */
-  #rph{padding:10px 14px 8px!important}
-  #rph-top span:first-child{font-size:20px!important}
-  #rph-sub{font-size:13px!important;line-height:1.5!important;margin-top:4px!important}
-  #rt{font-size:20px!important}
-  #sc{font-size:13px!important}
-
-  /* ── STOP LIST: prevent badge overflow ── */
-  .si{padding:12px 14px!important;overflow:hidden}
-  .sr{display:flex!important;flex-wrap:wrap!important;
-      align-items:flex-start!important;gap:6px!important}
-  .sn{font-size:12px!important;min-width:18px!important;
-      flex-shrink:0;padding-top:3px}
-  .si-in{flex:1!important;min-width:0!important;overflow:hidden}
-  .nm{font-size:16px!important;font-weight:700!important;line-height:1.3}
-  .cy{font-size:13px!important;margin-top:3px!important}
-  .ds{font-size:13px!important;line-height:1.55!important;margin-top:8px!important}
-  /* badge: shrinks gracefully, wraps if needed */
-  .sb{font-size:10px!important;padding:3px 8px!important;
-      letter-spacing:.5px;flex-shrink:1!important;
-      align-self:flex-start;max-width:90px}
-
-  /* ── iOS SCROLL FIX ── */
-  .pane{-webkit-overflow-scrolling:touch!important;overflow-y:auto!important}
-  #stsel{-webkit-overflow-scrolling:touch}
-
-  /* ── STOP NAVIGATE BUTTON ── */
-  .pnv{font-size:14px!important;padding:12px!important;
-       letter-spacing:1px!important;margin-top:10px!important}
-  .sna{font-size:13px!important;padding:6px!important}
-
-  /* ── OFFLINE & GPX PANEL ── */
-  .dls-t{font-size:13px!important;letter-spacing:2px;
-         padding-bottom:9px;margin-bottom:12px}
-  .fi-n{font-size:15px!important;font-weight:700!important;margin-bottom:5px}
-  .fi-d{font-size:13px!important;line-height:1.55!important;margin-bottom:7px}
-  .fi-nav{font-size:13px!important;padding:9px 14px!important}
-
-  /* ── CENTENNIAL PANEL ── */
-  #cent-title{font-size:22px!important;letter-spacing:3px}
-  #cent-sub{font-size:12px!important}
-  .cent-intro{font-size:13px!important;line-height:1.65!important}
-  .evt-main-name{font-size:15px!important}
-  .evt-main-desc{font-size:12px!important;line-height:1.5!important}
-  .state-evt-name{font-size:14px!important;font-weight:700!important}
-  .state-evt-hint{font-size:12px!important;line-height:1.45!important}
-  .state-evt-link{font-size:12px!important;padding:6px 12px!important}
-  #cent-body{padding:14px 16px 28px!important}
-  .evt-why-box{font-size:12px!important;line-height:1.6!important}
-}
 @media(max-width:900px)and(orientation:landscape)and(max-height:500px){
   #body{grid-template-columns:55% 1fr;grid-template-rows:1fr;height:calc(100vh - 52px)}
   #hdr{height:52px;gap:3px}.tb h1{font-size:13px}.sep,.hstat{display:none}
@@ -459,16 +364,131 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
   border-color:var(--rust);color:#fff;
   background:rgba(192,57,43,.2);
 }
-@media(max-width:768px){
-  #cent-panel{width:100%;top:58px}
+
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE — max-width 768px  (injected last for priority)
+   ═══════════════════════════════════════════════════════ */
+@media only screen and (max-width:768px){
+
+  /* ── HEADER ── */
+  #hdr{height:auto !important;padding:8px 12px 0 !important;gap:4px !important}
+  #htop{gap:8px !important}
+  .shield{width:34px !important;height:40px !important}
+  .shield span{font-size:8px !important}
+  .tb h1{font-size:16px !important;letter-spacing:2px !important}
+  .tb p{font-size:10px !important;display:block !important}
+  .sep,.hstat{display:none !important}
+
+  /* ── ITINERARY ROW: 2 rows ── */
+  #irow{
+    display:flex !important;flex-wrap:wrap !important;
+    gap:5px !important;padding-bottom:8px !important;
+    overflow-x:visible !important;align-items:stretch !important
+  }
+  .il{display:none !important}
+
+  /* Row 1: itinerary buttons */
+  .ib{
+    flex:1 !important;min-width:0 !important;
+    padding:11px 4px !important;
+    font-size:13px !important;font-weight:700 !important;
+    text-align:center !important;white-space:normal !important;
+    line-height:1.25 !important;letter-spacing:0 !important;border-radius:3px !important
+  }
+
+  /* Spacer forcing action buttons to row 2 */
+  .vsep{
+    width:100% !important;height:1px !important;
+    background:rgba(255,255,255,.06) !important;
+    flex-shrink:0 !important;margin:0 !important
+  }
+
+  /* Row 2: action buttons */
+  .hbtn{
+    flex:1 !important;min-width:0 !important;
+    padding:10px 4px !important;
+    font-size:11px !important;font-weight:700 !important;
+    text-align:center !important;white-space:normal !important;
+    line-height:1.25 !important;letter-spacing:0 !important;border-radius:3px !important
+  }
+
+  /* ── BODY LAYOUT ── */
+  #body{
+    grid-template-columns:1fr !important;
+    grid-template-rows:42vh 1fr !important;
+    height:calc(100vh - var(--hdr-h,110px)) !important
+  }
+  #mc{border-right:none !important;border-bottom:1px solid var(--bd) !important}
+  #dlpanel{width:100% !important;top:var(--hdr-h,110px) !important}
+  #cent-panel{width:100% !important;top:var(--hdr-h,110px) !important}
+
+  /* ── RIGHT PANEL TABS ── */
+  .tab{
+    padding:12px 4px !important;
+    font-size:12px !important;font-weight:700 !important;
+    letter-spacing:.2px !important
+  }
+
+  /* ── STATE SELECTOR ── */
+  #stsel{padding:8px 12px !important}
+  .stbtn{padding:7px 13px !important;font-size:13px !important;font-weight:700 !important;margin-right:6px !important}
+
+  /* ── STOP LIST ITEMS ── */
+  .si{padding:12px 14px !important}
+  .sr{gap:8px !important}
+  .sn{font-size:12px !important;min-width:20px !important}
+  .nm{font-size:16px !important;font-weight:700 !important;line-height:1.3 !important}
+  .cy{font-size:13px !important;margin-top:2px !important}
+  .ds{font-size:13px !important;line-height:1.55 !important;margin-top:7px !important}
+  .sb{font-size:11px !important;letter-spacing:.5px !important;padding:3px 8px !important}
+
+  /* ── STOP POPUP NAVIGATE BUTTON ── */
+  .pnv{font-size:14px !important;padding:11px !important;letter-spacing:1px !important}
+
+  /* ── PANELS: Offline & GPX / Centennial ── */
+  #dlbody{padding:14px 16px 30px !important}
+  .dls-t{font-size:13px !important;letter-spacing:2px !important;padding-bottom:9px !important;margin-bottom:12px !important}
+  .dls{margin-bottom:16px !important}
+
+  /* Fuel items */
+  .fi{padding:11px 0 !important}
+  .fi-n{font-size:14px !important;font-weight:700 !important;margin-bottom:5px !important}
+  .fi-d{font-size:13px !important;line-height:1.5 !important;margin-bottom:7px !important}
+  .fi-nav{font-size:13px !important;padding:8px 14px !important}
+
+  /* GPX buttons */
+  .gpx-btn,.dl-btn{font-size:13px !important;padding:9px 16px !important}
+
+  /* Lodging items */
+  .lodge-item,.lodge-name{font-size:14px !important;font-weight:700 !important}
+  .lodge-desc{font-size:13px !important;line-height:1.5 !important}
+  .lodge-nav{font-size:13px !important;padding:8px !important}
+  .lodge-state{font-size:14px !important;font-weight:700 !important;margin-top:14px !important}
+
+  /* Museum items */
+  .dls-t,.museum-name{font-size:14px !important}
+  .museum-verdict{font-size:13px !important}
+
+  /* Centennial panel */
+  #cent-title{font-size:22px !important;letter-spacing:3px !important}
+  #cent-sub{font-size:12px !important}
+  .cent-intro{font-size:13px !important;line-height:1.65 !important}
+  .evt-main-name{font-size:15px !important}
+  .evt-main-desc{font-size:12px !important;line-height:1.5 !important}
+  .state-evt-name{font-size:14px !important;font-weight:700 !important}
+  .state-evt-hint{font-size:12px !important;line-height:1.45 !important}
+  .state-evt-link{font-size:12px !important;padding:6px 12px !important}
+  #cent-body{padding:14px 16px 28px !important}
 }
+
 </style>
 </head>
 <body>
 <div id="hdr">
   <div id="htop">
     <div class="shield"><span>US<br>66</span></div>
-    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide</p></div>
+    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v3</span></p></div>
     <div class="sep"></div>
     <div class="hstat"><div class="v">2,448</div><div class="l">Miles</div></div>
     <div class="sep"></div>
