@@ -88,7 +88,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .hbtn.cent:hover,.hbtn.cent.on{border-color:var(--rust);color:#fff;background:rgba(192,57,43,.2)}
 
 /* ── BODY ── */
-#body{display:grid;grid-template-columns:1fr;grid-template-rows:32vh 1fr;height:calc(100vh - var(--hdr-h,120px))}
+#body{display:grid;grid-template-columns:1fr;grid-template-rows:28vh 1fr;height:calc(100vh - var(--hdr-h,120px))}
 #mc{display:flex;flex-direction:column;border-bottom:1px solid var(--bd);min-height:0;overflow:hidden}
 #mh{padding:9px 14px 7px;display:flex;align-items:center;gap:10px;flex-shrink:0;border-bottom:1px solid var(--bd)}
 #mt{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px}
@@ -299,7 +299,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
    DESKTOP OVERRIDE — min-width 769px
    Compact the layout back to fit wider screens
    ═══════════════════════════════════════════════ */
-@media(min-width:769px){
+@media(min-width:1024px){
   /* Header */
   #hdr{height:82px;padding:8px 16px 0;gap:6px}
   .sep{display:block;width:1px;height:30px;background:var(--bd2);margin:0 6px}
@@ -379,48 +379,39 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 }
 
 /* Landscape mobile */
-@media(orientation:landscape)and(max-height:500px){
-  /* Single-row 46px header — irow hidden */
-  #hdr{height:46px !important;padding:0 10px !important;gap:0 !important;
-       flex-direction:row !important;align-items:center !important}
-  .shield{width:28px !important;height:34px !important}
-  .shield span{font-size:7px !important}
-  .tb{flex:1;min-width:0}
-  .tb h1{font-size:13px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .tb p{display:none !important}
-  .sep,.hstat{display:none !important}
-  /* Hide itinerary row entirely */
-  #irow{display:none !important}
-  /* Show compact action buttons inline */
-  #hdr-actions{display:flex !important;gap:4px !important;flex-shrink:0;margin-left:8px}
-  #hdr-actions .hbtn{
-    flex:none !important;padding:6px 8px !important;
-    font-size:11px !important;white-space:nowrap;line-height:normal !important
-  }
-  /* Map left, panel right — full height minus 46px */
-  #body{
-    grid-template-columns:52% 1fr !important;
-    grid-template-rows:1fr !important;
-    height:calc(100vh - 46px) !important
-  }
-  #mc{border-right:1px solid var(--bd) !important;border-bottom:none !important}
-  #dlpanel{top:46px !important;width:48% !important}
-  #cent-panel{top:46px !important;width:100% !important}
-  /* Compact panel text in landscape */
-  .tab{padding:8px 3px !important;font-size:10px !important}
-  .stbtn{padding:4px 10px !important;font-size:11px !important}
-  .si{padding:8px 11px !important}
-  .nm{font-size:14px !important}
-  .cy{font-size:12px !important}
-  .ds{font-size:12px !important}
-  .sb{font-size:10px !important}
-  #mh{padding:5px 10px !important}
-  #mt{font-size:16px !important}
-  #mf{padding:5px 10px !important;gap:4px}
-  #gnav{padding:6px !important;font-size:11px !important}
-  #leg{gap:8px}
-  .lgi{font-size:11px}
+/* Landscape handled by JS class .ls on body */
+body.ls #hdr{
+  height:46px;padding:0 10px;gap:0;
+  flex-direction:row;align-items:center;
 }
+body.ls .shield{width:28px;height:34px}
+body.ls .shield span{font-size:7px}
+body.ls .tb h1{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.ls .tb p{display:none}
+body.ls .sep,body.ls .hstat{display:none}
+body.ls #irow{display:none}
+body.ls #hdr-actions{display:flex;gap:4px;flex-shrink:0;margin-left:8px}
+body.ls #hdr-actions .hbtn{
+  flex:none;padding:6px 8px;font-size:11px;
+  white-space:nowrap;line-height:normal;letter-spacing:0
+}
+body.ls #body{
+  grid-template-columns:52% 1fr;
+  grid-template-rows:1fr;
+}
+body.ls #mc{border-right:1px solid var(--bd);border-bottom:none}
+body.ls .tab{padding:7px 3px;font-size:11px}
+body.ls .stbtn{padding:4px 9px;font-size:11px}
+body.ls .si{padding:7px 10px}
+body.ls .nm{font-size:14px}
+body.ls .cy{font-size:12px}
+body.ls .sb{font-size:10px}
+body.ls #mf{padding:5px 10px;gap:4px}
+body.ls #mh{padding:5px 10px}
+body.ls #mt{font-size:16px}
+body.ls #gnav{padding:7px;font-size:11px}
+
+
 </style>
 </head>
 <body>
@@ -428,7 +419,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <div id="htop">
     <div class="shield"><span>US<br>66</span></div>
-    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v6</span></p></div>
+    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v7</span></p></div>
     <div class="sep"></div>
     <div class="hstat"><div class="v">2,448</div><div class="l">Miles</div></div>
     <div class="sep"></div>
@@ -1045,26 +1036,44 @@ let activeIdx=null, fuelOn=false;
 
 // ── Sync header height CSS var ──
 function syncHdrH(){
-  var hdrEl = document.getElementById('hdr');
+  var hdrEl  = document.getElementById('hdr');
   var bodyEl = document.getElementById('body');
+  var dlp    = document.getElementById('dlpanel');
+  var cp     = document.getElementById('cent-panel');
   if(!hdrEl || !bodyEl) return;
-  var hh = hdrEl.offsetHeight;
-  var avail = window.innerHeight - hh;  // actual available px (accounts for iOS address bar)
-  document.documentElement.style.setProperty('--hdr-h', hh+'px');
-  // Force exact pixel height on body — never use vh on mobile (iOS bar shrinks viewport)
-  bodyEl.style.height = avail + 'px';
-  // Sync overlay panels
-  var dlp = document.getElementById('dlpanel');
-  var cp  = document.getElementById('cent-panel');
-  if(dlp) dlp.style.top = hh + 'px';
-  if(cp)  cp.style.top  = hh + 'px';
+
+  // Detect landscape on mobile
+  var isLandscape = window.innerWidth > window.innerHeight;
+  var isMobile    = Math.min(window.innerWidth, window.innerHeight) < 600;
+
+  if(isLandscape && isMobile){
+    document.body.classList.add('ls');
+    // Force single-row header
+    hdrEl.style.height = '46px';
+    var avail = window.innerHeight - 46;
+    bodyEl.style.height = avail + 'px';
+    bodyEl.style.gridTemplateColumns = '52% 1fr';
+    bodyEl.style.gridTemplateRows = '1fr';
+    if(dlp){ dlp.style.top = '46px'; dlp.style.width = '48%'; }
+    if(cp){  cp.style.top  = '46px'; cp.style.width  = '100%'; }
+  } else {
+    document.body.classList.remove('ls');
+    hdrEl.style.height = '';
+    var hh = hdrEl.offsetHeight;
+    var avail = window.innerHeight - hh;
+    bodyEl.style.height = avail + 'px';
+    bodyEl.style.gridTemplateColumns = '';
+    bodyEl.style.gridTemplateRows = '';
+    if(dlp){ dlp.style.top = hh + 'px'; dlp.style.width = ''; }
+    if(cp){  cp.style.top  = hh + 'px'; cp.style.width  = ''; }
+  }
 }
-window.addEventListener('resize', function(){ setTimeout(syncHdrH, 50); });
-window.addEventListener('orientationchange', function(){ setTimeout(syncHdrH, 300); });
+window.addEventListener('resize', function(){ setTimeout(syncHdrH, 80); });
+window.addEventListener('orientationchange', function(){ setTimeout(syncHdrH, 350); });
 document.addEventListener('DOMContentLoaded', function(){
   syncHdrH();
-  setTimeout(syncHdrH, 200);
-  setTimeout(syncHdrH, 600);
+  setTimeout(syncHdrH, 300);
+  setTimeout(syncHdrH, 800);
 });
 
 // ── Init map ──
