@@ -88,8 +88,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .hbtn.cent:hover,.hbtn.cent.on{border-color:var(--rust);color:#fff;background:rgba(192,57,43,.2)}
 
 /* ── BODY ── */
-#body{display:grid;grid-template-columns:1fr;grid-template-rows:42vh 1fr;height:calc(100vh - var(--hdr-h,120px))}
-#mc{display:flex;flex-direction:column;border-bottom:1px solid var(--bd)}
+#body{display:grid;grid-template-columns:1fr;grid-template-rows:32vh 1fr;height:calc(100vh - var(--hdr-h,120px))}
+#mc{display:flex;flex-direction:column;border-bottom:1px solid var(--bd);min-height:0;overflow:hidden}
 #mh{padding:9px 14px 7px;display:flex;align-items:center;gap:10px;flex-shrink:0;border-bottom:1px solid var(--bd)}
 #mt{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px}
 #mm{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--rust);color:#fff;padding:3px 8px;border-radius:2px}
@@ -109,7 +109,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 #gnav:hover{filter:brightness(1.12)}
 
 /* ── RIGHT PANEL ── */
-#rp{display:flex;flex-direction:column;background:var(--sur);overflow:hidden}
+#rp{display:flex;flex-direction:column;background:var(--sur);overflow:hidden;min-height:0}
 
 /* Tab bar */
 #tabs{display:flex;flex-shrink:0;border-bottom:2px solid var(--bd2);background:var(--sur2)}
@@ -424,18 +424,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 </style>
 </head>
 <body>
-<div id="test-banner" style="
-  background:#FF0000;color:#fff;
-  font-size:20px;font-weight:900;
-  text-align:center;padding:12px;
-  position:fixed;top:0;left:0;right:0;z-index:99999;
-  font-family:monospace;letter-spacing:2px;
-">⚡ VERSION 6 LOADED ⚡</div>
-<div style="height:50px"></div>
+
 <div id="hdr">
   <div id="htop">
     <div class="shield"><span>US<br>66</span></div>
-    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v5</span></p></div>
+    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v6</span></p></div>
     <div class="sep"></div>
     <div class="hstat"><div class="v">2,448</div><div class="l">Miles</div></div>
     <div class="sep"></div>
@@ -1053,22 +1046,25 @@ let activeIdx=null, fuelOn=false;
 // ── Sync header height CSS var ──
 function syncHdrH(){
   var hdrEl = document.getElementById('hdr');
-  if(!hdrEl) return;
-  var h = hdrEl.offsetHeight;
-  document.documentElement.style.setProperty('--hdr-h', h+'px');
-  // Update body height for mobile portrait
   var bodyEl = document.getElementById('body');
-  if(bodyEl && window.innerWidth <= 768 && window.innerHeight > window.innerWidth){
-    bodyEl.style.height = 'calc(100vh - ' + h + 'px)';
-  } else {
-    bodyEl && (bodyEl.style.height = '');
-  }
+  if(!hdrEl || !bodyEl) return;
+  var hh = hdrEl.offsetHeight;
+  var avail = window.innerHeight - hh;  // actual available px (accounts for iOS address bar)
+  document.documentElement.style.setProperty('--hdr-h', hh+'px');
+  // Force exact pixel height on body — never use vh on mobile (iOS bar shrinks viewport)
+  bodyEl.style.height = avail + 'px';
+  // Sync overlay panels
+  var dlp = document.getElementById('dlpanel');
+  var cp  = document.getElementById('cent-panel');
+  if(dlp) dlp.style.top = hh + 'px';
+  if(cp)  cp.style.top  = hh + 'px';
 }
 window.addEventListener('resize', function(){ setTimeout(syncHdrH, 50); });
-window.addEventListener('orientationchange', function(){ setTimeout(syncHdrH, 200); });
+window.addEventListener('orientationchange', function(){ setTimeout(syncHdrH, 300); });
 document.addEventListener('DOMContentLoaded', function(){
   syncHdrH();
-  setTimeout(syncHdrH, 400);
+  setTimeout(syncHdrH, 200);
+  setTimeout(syncHdrH, 600);
 });
 
 // ── Init map ──
