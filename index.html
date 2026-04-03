@@ -144,11 +144,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .sr{display:flex;align-items:flex-start;gap:8px}
 .sn{font-size:12px;color:var(--mu);font-weight:600;flex-shrink:0;padding-top:3px;min-width:22px;text-align:right}
 .si-in{flex:1;min-width:0}
-.nm{font-size:17px;font-weight:700;line-height:1.3}
-.cy{font-size:14px;color:var(--mu);margin-top:2px}
-.ds{font-size:14px;color:rgba(240,232,213,.6);margin-top:7px;line-height:1.55;display:none}
+.nm{font-size:19px;font-weight:700;line-height:1.3}
+.cy{font-size:15px;color:var(--mu);margin-top:2px}
+.ds{font-size:15px;color:rgba(240,232,213,.6);margin-top:8px;line-height:1.55;display:none}
 .si.act .ds{display:block}
-.sb{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 7px;border-radius:2px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.sb{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 7px;border-radius:2px;flex-shrink:0;margin-top:2px;white-space:nowrap}
 .bw{background:rgba(39,174,96,.15);color:#5DEB9E;border:1px solid rgba(39,174,96,.25)}
 .bo{background:rgba(212,160,23,.12);color:var(--gold);border:1px solid rgba(212,160,23,.2)}
 .bs{background:rgba(255,255,255,.03);color:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.06)}
@@ -379,21 +379,47 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 }
 
 /* Landscape mobile */
-@media(max-width:900px)and(orientation:landscape)and(max-height:500px){
-  #body{grid-template-columns:55% 1fr;grid-template-rows:1fr;height:calc(100vh - 56px)}
-  #hdr{height:56px;padding:4px 12px 0;gap:3px}
-  #htop{gap:6px}
-  .tb h1{font-size:15px}
-  .tb p{display:none}
-  .sep,.hstat{display:none}
-  #irow{flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:4px}
-  .il{display:none}
-  .vsep{width:1px;height:14px;background:var(--bd2);flex-shrink:0}
-  .ib{flex:none;padding:4px 8px;font-size:11px;white-space:nowrap;line-height:normal}
-  .hbtn{flex:none;padding:4px 8px;font-size:10px;white-space:nowrap;line-height:normal}
-  #mc{border-right:1px solid var(--bd);border-bottom:none}
-  #dlpanel{top:56px}
-  #cent-panel{top:56px}
+@media(orientation:landscape)and(max-height:500px){
+  /* Single-row 46px header — irow hidden */
+  #hdr{height:46px !important;padding:0 10px !important;gap:0 !important;
+       flex-direction:row !important;align-items:center !important}
+  .shield{width:28px !important;height:34px !important}
+  .shield span{font-size:7px !important}
+  .tb{flex:1;min-width:0}
+  .tb h1{font-size:13px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tb p{display:none !important}
+  .sep,.hstat{display:none !important}
+  /* Hide itinerary row entirely */
+  #irow{display:none !important}
+  /* Show compact action buttons inline */
+  #hdr-actions{display:flex !important;gap:4px !important;flex-shrink:0;margin-left:8px}
+  #hdr-actions .hbtn{
+    flex:none !important;padding:6px 8px !important;
+    font-size:11px !important;white-space:nowrap;line-height:normal !important
+  }
+  /* Map left, panel right — full height minus 46px */
+  #body{
+    grid-template-columns:52% 1fr !important;
+    grid-template-rows:1fr !important;
+    height:calc(100vh - 46px) !important
+  }
+  #mc{border-right:1px solid var(--bd) !important;border-bottom:none !important}
+  #dlpanel{top:46px !important;width:48% !important}
+  #cent-panel{top:46px !important;width:100% !important}
+  /* Compact panel text in landscape */
+  .tab{padding:8px 3px !important;font-size:10px !important}
+  .stbtn{padding:4px 10px !important;font-size:11px !important}
+  .si{padding:8px 11px !important}
+  .nm{font-size:14px !important}
+  .cy{font-size:12px !important}
+  .ds{font-size:12px !important}
+  .sb{font-size:10px !important}
+  #mh{padding:5px 10px !important}
+  #mt{font-size:16px !important}
+  #mf{padding:5px 10px !important;gap:4px}
+  #gnav{padding:6px !important;font-size:11px !important}
+  #leg{gap:8px}
+  .lgi{font-size:11px}
 }
 </style>
 </head>
@@ -401,7 +427,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <div id="htop">
     <div class="shield"><span>US<br>66</span></div>
-    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v4</span></p></div>
+    <div class="tb"><h1>ROUTE 66 TRAVEL COMPANION</h1><p>Centennial 2026 &middot; No-BS Survival Guide <span id="ver" style="opacity:.4;font-size:8px">v5</span></p></div>
     <div class="sep"></div>
     <div class="hstat"><div class="v">2,448</div><div class="l">Miles</div></div>
     <div class="sep"></div>
@@ -416,6 +442,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
     <button class="hbtn fuel" onclick="toggleFuel(this)">⛽ Fuel</button>
     <button class="hbtn dl"   onclick="toggleDL()">⬇ Offline & GPX</button>
     <button class="hbtn cent" id="cent-toggle" onclick="toggleCent()">🇺🇸 Centennial 🎆</button>
+  </div>
+  <div id="hdr-actions" style="display:none">
+    <button class="hbtn fuel" onclick="toggleFuel(this)">⛽</button>
+    <button class="hbtn dl"   onclick="toggleDL()">⬇</button>
+    <button class="hbtn cent" onclick="toggleCent()">🇺🇸</button>
   </div>
 </div>
 
@@ -1013,13 +1044,23 @@ let activeIdx=null, fuelOn=false;
 
 // ── Sync header height CSS var ──
 function syncHdrH(){
-  var h = document.getElementById('hdr');
-  if(h) document.documentElement.style.setProperty('--hdr-h', h.offsetHeight+'px');
+  var hdrEl = document.getElementById('hdr');
+  if(!hdrEl) return;
+  var h = hdrEl.offsetHeight;
+  document.documentElement.style.setProperty('--hdr-h', h+'px');
+  // Update body height for mobile portrait
+  var bodyEl = document.getElementById('body');
+  if(bodyEl && window.innerWidth <= 768 && window.innerHeight > window.innerWidth){
+    bodyEl.style.height = 'calc(100vh - ' + h + 'px)';
+  } else {
+    bodyEl && (bodyEl.style.height = '');
+  }
 }
-window.addEventListener('resize', syncHdrH);
+window.addEventListener('resize', function(){ setTimeout(syncHdrH, 50); });
+window.addEventListener('orientationchange', function(){ setTimeout(syncHdrH, 200); });
 document.addEventListener('DOMContentLoaded', function(){
   syncHdrH();
-  setTimeout(syncHdrH, 300); // after fonts load
+  setTimeout(syncHdrH, 400);
 });
 
 // ── Init map ──
