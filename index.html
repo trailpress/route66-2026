@@ -419,7 +419,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <!-- Mobile: single row -->
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span id="ver" style="opacity:.3;font-size:9px;font-family:'DM Sans',sans-serif;letter-spacing:0;font-weight:400">v12</span></h1>
+    <h1>ROUTE 66 COMPANION <span id="ver" style="opacity:.3;font-size:9px;font-family:'DM Sans',sans-serif;letter-spacing:0;font-weight:400">v14</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-actions">
@@ -477,7 +477,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
       <div class="lgi"><div class="lgd" style="background:#555"></div>Skip</div>
       <div class="lgi"><div class="lgline"></div>Route 66</div>
     </div>
-    <a id="gnav" id="seg-btn" href="#" target="_blank">▶ OPEN SEGMENT IN GOOGLE MAPS</a>
+    <a id="gnav" href="#" target="_blank">▶ OPEN SEGMENT IN GOOGLE MAPS</a>
   </div>
 
   <!-- BOTTOM SHEET -->
@@ -1009,7 +1009,7 @@ body.ls #dlpanel,body.ls #cent-panel{top:46px}
         <div class="lgi"><div class="lgd" style="background:#555"></div>Skip</div>
         <div class="lgi"><div class="lgline"></div>Route 66</div>
       </div>
-      <a id="gnav" href="#" target="_blank">&#9654;&nbsp; OPEN SEGMENT IN GOOGLE MAPS</a>
+      
     </div>
   </div>
 
@@ -1601,13 +1601,10 @@ function setView(view){
   if(map) setTimeout(function(){ map.resize(); }, 50);
 }
 function setItinM(days, btn){
-  // Sync with desktop .ib buttons
-  document.querySelectorAll('.ib').forEach(function(b){
-    b.classList.toggle('on', parseInt(b.textContent) === days || b.onclick.toString().includes('('+days+','));
-  });
   document.querySelectorAll('.ib-m').forEach(function(b){ b.classList.remove('on'); });
-  btn.classList.add('on');
-  setItin(days, btn);
+  if(btn) btn.classList.add('on');
+  curItin = days;
+  if(curState){ clearMarkers(); renderStops(); }
 }
 
 function syncHdrH(){
@@ -1880,7 +1877,11 @@ function activateStop(i){
 function setItin(d,btn){
   curItin=d;
   document.querySelectorAll('.ib').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
+  if(btn) btn.classList.add('on');
+  // Keep mobile selector in sync
+  document.querySelectorAll('.ib-m').forEach(function(b){
+    b.classList.toggle('on', parseInt(b.textContent)===d);
+  });
   if(curState){clearMarkers();renderStops();}
 }
 
@@ -1954,6 +1955,17 @@ window.addEventListener('load',()=>{initMap();populateFuelList();});
 window.addEventListener('resize',()=>{if(map) map.resize();});
 
 
+function toggleSheet(){
+  document.getElementById('sheet').classList.toggle('expanded');
+  if(window.map) setTimeout(()=>window.map.resize(),360);
+}
+// Auto-expand sheet when state selected
+function expandSheet(){
+  document.getElementById('sheet').classList.add('expanded');
+}
+</script>
+
+
 <!-- CENTENNIAL PANEL -->
 <div id="cent-panel">
   <div id="cent-hdr">
@@ -2007,16 +2019,5 @@ window.addEventListener('resize',()=>{if(map) map.resize();});
 </div>
 
 
-function toggleSheet(){
-  document.getElementById('sheet').classList.toggle('expanded');
-  if(window.map) setTimeout(()=>window.map.resize(),360);
-}
-// Auto-expand sheet when state selected
-function expandSheet(){
-  document.getElementById('sheet').classList.add('expanded');
-}
-
-
-</script>
 </body>
 </html>
