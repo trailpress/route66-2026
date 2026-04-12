@@ -1252,16 +1252,22 @@ function renderStops(){
   if(map){
     stops.forEach(function(st,i){
       var col=DCOL[st.s], wrap=document.createElement('div');
-      wrap.style.cssText='width:36px;height:36px;cursor:pointer';
+      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;will-change:transform';
       if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
       var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
       wrap.appendChild(dot);
-      wrap.addEventListener('click',function(){
+      function openStop(){
         if(popupRef) popupRef.remove();
         popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
           .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
         activateStop(i);
-      });
+        // On mobile map view: switch to list to show the activated stop
+        var lp=document.getElementById('list-panel');
+        if(lp && (lp.style.display==='none' || getComputedStyle(lp).display==='none')){
+          setView('list');
+        }
+      }
+      wrap.addEventListener('click', openStop);
       allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
@@ -1284,7 +1290,14 @@ function renderStops(){
     div.appendChild(sr);
     div.addEventListener('click',function(){
       activateStop(i);
-      if(map) map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
+      if(map){
+        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
+        setTimeout(function(){
+          if(popupRef) popupRef.remove();
+          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        }, 850);
+      }
     });
     list.appendChild(div);
   });
