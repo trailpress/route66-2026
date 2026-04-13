@@ -1120,11 +1120,7 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    // Resize after layout settles, then auto-select first state
-    setTimeout(function(){
-      map.resize();
-      selectState('IL', document.querySelector('.stbtn'));
-    }, 200);
+    selectState('IL', document.querySelector('.stbtn'));
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1204,22 +1200,13 @@ function selectState(code, btnEl){
   document.querySelectorAll('.stbtn').forEach(function(b){b.classList.remove('on');});
   if(btnEl) btnEl.classList.add('on');
   else document.querySelectorAll('.stbtn').forEach(function(b){if(b.textContent===code)b.classList.add('on');});
-  clearMarkers(); // clear old markers immediately
+  clearMarkers();
+  renderStops(); // renders list + native map layers immediately
   if(map){
-    map.resize(); // ensure correct canvas dimensions BEFORE projection
     var bb=s.bbox;
     map.fitBounds([[bb[0][0],bb[0][1]],[bb[1][0],bb[1][1]]],{
       padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:800,easing:easeInOutCubic
     });
-    // Place markers ONLY after animation is truly complete
-    map.once('moveend', function(){
-      if(curState===code){
-        map.resize(); // second resize after animation settles
-        renderStops();
-      }
-    });
-  } else {
-    renderStops(); // no map, just render list
   }
 }
 
@@ -1252,8 +1239,98 @@ function buildPopup(st){
 
 
 function clearMarkers(){
-  allMarkers.forEach(function(m){m.remove();}); allMarkers.length=0;
   if(popupRef){popupRef.remove();popupRef=null;}
+  if(!map) return;
+  // Clear native GeoJSON source (layers persist, only data changes)
+  if(map.getSource('stops')){
+    map.getSource('stops').setData({type:'FeatureCollection',features:[]});
+  }
+  allMarkers=[]; // kept for API compatibility
+}
+
+function renderMarkers(stops){
+  if(!map || !map.isStyleLoaded()) return;
+  var features = stops.map(function(st,i){
+    return {
+      type:'Feature', id:i,
+      properties:{
+        num:i+1, status:st.s,
+        col:DCOL[st.s],
+        name:st.n, city:st.cy, desc:st.d,
+        lat:st.lat, lng:st.lng, nav:st.nav||''
+      },
+      geometry:{type:'Point',coordinates:[st.lng,st.lat]}
+    };
+  });
+  var geojson = {type:'FeatureCollection',features:features};
+
+  if(map.getSource('stops')){
+    // Just update data — layers stay
+    map.getSource('stops').setData(geojson);
+  } else {
+    // First time: create source + all layers
+    map.addSource('stops',{type:'geojson',data:geojson});
+
+    // Worth-It glow ring (static, no animation needed on canvas)
+    map.addLayer({
+      id:'stop-glow', type:'circle', source:'stops',
+      filter:['==',['get','status'],'worth'],
+      paint:{
+        'circle-radius':['interpolate',['linear'],['zoom'],4,12,8,20,12,28],
+        'circle-color':'transparent',
+        'circle-stroke-color':'#27AE60',
+        'circle-stroke-width':2,
+        'circle-opacity':0.6,
+        'circle-stroke-opacity':0.7
+      }
+    });
+
+    // Main dot circle
+    map.addLayer({
+      id:'stop-circles', type:'circle', source:'stops',
+      paint:{
+        'circle-radius':['interpolate',['linear'],['zoom'],4,8,8,13,12,17],
+        'circle-color':['get','col'],
+        'circle-stroke-color':'rgba(255,255,255,0.9)',
+        'circle-stroke-width':2,
+        'circle-pitch-alignment':'map'
+      }
+    });
+
+    // Number label
+    map.addLayer({
+      id:'stop-nums', type:'symbol', source:'stops',
+      layout:{
+        'text-field':['to-string',['get','num']],
+        'text-size':['interpolate',['linear'],['zoom'],4,9,8,11,12,13],
+        'text-font':['Open Sans Bold','Arial Unicode MS Bold'],
+        'text-allow-overlap':true,
+        'text-ignore-placement':true
+      },
+      paint:{
+        'text-color':'#ffffff',
+        'text-halo-color':'rgba(0,0,0,0.3)',
+        'text-halo-width':0.5
+      }
+    });
+
+    // Click → popup
+    map.on('click','stop-circles',function(e){
+      if(!e.features.length) return;
+      var p=e.features[0].properties;
+      var coords=e.features[0].geometry.coordinates.slice();
+      var st={n:p.name,cy:p.city,d:p.desc,s:p.status,lat:p.lat,lng:p.lng,nav:p.nav};
+      if(popupRef) popupRef.remove();
+      popupRef=new maplibregl.Popup({
+        closeButton:true,maxWidth:'290px',
+        offset:[0,-16],anchor:'bottom',focusAfterOpen:false
+      }).setDOMContent(buildPopup(st)).setLngLat(coords).addTo(map);
+      activateStop(e.features[0].id);
+    });
+
+    map.on('mouseenter','stop-circles',function(){ map.getCanvas().style.cursor='pointer'; });
+    map.on('mouseleave','stop-circles',function(){ map.getCanvas().style.cursor=''; });
+  }
 }
 
 function renderStops(){
@@ -1261,22 +1338,7 @@ function renderStops(){
   var s=STATES[curState], allowed=ITIN[curItin];
   var stops=s.stops.filter(function(st){return allowed.indexOf(st.s)>=0;});
   var el=document.getElementById('sc'); if(el) el.textContent=stops.length+' stops';
-  if(map){
-    stops.forEach(function(st,i){
-      var col=DCOL[st.s], wrap=document.createElement('div');
-      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;';
-      if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
-      var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
-      wrap.appendChild(dot);
-      wrap.addEventListener('click', function(){
-        if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
-          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        activateStop(i);
-      });
-      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
-    });
-  }
+  if(map){ renderMarkers(stops); }
   var list=document.getElementById('pane-stops');
   if(!stops.length){list.innerHTML='<div class="empty"><span class="big">66</span>No stops.</div>';return;}
   list.innerHTML='';
