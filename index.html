@@ -247,6 +247,26 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 .evt-why-box{font-size:13px;color:var(--mu);line-height:1.6;background:rgba(255,255,255,.025);border-left:3px solid rgba(212,160,23,.3);padding:11px 13px;border-radius:0 6px 6px 0;margin-top:16px}
 .evt-why-box strong{color:rgba(212,160,23,.7)}
 
+
+/* ══ LAYOUT CONTROL VIA JS CLASSES ══ */
+/* Portrait: map view */
+html.v-map  #map-panel  { display:flex !important }
+html.v-map  #list-panel { display:none !important }
+html.v-map  #view-toggle{ display:flex }
+html.v-map  #list-itin  { display:none !important }
+
+/* Portrait: list view */
+html.v-list #map-panel  { display:none !important }
+html.v-list #list-panel { display:flex !important; flex:1 }
+html.v-list #view-toggle{ display:flex }
+html.v-list #list-itin  { display:flex !important }
+
+/* Landscape */
+html.ls #map-panel  { display:none !important }
+html.ls #list-panel { display:flex !important; flex:1 }
+html.ls #view-toggle{ display:none !important }
+html.ls #list-itin  { display:flex !important }
+
 /* ══ DESKTOP (≥1024px) ══ */
 @media(min-width:1024px){
   :root{--hh:82px}
@@ -357,9 +377,9 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 </div>
 
 <div id="view-toggle">
-  <button class="vt-btn on" id="vt-map" onclick="setView('map')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Map</button>
+  <button class="vt-btn" id="vt-map" onclick="setView('map')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Map</button>
   <div class="vt-sep"></div>
-  <button class="vt-btn" id="vt-list" onclick="setView('list')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> List</button>
+  <button class="vt-btn on" id="vt-list" onclick="setView('list')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> List</button>
 </div>
 
 <div id="body">
@@ -1003,42 +1023,31 @@ function isLandscape(){
 }
 
 function syncLayout(){
-  var mp    = document.getElementById('map-panel');
-  var lp    = document.getElementById('list-panel');
-  var bod   = document.getElementById('body');
-  var tog   = document.getElementById('view-toggle');
-  var li    = document.getElementById('list-itin');
-  var lsBtn = document.getElementById('ls-map-btn');
-  var hdr   = document.getElementById('hdr');
   var ls    = isLandscape();
   var mapOn = document.getElementById('vt-map').classList.contains('on');
-  // Set body height based on actual header height
-  var hh = hdr ? hdr.offsetHeight : 58;
-  bod.style.height = 'calc(100svh - ' + hh + 'px)';
+  var root  = document.documentElement;
 
-  if(ls){
-    // LANDSCAPE: list fullscreen, map hidden, 🗺 button to open map
-    bod.style.display       = 'flex';
-    bod.style.flexDirection = 'column';
-    mp.style.display        = 'none';
-    lp.style.display        = 'flex';
-    lp.style.flex           = '1';
-    if(tog)   tog.style.display   = 'none';
-    if(li)    li.style.display    = 'flex';
-    if(lsBtn) lsBtn.style.display = 'flex';
-    _lsMapOpen = false;
-  } else {
-    // PORTRAIT: map or list, toggled by pill
-    bod.style.display       = 'flex';
-    bod.style.flexDirection = 'column';
-    lp.style.flex           = '1';
-    mp.style.display        = mapOn ? 'flex'  : 'none';
-    lp.style.display        = mapOn ? 'none'  : 'flex';
-    if(tog)   tog.style.display   = '';
-    if(li)    li.style.display    = mapOn ? 'none' : 'flex';
-    if(lsBtn) lsBtn.style.display = 'none';
-    if(map && mapOn) setTimeout(function(){ map.resize(); }, 80);
+  // Single source of truth: CSS classes on <html>
+  root.classList.toggle('ls',  ls);
+  root.classList.toggle('v-map',  !ls && mapOn);
+  root.classList.toggle('v-list', !ls && !mapOn);
+
+  // Update body height from real header height (handles both portrait & landscape)
+  var hdr = document.getElementById('hdr');
+  var hh  = hdr ? hdr.offsetHeight : 58;
+  document.getElementById('body').style.height = 'calc(100svh - ' + hh + 'px)';
+
+  // Map resize after it becomes visible
+  if(map){
+    var mpVis = ls ? _lsMapOpen : mapOn;
+    if(mpVis) setTimeout(function(){ map.resize(); }, 60);
   }
+
+  // Landscape map toggle button visibility
+  var lsBtn = document.getElementById('ls-map-btn');
+  if(lsBtn) lsBtn.style.display = ls ? 'flex' : 'none';
+
+  if(ls) _lsMapOpen = false;
 }
 
 function setView(v){
@@ -1241,7 +1250,6 @@ function buildPopup(st){
 
 function clearMarkers(){
   allMarkers.forEach(function(m){m.remove();}); allMarkers.length=0;
-  if(map){ try{ map.resize(); }catch(e){} }
   if(popupRef){popupRef.remove();popupRef=null;}
 }
 
@@ -1259,7 +1267,7 @@ function renderStops(){
       wrap.appendChild(dot);
       wrap.addEventListener('click', function(){
         if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
           .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
         activateStop(i);
       });
@@ -1293,13 +1301,13 @@ function renderStops(){
           setTimeout(function(){
             map.resize();
             if(popupRef) popupRef.remove();
-            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
               .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
             map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
           }, 100);
         } else {
           if(popupRef) popupRef.remove();
-          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
             .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
           map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
         }
@@ -1407,20 +1415,18 @@ window.addEventListener('orientationchange', function(){
 var _lsMapOpen = false;
 function lsToggleMap(){
   _lsMapOpen = !_lsMapOpen;
+  var btn = document.getElementById('ls-map-btn');
   var mp  = document.getElementById('map-panel');
   var lp  = document.getElementById('list-panel');
-  var btn = document.getElementById('ls-map-btn');
   if(_lsMapOpen){
     mp.style.display = 'flex';
     lp.style.display = 'none';
-    btn.textContent  = '✕';
-    btn.title        = 'Back to list';
-    if(map) setTimeout(function(){ map.resize(); }, 120);
+    if(btn){ btn.textContent='✕'; btn.title='Back to list'; }
+    if(map) setTimeout(function(){ map.resize(); }, 80);
   } else {
-    mp.style.display = 'none';
-    lp.style.display = 'flex';
-    btn.textContent  = '🗺';
-    btn.title        = 'Show map';
+    mp.style.display = '';
+    lp.style.display = '';
+    if(btn){ btn.textContent='🗺'; btn.title='Show map'; }
   }
 }
 // orientationchange handled by main listener
