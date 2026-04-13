@@ -160,7 +160,7 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 
 /* ══ MARKERS ══ */
 .dot{position:absolute;top:5px;left:5px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
-.mring{position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;border:2px solid var(--grn);animation:pulse 2.2s ease-out infinite;pointer-events:none}
+.mring{position:absolute;top:-1px;left:-1px;width:38px;height:38px;border-radius:50%;border:2px solid var(--grn);animation:pulse 2.2s ease-out infinite;pointer-events:none;will-change:transform;isolation:isolate}
 @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(2.4);opacity:0}100%{transform:scale(2.4);opacity:0}}
 .fdot{width:26px;height:26px;background:#E8880A;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
 #map .maplibregl-canvas{outline:none}
@@ -377,9 +377,9 @@ html.ls #list-itin  { display:flex !important }
 </div>
 
 <div id="view-toggle">
-  <button class="vt-btn" id="vt-map" onclick="setView('map')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Map</button>
+  <button class="vt-btn on" id="vt-map" onclick="setView('map')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg> Map</button>
   <div class="vt-sep"></div>
-  <button class="vt-btn on" id="vt-list" onclick="setView('list')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> List</button>
+  <button class="vt-btn" id="vt-list" onclick="setView('list')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> List</button>
 </div>
 
 <div id="body">
@@ -1120,12 +1120,11 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    requestAnimationFrame(()=>map.resize());
-    setTimeout(()=>map.resize(),300);
-    // Re-render markers after map tiles load (auto-select may have run before map was ready)
+    // Resize after layout settles, then auto-select first state
     setTimeout(function(){
-      if(curState){ clearMarkers(); renderStops(); }
-    }, 600);
+      map.resize();
+      selectState('IL', document.querySelector('.stbtn'));
+    }, 200);
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1205,18 +1204,22 @@ function selectState(code, btnEl){
   document.querySelectorAll('.stbtn').forEach(function(b){b.classList.remove('on');});
   if(btnEl) btnEl.classList.add('on');
   else document.querySelectorAll('.stbtn').forEach(function(b){if(b.textContent===code)b.classList.add('on');});
+  clearMarkers(); // clear old markers immediately
   if(map){
+    map.resize(); // ensure correct canvas dimensions BEFORE projection
     var bb=s.bbox;
     map.fitBounds([[bb[0][0],bb[0][1]],[bb[1][0],bb[1][1]]],{
-      padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:1000,easing:easeInOutCubic
+      padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:800,easing:easeInOutCubic
     });
-  }
-  clearMarkers(); renderStops();
-  // Re-render markers AFTER fitBounds animation truly ends
-  if(map){
+    // Place markers ONLY after animation is truly complete
     map.once('moveend', function(){
-      if(curState===code){ clearMarkers(); renderStops(); }
+      if(curState===code){
+        map.resize(); // second resize after animation settles
+        renderStops();
+      }
     });
+  } else {
+    renderStops(); // no map, just render list
   }
 }
 
@@ -1400,10 +1403,7 @@ function syncHdrH(){
 window.addEventListener('load',function(){
   initMap(); populateFuelList();
   syncLayout(); syncHdrH();
-  setTimeout(function(){
-    selectState('IL',document.querySelector('.stbtn'));
-    syncLayout();
-  }, 500);
+  // selectState called inside map.on('load') after resize
 });
 window.addEventListener('resize', function(){ syncLayout(); syncHdrH(); });
 window.addEventListener('orientationchange', function(){
