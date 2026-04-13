@@ -1120,7 +1120,11 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    selectState('IL', document.querySelector('.stbtn'));
+    requestAnimationFrame(()=>map.resize());
+    setTimeout(()=>map.resize(),300);
+    setTimeout(function(){
+      if(curState){ clearMarkers(); renderStops(); }
+    }, 600);
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1465,7 +1469,10 @@ function syncHdrH(){
 window.addEventListener('load',function(){
   initMap(); populateFuelList();
   syncLayout(); syncHdrH();
-  // selectState called inside map.on('load') after resize
+  setTimeout(function(){
+    selectState('IL', document.querySelector('.stbtn'));
+    setTimeout(syncLayout, 100);
+  }, 400);
 });
 window.addEventListener('resize', function(){ syncLayout(); syncHdrH(); });
 window.addEventListener('orientationchange', function(){
