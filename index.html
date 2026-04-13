@@ -1003,36 +1003,39 @@ function isLandscape(){
 }
 
 function syncLayout(){
-  var mp  = document.getElementById('map-panel');
-  var lp  = document.getElementById('list-panel');
-  var bod = document.getElementById('body');
-  var tog = document.getElementById('view-toggle');
-  var li  = document.getElementById('list-itin');
+  var mp    = document.getElementById('map-panel');
+  var lp    = document.getElementById('list-panel');
+  var bod   = document.getElementById('body');
+  var tog   = document.getElementById('view-toggle');
+  var li    = document.getElementById('list-itin');
   var lsBtn = document.getElementById('ls-map-btn');
-  var ls  = isLandscape();
+  var hdr   = document.getElementById('hdr');
+  var ls    = isLandscape();
   var mapOn = document.getElementById('vt-map').classList.contains('on');
+  // Set body height based on actual header height
+  var hh = hdr ? hdr.offsetHeight : 58;
+  bod.style.height = 'calc(100svh - ' + hh + 'px)';
 
   if(ls){
-    // LANDSCAPE: list full screen, map hidden, floating button to open map
-    bod.style.display = 'flex';
+    // LANDSCAPE: list fullscreen, map hidden, 🗺 button to open map
+    bod.style.display       = 'flex';
     bod.style.flexDirection = 'column';
-    bod.style.gridTemplateColumns = '';
-    mp.style.display = 'none';
-    lp.style.display = 'flex';
-    mp.style.borderRight = '';
-    if(tog) tog.style.display = 'none';
-    if(li)  li.style.display  = 'flex';
+    mp.style.display        = 'none';
+    lp.style.display        = 'flex';
+    lp.style.flex           = '1';
+    if(tog)   tog.style.display   = 'none';
+    if(li)    li.style.display    = 'flex';
     if(lsBtn) lsBtn.style.display = 'flex';
+    _lsMapOpen = false;
   } else {
-    // PORTRAIT: standard map/list toggle
-    bod.style.display = 'flex';
+    // PORTRAIT: map or list, toggled by pill
+    bod.style.display       = 'flex';
     bod.style.flexDirection = 'column';
-    bod.style.gridTemplateColumns = '';
-    mp.style.borderRight = '';
-    mp.style.display = mapOn ? 'flex' : 'none';
-    lp.style.display = mapOn ? 'none' : 'flex';
-    if(tog) tog.style.display = '';
-    if(li)  li.style.display  = mapOn ? 'none' : 'flex';
+    lp.style.flex           = '1';
+    mp.style.display        = mapOn ? 'flex'  : 'none';
+    lp.style.display        = mapOn ? 'none'  : 'flex';
+    if(tog)   tog.style.display   = '';
+    if(li)    li.style.display    = mapOn ? 'none' : 'flex';
     if(lsBtn) lsBtn.style.display = 'none';
     if(map && mapOn) setTimeout(function(){ map.resize(); }, 80);
   }
@@ -1200,10 +1203,12 @@ function selectState(code, btnEl){
     });
   }
   clearMarkers(); renderStops();
-  // Re-render markers after fitBounds animation completes (1000ms + buffer)
-  setTimeout(function(){
-    if(curState===code){ if(map) map.resize(); clearMarkers(); renderStops(); }
-  }, 1250);
+  // Re-render markers AFTER fitBounds animation truly ends
+  if(map){
+    map.once('moveend', function(){
+      if(curState===code){ clearMarkers(); renderStops(); }
+    });
+  }
 }
 
 function buildPopup(st){
@@ -1281,14 +1286,22 @@ function renderStops(){
     div.addEventListener('click',function(){
       activateStop(i);
       if(map){
-        if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
-        // If on mobile and in list view, switch to map to show popup
-        if(!isLandscape()){
-          var vtMap = document.getElementById('vt-map');
-          if(vtMap && !vtMap.classList.contains('on')){ setView('map'); }
+        // Switch to map view FIRST so map container is visible before popup
+        var wasHidden = document.getElementById('map-panel').style.display==='none';
+        if(wasHidden && !isLandscape()){
+          setView('map');
+          setTimeout(function(){
+            map.resize();
+            if(popupRef) popupRef.remove();
+            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+              .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+            map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
+          }, 100);
+        } else {
+          if(popupRef) popupRef.remove();
+          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+          map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
         }
       }
     });
@@ -1377,14 +1390,17 @@ function syncHdrH(){
 }
 
 window.addEventListener('load',function(){
-  initMap(); populateFuelList(); syncHdrH();
+  initMap(); populateFuelList();
+  syncLayout(); syncHdrH();
   setTimeout(function(){
     selectState('IL',document.querySelector('.stbtn'));
-    setTimeout(syncLayout,100);
-  },400);
+    syncLayout();
+  }, 500);
 });
-window.addEventListener('resize',function(){ syncLayout(); });
-window.addEventListener('orientationchange',function(){ setTimeout(syncLayout,350); });
+window.addEventListener('resize', function(){ syncLayout(); syncHdrH(); });
+window.addEventListener('orientationchange', function(){
+  setTimeout(function(){ _lsMapOpen=false; syncLayout(); syncHdrH(); }, 350);
+});
 
 
 // Landscape map toggle
@@ -1407,13 +1423,7 @@ function lsToggleMap(){
     btn.title        = 'Show map';
   }
 }
-window.addEventListener('orientationchange', function(){
-  setTimeout(function(){
-    _lsMapOpen = false;
-    syncLayout();
-    syncHdrH();
-  }, 250);
-});
+// orientationchange handled by main listener
 </script>
 
 <!-- Landscape floating map button -->
