@@ -290,52 +290,85 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 }
 
 /* ══ LANDSCAPE MOBILE ══ */
-@media(orientation:landscape)and(max-height:700px){
-  #hdr{height:46px;flex-direction:row;align-items:center;gap:8px;padding:0 10px}
-  #hdr-title h1{font-size:14px}
-  #hdr-title p{display:none}
-  .hbtn{width:34px;height:20px;flex-direction:row;gap:4px;padding:0 6px}
-  .hbtn svg{width:14px;height:14px}
-  .hbtn-label{font-size:8px}
-  #body{
-    display:grid !important;
-    grid-template-columns:52% 48% !important;
-    grid-template-rows:1fr !important;
-    height:calc(100% - 46px) !important;
+@media(orientation:landscape)and(max-height:500px){
+  /* ── HEADER: single row, 46px ── */
+  #hdr{
+    height:46px !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    padding:0 12px !important;
+    gap:8px !important;
   }
-  #map-panel{display:flex !important;flex-direction:column !important;overflow:hidden}
-  #list-panel{display:flex !important;flex-direction:column !important;overflow:hidden}
-  #map-panel,#list-panel{height:100%}
-  #rp{display:flex !important;flex-direction:column !important;flex:1;min-height:0;overflow:hidden}
-  /* Hide mobile-only elements */
-  #itin-bar{display:flex !important;padding:4px 8px;gap:4px;background:rgba(15,12,7,.95);border-top:1px solid var(--bd)}
-  .ib-m{padding:5px 6px;font-size:11px;border-radius:6px}
-  #list-itin{display:none !important}
-  #view-toggle{display:none !important}
-  /* Compact the list header in landscape - hide description to save space */
-  #rph-sub{display:none !important}
-  #rph{padding:5px 10px 4px !important}
-  #rt{font-size:15px !important}
-  #sc{font-size:10px !important}
-  /* Compact tabs and state buttons */
-  #tabs{flex-shrink:0}
-  .tab{padding:7px 3px;font-size:10px}
-  #stsel{padding:5px 10px !important}
-  .stbtn{padding:4px 9px;font-size:11px}
-  /* Stop list: 2-column grid in landscape */
-  #pane-stops{display:grid !important;grid-template-columns:1fr 1fr;align-content:start}
-  .si{padding:7px 10px;border-bottom:1px solid var(--bd);border-left:3px solid transparent}
-  .nm{font-size:13px;font-weight:700;line-height:1.2;letter-spacing:-.2px}
-  .cy{font-size:11px}.sb{font-size:9px;padding:2px 5px;border-radius:4px}
-  .sr{flex-direction:column;gap:3px}
-  .sn{min-width:auto;padding-top:0;font-size:10px}
-  .ds{font-size:11px}
-  .sna{font-size:11px;padding:5px 8px}
-  #dlpanel,#cent-panel{top:46px}
+  .tb h1{font-size:14px !important;white-space:nowrap}
+  .tb p,.sep,.hstat{display:none !important}
+  /* Itinerary row hidden in landscape */
+  #irow{display:none !important}
+  /* Compact action buttons stay in header */
+  .hbtn{
+    padding:6px 10px !important;
+    font-size:11px !important;
+    white-space:nowrap !important;
+    line-height:normal !important;
+    flex:none !important;
+  }
 
-  .pane{flex:1;min-height:0;overflow-y:auto}
-  .pane.active{display:flex;flex-direction:column}
-  #pane-stops.active{display:grid !important;grid-template-columns:1fr 1fr;align-content:start;overflow-y:auto}
+  /* ── BODY: list fullscreen, map hidden ── */
+  #body{
+    grid-template-columns:1fr !important;
+    grid-template-rows:1fr !important;
+    height:calc(100vh - 46px) !important;
+  }
+  /* Hide map column entirely */
+  #mc{display:none !important}
+  /* Right panel = full width */
+  #rp{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    min-height:0 !important;
+  }
+
+  /* ── PANEL: compact but readable ── */
+  .tab{padding:9px 4px !important;font-size:12px !important}
+  #stsel{padding:7px 12px !important}
+  .stbtn{padding:5px 12px !important;font-size:12px !important;font-weight:700 !important}
+  #rph{padding:6px 12px 5px !important}
+  #rt{font-size:16px !important}
+  #sc{font-size:11px !important}
+  #rph-sub{display:none !important}
+
+  /* ── STOPS: 2-column grid to use wide screen ── */
+  #pane-stops{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    align-content:start !important;
+    overflow-y:auto !important;
+  }
+  .si{padding:10px 12px !important;border-left-width:3px !important}
+  .nm{font-size:15px !important;font-weight:700 !important;line-height:1.25 !important}
+  .cy{font-size:12px !important;margin-top:1px !important}
+  .ds{font-size:12px !important;line-height:1.45 !important}
+  .sb{font-size:10px !important;padding:2px 6px !important}
+  .sna{font-size:12px !important;margin-top:5px !important}
+  .sn{font-size:11px !important;min-width:18px !important}
+  .sr{gap:6px !important}
+
+  /* Lodging / museums: also 2-col */
+  #pane-lodge,#pane-museums{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    align-content:start !important;
+    overflow-y:auto !important;
+  }
+  .lodge-item{padding:8px 12px !important}
+  .lodge-name{font-size:13px !important}
+  .lodge-note,.lodge-addr{font-size:12px !important}
+
+  /* Slide-over panels */
+  #dlpanel,#cent-panel{top:46px !important;width:100% !important}
+
+  /* ── MAP TOGGLE BUTTON visible only in landscape ── */
+  #map-ls-btn{display:flex !important}
 }
 
 
@@ -1036,7 +1069,6 @@ function syncLayout(){
     lp.style.display = 'flex';
     if(tog) tog.style.display = 'none';
     if(li)  li.style.display  = 'none';
-    if(curState){ clearMarkers(); renderStops(); }
     if(map) setTimeout(function(){ map.resize(); }, 120);
   } else {
     bod.style.display = 'flex';
@@ -1123,6 +1155,10 @@ function initMap(){
     addTrack(); addPolygons(); updateStats();
     requestAnimationFrame(()=>map.resize());
     setTimeout(()=>map.resize(),300);
+    // Re-render markers after map tiles load (auto-select may have run before map was ready)
+    setTimeout(function(){
+      if(curState){ clearMarkers(); renderStops(); }
+    }, 600);
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1256,18 +1292,12 @@ function renderStops(){
       if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
       var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
       wrap.appendChild(dot);
-      function openStop(){
+      wrap.addEventListener('click', function(){
         if(popupRef) popupRef.remove();
         popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
           .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
         activateStop(i);
-        // On mobile map view: switch to list to show the activated stop
-        var lp=document.getElementById('list-panel');
-        if(lp && (lp.style.display==='none' || getComputedStyle(lp).display==='none')){
-          setView('list');
-        }
-      }
-      wrap.addEventListener('click', openStop);
+      });
       allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
@@ -1291,12 +1321,10 @@ function renderStops(){
     div.addEventListener('click',function(){
       activateStop(i);
       if(map){
+        if(popupRef) popupRef.remove();
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
         map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
-        setTimeout(function(){
-          if(popupRef) popupRef.remove();
-          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        }, 850);
       }
     });
     list.appendChild(div);
@@ -1391,6 +1419,56 @@ window.addEventListener('load',function(){
 window.addEventListener('resize',function(){ syncLayout(); });
 window.addEventListener('orientationchange',function(){ setTimeout(syncLayout,350); });
 
+
+// Landscape map toggle
+var _lsMapOpen = false;
+function toggleLandscapeMap(){
+  _lsMapOpen = !_lsMapOpen;
+  var mc = document.getElementById('mc');
+  var rp = document.getElementById('rp');
+  var btn = document.getElementById('map-ls-btn');
+  if(_lsMapOpen){
+    mc.style.display='flex';
+    mc.style.width='100%';
+    rp.style.display='none';
+    btn.textContent='✕';
+    btn.title='Close map';
+    if(window._map) window._map.resize();
+  } else {
+    mc.style.display='none';
+    mc.style.width='';
+    rp.style.display='flex';
+    btn.textContent='🗺';
+    btn.title='Show map';
+  }
+}
+// Reset map toggle state on orientation change
+window.addEventListener('orientationchange', function(){
+  setTimeout(function(){
+    _lsMapOpen = false;
+    var mc = document.getElementById('mc');
+    var rp = document.getElementById('rp');
+    var btn = document.getElementById('map-ls-btn');
+    if(mc){ mc.style.display=''; mc.style.width=''; }
+    if(rp){ rp.style.display=''; }
+    if(btn){ btn.textContent='🗺'; }
+    syncHdrH();
+    if(window._map) setTimeout(function(){ window._map.resize(); }, 300);
+  }, 200);
+});
 </script>
+
+<!-- Landscape map toggle button -->
+<button id="map-ls-btn" onclick="toggleLandscapeMap()" style="
+  display:none;
+  position:fixed;bottom:16px;right:16px;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#C0392B,#8B0000);
+  border:2px solid rgba(255,255,255,.3);
+  color:#fff;font-size:22px;
+  align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.7);
+  cursor:pointer;transition:transform .15s;
+" title="Show map">🗺</button>
 </body>
 </html>
