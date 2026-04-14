@@ -127,6 +127,35 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .lodge-addr{font-size:14px;color:var(--gold)}
 .lodge-note{font-size:14px;color:var(--mu);line-height:1.5}
 .lodge-nav{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:14px;font-weight:700;color:var(--gold);text-decoration:none;padding:8px 14px;background:rgba(212,160,23,.08);border:1.5px solid rgba(212,160,23,.2);border-radius:10px;font-family:'DM Sans',sans-serif}
+.ra-hdr{padding:10px 12px 8px;border-bottom:2px solid rgba(192,57,43,.18);background:rgba(192,57,43,.04)}
+.ra-item{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:4px}
+.ra-name{font-size:16px;font-weight:700;color:var(--cream)}
+.ra-loc{font-size:13px;color:var(--mu)}
+.ra-note{font-size:13.5px;color:rgba(240,232,213,.78);line-height:1.55}
+.ra-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;margin-bottom:2px}
+.rb-trap{background:rgba(192,57,43,.18);color:#E74C3C;border:1px solid rgba(231,76,60,.3)}
+.rb-dirt{background:rgba(212,160,23,.15);color:#D4A017;border:1px solid rgba(212,160,23,.3)}
+.rb-fork{background:rgba(52,152,219,.15);color:#5DADE2;border:1px solid rgba(93,173,226,.3)}
+.rb-vc{background:rgba(39,174,96,.15);color:#2ECC71;border:1px solid rgba(46,204,113,.3)}
+.ra-nav{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:6px 12px;background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.3);border-radius:6px;color:#2ECC71;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:.5px}
+#tabs{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+#tabs::-webkit-scrollbar{display:none}
+/* Stop tooltip (desktop hover) */
+#stop-tip{
+  position:fixed;z-index:9000;pointer-events:none;
+  background:var(--sur2);border:1px solid var(--bd2);
+  border-radius:12px;padding:14px 16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);
+  max-width:260px;min-width:200px;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .15s, transform .15s;
+}
+#stop-tip.show{opacity:1;transform:translateY(0)}
+.tip-name{font-size:15px;font-weight:700;color:var(--cream);margin-bottom:3px}
+.tip-city{font-size:12px;color:var(--mu);margin-bottom:6px}
+.tip-desc{font-size:12px;color:rgba(240,232,213,.7);line-height:1.5;margin-bottom:8px}
+.tip-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+.tip-hint{font-size:10.5px;color:var(--mu);margin-top:6px;font-style:italic}
 
 /* ══ METHOD ══ */
 #mpanel{flex-shrink:0;border-top:2px solid rgba(212,160,23,.18);overflow-y:auto;max-height:200px}
@@ -364,7 +393,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="body">
   <div id="map-panel">
     <div id="mh">
-      <span id="state-title">SELECT A STATE</span>
+      <button id="full-route-btn" onclick="showFullRoute()" title="Show full route" style="display:none;background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.3);color:var(--rust);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px;font-family:'DM Sans',sans-serif">← ALL STATES</button><span id="state-title">ROUTE 66</span>
       <span id="state-miles"></span>
       <div id="mh-info"></div>
     </div>
@@ -396,6 +425,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
       <div class="tab on" onclick="switchTab('stops',this)">Stops</div>
       <div class="tab"    onclick="switchTab('lodge',this)">Lodging</div>
       <div class="tab"    onclick="switchTab('museums',this)">Museums</div>
+      <div class="tab"    onclick="switchTab('road',this)">Road</div>
       <div class="tab"    onclick="switchTab('method',this)">Method</div>
     </div>
     <div id="stsel">
@@ -429,6 +459,184 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
       <div class="tip">&#128242; <strong>Download offline maps</strong> before TX Panhandle, NM, and the Mojave — cell coverage disappears for long stretches.</div>
       <div class="tip">&#9888;&#65039; <strong>2026 Centennial:</strong> Grand Canyon entry sells out months ahead. Book via recreation.gov before your trip.</div>
     </div>
+
+    <div class="pane" id="pane-road">
+
+      <div class="ra-hdr">
+        <div style="font-family:'Bebas Neue',cursive;font-size:13px;letter-spacing:2px;color:var(--rust);margin-bottom:5px">NAVIGATION TRAPS &amp; CHECKPOINTS — CHICAGO → SANTA MONICA</div>
+        <div style="font-size:10.5px;color:rgba(240,232,213,.65);line-height:1.6">Spots that trip up first-timers: missing signs, rough alignments, major forks. <strong style="color:var(--cream)">Visitor Centers</strong> are ground-truth checkpoints — free maps, current road conditions, locals who actually know.</div>
+      </div>
+
+      <p class="lodge-state">Illinois</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Springfield One-Way Grid</span>
+        <span class="ra-loc">📍 Downtown Springfield, IL</span>
+        <span class="ra-note">Historic Route 66 threads through Springfield's one-way downtown streets with zero highway signs. The correct path jogs from 6th to 9th Street. Don't expect markers — use GPS through here and rejoin the signed route south of downtown.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Illinois Route 66 Welcome Center</span>
+        <span class="ra-loc">📍 1900 W Jefferson St, Springfield, IL</span>
+        <span class="ra-note">Pick up the official Illinois strip maps here — the best paper navigation tool for the state. Staffed, free, and stocked with current detour info.</span>
+        <a class="ra-nav" href="javascript:smartNav(39.7992,-89.6663,'Illinois Route 66 Welcome Center')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">Missouri</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">St. Louis Chain of Rocks Approach</span>
+        <span class="ra-loc">📍 Near I-270 / Madison IL border</span>
+        <span class="ra-note">The historic Chain of Rocks Bridge has no Route 66 signs on the approach from I-270. It's a pedestrian/bike bridge — you cross it on foot, then rejoin the road south. Worth the 20-minute detour. Navigate directly: search "Chain of Rocks Bridge St. Louis."</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span>
+        <span class="ra-name">Devil's Elbow — MO-Z Turnoff</span>
+        <span class="ra-loc">📍 Near Hazelgreen, MO (between Rolla and Springfield)</span>
+        <span class="ra-note">The turn onto MO-Z toward Devil's Elbow is unsigned. Old alignment is paved but narrow — farm trucks use it too. Slow down on the bridge. One of the most scenic stretches in Missouri; don't skip it, just don't rush it.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Rolla Visitor Center</span>
+        <span class="ra-loc">📍 I-44 Exit 184, Rolla, MO</span>
+        <span class="ra-note">Mid-Missouri checkpoint. Good maps, current I-44 construction alerts, and confirmation you're tracking the correct alignment through the Ozarks section ahead.</span>
+        <a class="ra-nav" href="javascript:smartNav(37.9514,-91.7723,'Rolla Missouri Visitor Center')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">Oklahoma</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Tulsa Alignment — 11th St / Skelly Dr Split</span>
+        <span class="ra-loc">📍 Tulsa, OK</span>
+        <span class="ra-note">Route 66 through downtown Tulsa becomes 11th Street heading west, then briefly Skelly Drive near the fairgrounds. Signs exist but are inconsistent — two turns in a row with no markers. Use GPS through Tulsa; the Art Deco architecture makes the slow urban crawl worth it.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span>
+        <span class="ra-name">Creek Turnpike Crossing — Unpaved Section</span>
+        <span class="ra-loc">📍 Near Kellyville, OK (between Stroud and Bristow)</span>
+        <span class="ra-note">A short unpaved section (~0.4 miles) where the old alignment crosses under the Creek Turnpike. Passable in dry weather for any standard car — but after rain, the clay surface turns to mud. If it's been raining, skip this segment and use the frontage road parallel to the turnpike.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Oklahoma Route 66 Welcome Center</span>
+        <span class="ra-loc">📍 US-69, Afton, OK (near Buffalo Ranch)</span>
+        <span class="ra-note">Small but reliably stocked with Oklahoma strip maps. The staff can tell you which segments have active construction or rough conditions between here and the Texas border. Also a good stretch-the-legs stop.</span>
+        <a class="ra-nav" href="javascript:smartNav(36.6942,-94.9721,'Route 66 Welcome Center Afton Oklahoma')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">Texas</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Amarillo Airport Zone — Missing Signs</span>
+        <span class="ra-loc">📍 Near Rick Husband Amarillo International Airport</span>
+        <span class="ra-note">Old Route 66 runs along Amarillo Blvd parallel to the airport perimeter. The alignment splits near Hollywood Rd with no signs indicating which fork stays on historic 66. Stay on Amarillo Blvd heading west — it becomes the correct alignment. If you find yourself on Airport Blvd proper, you've drifted off the historic road.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Texas Welcome Center — I-40 East</span>
+        <span class="ra-loc">📍 I-40 Eastbound, near Shamrock, TX (mile marker 163)</span>
+        <span class="ra-note">Last well-staffed Texas checkpoint before the Panhandle straightens out. Ask about current NM road conditions — they often have fresher info than apps. Also the last reliable restrooms for a long stretch west.</span>
+        <a class="ra-nav" href="javascript:smartNav(35.2231,-100.2421,'Texas Welcome Center Shamrock I-40')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">New Mexico</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span>
+        <span class="ra-name">Glenrio to San Jon — Unpaved Alignment</span>
+        <span class="ra-loc">📍 Near TX/NM state line, east of Tucumcari</span>
+        <span class="ra-note">Roughly 6 miles of unpaved old alignment between the Texas border and San Jon. Passable in dry weather for any standard car at low speed. After rain, skip it entirely — the clay goes slick fast. The I-40 frontage road runs parallel and gets you to the same place. Not worth a breakdown to say you drove it.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Albuquerque — Central Ave to 4th Street Jog</span>
+        <span class="ra-loc">📍 Downtown Albuquerque, NM</span>
+        <span class="ra-note">Through Albuquerque, Route 66 is Central Avenue heading west — well signed. But north of Old Town it briefly becomes 4th Street heading toward Rio Grande. No highway signs at the transition, only street signs. This is actually the most intact urban stretch of the entire road — the neon motel row on Central Ave is real, not restored. Take your time here.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span>
+        <span class="ra-name">Correo Unpaved Alignment</span>
+        <span class="ra-loc">📍 West of Albuquerque, near Correo, NM</span>
+        <span class="ra-note">About 9 miles of unsigned unpaved old alignment west of Albuquerque. Not marked on most Route 66 apps. Skip this one — it adds nothing scenically that the paved frontage road doesn't give you, and the surface can get genuinely rough. Save the off-pavement experience for the Glenrio stretch if you want one.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Santa Rosa Visitor Center — Blue Hole</span>
+        <span class="ra-loc">📍 Blue Hole Rd, Santa Rosa, NM</span>
+        <span class="ra-note">The Blue Hole staff almost always know current I-40 and frontage road conditions through the NM stretch. More useful than the highway welcome center. While you're here: the Blue Hole itself is worth 20 minutes — a natural artesian pool in the desert, genuinely strange and free.</span>
+        <a class="ra-nav" href="javascript:smartNav(34.9413,-104.6753,'Blue Hole Santa Rosa New Mexico')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">Arizona</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Ash Fork Westbound Exit</span>
+        <span class="ra-loc">📍 Ash Fork, AZ (between Williams and Seligman)</span>
+        <span class="ra-note">Leaving Ash Fork west toward Seligman, old Route 66 diverges from AZ-89 with no marker at the fork. Head west on Lewis Ave out of town — it becomes Route 66 within a half mile. If you stay on AZ-89, you'll rejoin I-40 and miss the best stretch of the Arizona run.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-fork">⇌ MAJOR FORK</span>
+        <span class="ra-name">Kingman — Oatman Route vs. Needles Direct</span>
+        <span class="ra-loc">📍 Kingman, AZ — decide before you leave town</span>
+        <span class="ra-note">Two options from Kingman. Historic Route 66 goes southwest through Oatman on a narrow mountain road over the Black Mountains — spectacular hairpins, wild burros in the street, Gold Rush ghost town. RVs and towed vehicles cannot safely make it. Alternative: US-93 south to Needles CA, straight freeway. No signs at the split explain the tradeoff. If you're driving a standard car: take Oatman, no question. If you're in an RV or towing anything: take US-93.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">Kingman Powerhouse Visitor Center</span>
+        <span class="ra-loc">📍 120 W Andy Devine Ave, Kingman, AZ</span>
+        <span class="ra-note">Best visitor center west of Oklahoma. Detailed Oatman road condition reports, California desert fuel warnings, and strip maps for the final push. Staff are Route 66 enthusiasts, not just tourism employees. Stop here before deciding Oatman vs. Needles — they can tell you current road conditions on the mountain section.</span>
+        <a class="ra-nav" href="javascript:smartNav(35.1895,-114.0561,'Kingman Powerhouse Visitor Center Arizona')">&#10148; Navigate</a>
+      </div>
+
+      <p class="lodge-state">California</p>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-dirt">⛽ FUEL WARNING</span>
+        <span class="ra-name">Needles to Barstow — 70+ Miles, No Services</span>
+        <span class="ra-loc">📍 Needles, CA → Barstow, CA</span>
+        <span class="ra-note">Fill up in Needles before entering the Mojave section. Roy's Motel &amp; Café in Amboy sometimes sells gas — but verify current status before counting on it (it's been intermittent since 2022). Next reliable fuel is Barstow, 75+ miles away. Do not start this section with less than a half tank. Temperature routinely exceeds 110°F in summer; carry water regardless of season.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">San Bernardino to Pasadena — Foothill Blvd</span>
+        <span class="ra-loc">📍 San Bernardino → Pasadena, CA</span>
+        <span class="ra-note">Old Route 66 follows Foothill Blvd through the Inland Empire — well-signed in some cities, completely unsigned in others. You'll pass through half a dozen different municipalities, each with different signage standards. GPS mandatory through here. The road itself is intact and drivable; finding it is the challenge.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-trap">⚠ NAV TRAP</span>
+        <span class="ra-name">Santa Monica Pier Endpoint — Easy to Overshoot</span>
+        <span class="ra-loc">📍 Santa Monica, CA</span>
+        <span class="ra-note">The official end of Route 66 is Santa Monica Pier — but Will Rogers Highway (the historic US-66 designation) technically ends at Lincoln Blvd and Ocean Ave, about 2 blocks north of the pier. Most GPS apps route you to the pier parking lot, which dumps you on the wrong side. Head to Ocean Ave, turn south, park near the pier entrance. The "End of the Trail" sign is at the pier's west end, overlooking the Pacific.</span>
+      </div>
+
+      <div class="ra-item">
+        <span class="ra-badge rb-vc">✓ CHECKPOINT</span>
+        <span class="ra-name">California Route 66 Museum</span>
+        <span class="ra-loc">📍 16825 S D St, Victorville, CA</span>
+        <span class="ra-note">Last dedicated Route 66 museum before the LA basin. Good California strip maps and the staff can confirm current Foothill Blvd conditions. Small volunteer-run operation — call ahead to confirm hours (they're irregular). Worth a 30-minute stop if you want context before the final urban push.</span>
+        <a class="ra-nav" href="javascript:smartNav(34.5133,-117.3086,'California Route 66 Museum Victorville')">&#10148; Navigate</a>
+      </div>
+
+    </div>
+
     </div>
   </div>
 </div>
@@ -1117,16 +1325,13 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    requestAnimationFrame(()=>map.resize());
-    setTimeout(()=>map.resize(),300);
-    // Re-render markers after map tiles load (auto-select may have run before map was ready)
+    // Resize first so fitBounds has correct container dimensions
+    map.resize();
     setTimeout(function(){
-      if(curState){
-        clearMarkers();
-        renderStops();
-        setTimeout(function(){ if(map) map.resize(); }, 150);
-      }
-    }, 600);
+      map.resize();
+      // Show full Route 66 overview — map is definitely ready now
+      showFullRoute();
+    }, 200);
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1136,6 +1341,125 @@ function initMap(){
       }
     },6000);
   });
+}
+
+var _tipTimeout = null;
+
+function showStopTooltip(st, anchorEl){
+  // Only on desktop (hover doesn't exist on touch)
+  if(window.innerWidth < 1024) return;
+  var tip = document.getElementById('stop-tip');
+  if(!tip) return;
+
+  document.getElementById('tip-name').textContent = st.n;
+  document.getElementById('tip-city').textContent = '📍 ' + st.cy;
+  var badge = document.getElementById('tip-badge');
+  badge.textContent = DLABEL[st.s] || st.s;
+  badge.style.background = (DCOL[st.s]||'#666') + '22';
+  badge.style.color = DCOL[st.s] || '#aaa';
+  badge.style.border = '1px solid ' + (DCOL[st.s]||'#666') + '44';
+  document.getElementById('tip-desc').textContent = (st.d||'').slice(0, 120) + ((st.d||'').length > 120 ? '…' : '');
+
+  // Position: right side of the anchor element
+  var rect = anchorEl.getBoundingClientRect();
+  var tipW = 260;
+  var left = rect.right + 12;
+  if(left + tipW > window.innerWidth) left = rect.left - tipW - 12;
+  var top = rect.top;
+  if(top + 160 > window.innerHeight) top = window.innerHeight - 170;
+
+  tip.style.left = left + 'px';
+  tip.style.top  = top + 'px';
+  tip.classList.add('show');
+
+  // Also open map popup on hover
+  if(map){
+    if(popupRef) popupRef.remove();
+    popupRef = new maplibregl.Popup({closeButton:false, maxWidth:'240px', offset:10, focusAfterOpen:false})
+      .setDOMContent(buildPopup(st)).setLngLat([st.lng, st.lat]).addTo(map);
+  }
+}
+
+function hideStopTooltip(){
+  if(window.innerWidth < 1024) return;
+  var tip = document.getElementById('stop-tip');
+  if(tip) tip.classList.remove('show');
+}
+
+function showFullRoute(){
+  // Full Route 66 extent: Chicago to Santa Monica
+  var fullBbox = [[-118.6, 33.5], [-87.5, 41.95]];
+  if(map){
+    map.fitBounds(fullBbox, {
+      padding:{top:50, bottom:50, left:30, right:30},
+      duration:800, maxZoom:5
+    });
+  }
+  // Show all stops from all states on the map
+  clearMarkers();
+  var allowed = ITIN[curItin] || ITIN[7];
+  var allStops = [];
+  ['IL','MO','KS','OK','TX','NM','AZ','CA'].forEach(function(code){
+    var s = STATES[code];
+    if(!s) return;
+    s.stops.filter(function(st){ return allowed.indexOf(st.s) >= 0; })
+      .forEach(function(st){ allStops.push({st:st, code:code}); });
+  });
+  if(map){
+    allStops.forEach(function(item, i){
+      var st = item.st;
+      var col = DCOL[st.s];
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;width:28px;height:28px;cursor:pointer;';
+      var dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.cssText = 'background:' + col + ';width:22px;height:22px;font-size:9px;';
+      dot.textContent = i + 1;
+      wrap.appendChild(dot);
+      wrap.addEventListener('click', function(){
+        // Select this stop's state and activate
+        selectState(item.code, null);
+        setTimeout(function(){
+          var s = STATES[item.code];
+          var allowed2 = ITIN[curItin] || ['worth'];
+          var stateStops = s.stops.filter(function(x){ return allowed2.indexOf(x.s) >= 0; });
+          var localIdx = stateStops.indexOf(st);
+          if(localIdx === -1){
+            // find by name
+            localIdx = stateStops.findIndex(function(x){ return x.n === st.n; });
+          }
+          if(localIdx >= 0){
+            if(popupRef) popupRef.remove();
+            popupRef = new maplibregl.Popup({closeButton:true, maxWidth:'270px', offset:14, focusAfterOpen:false})
+              .setDOMContent(buildPopup(st)).setLngLat([st.lng, st.lat]).addTo(map);
+            activateStop(localIdx);
+          }
+        }, 400);
+      });
+      allMarkers.push(new maplibregl.Marker({element:wrap, anchor:'center'}).setLngLat([st.lng, st.lat]).addTo(map));
+    });
+  }
+  // Update list panel to show "Select a state"
+  var listEl = document.getElementById('pane-stops');
+  if(listEl){
+    listEl.innerHTML = '<div class="empty" style="padding:30px 20px;text-align:center"><div style="font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:3px;color:var(--rust);margin-bottom:10px">ROUTE 66</div><div style="font-size:14px;color:var(--mu);line-height:1.7">Chicago → Santa Monica<br>2,278 miles across 8 states<br><br><strong style="color:var(--cream)">Select a state above</strong><br>to see stops, details and directions.</div></div>';
+  }
+  // Clear state indicators
+  var el = document.getElementById('rt');
+  if(el) el.textContent = 'ROUTE 66';
+  var frb = document.getElementById('full-route-btn');
+  if(frb) frb.style.display = 'none';
+  var stEl = document.getElementById('state-title');
+  if(stEl) stEl.textContent = 'ALL STATES';
+  var el2 = document.getElementById('mh-info');
+  if(el2) el2.style.display = 'none';
+  document.querySelectorAll('.stbtn').forEach(function(b){ b.classList.remove('on'); });
+  // Clear polygon active state
+  if(map && activeIdx !== null){
+    map.setFeatureState({source:'st', id:activeIdx}, {active:false});
+    activeIdx = null;
+  }
+  curState = null;
 }
 
 function addTrack(){
@@ -1197,6 +1521,7 @@ function selectState(code, btnEl){
   curState = code;
   var s = STATES[code], el;
   el=document.getElementById('state-title'); if(el) el.textContent=s.name.toUpperCase();
+  var frb=document.getElementById('full-route-btn'); if(frb) frb.style.display='inline-block';
   el=document.getElementById('state-miles'); if(el){el.style.display='inline';el.textContent=s.miles;}
   el=document.getElementById('mh-info');    if(el){el.style.display='block';el.innerHTML='<strong>'+s.miles+'</strong> in this state &middot; '+s.days;}
   el=document.getElementById('gnav');       if(el) el.href=s.nav;
@@ -1237,7 +1562,9 @@ function buildPopup(st){
     wrap.appendChild(hd);
   }
   const body=document.createElement('div'); body.className='pb2';
-  body.innerHTML='<div class="pci">'+st.cy+'</div><div class="pds">'+st.d+'</div><button class="pnv" onclick="smartNav('+st.lat+','+st.lng+',\''+st.nav+'\')" type="button">&#9654; Navigate</button>';
+  var isMob = window.innerWidth < 1024;
+  var backBtn = isMob ? '<button class="pnv" style="background:rgba(240,232,213,.08);color:var(--mu);border-color:rgba(240,232,213,.15);margin-right:6px" onclick="setView('list')" type="button">&#8592; List</button>' : '';
+  body.innerHTML='<div class="pci">'+st.cy+'</div><div class="pds">'+st.d+'</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+backBtn+'<button class="pnv" onclick="smartNav('+st.lat+','+st.lng+',\''+st.nav+'\')" type="button">&#9654; Navigate</button></div>';
   wrap.appendChild(body);
   return wrap;
 }
@@ -1287,13 +1614,34 @@ function renderStops(){
     inn.appendChild(nm); inn.appendChild(cy); inn.appendChild(ds); inn.appendChild(nb);
     sr.appendChild(sn); sr.appendChild(inn); sr.appendChild(sb);
     div.appendChild(sr);
+    // Contextual popup: desktop hover shows tooltip, click → map
+    div.addEventListener('mouseenter', function(e){
+      showStopTooltip(st, div);
+    });
+    div.addEventListener('mouseleave', function(){
+      hideStopTooltip();
+    });
     div.addEventListener('click',function(){
       activateStop(i);
-      if(map){
-        if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
+      // On mobile: switch to map view so popup is visible
+      var isMobile = window.innerWidth < 1024;
+      if(isMobile){
+        setView('map');
+        setTimeout(function(){
+          if(map){
+            if(popupRef) popupRef.remove();
+            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+              .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+            map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),11),duration:700,essential:true});
+          }
+        }, 200);
+      } else {
+        if(map){
+          if(popupRef) popupRef.remove();
+          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+          map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
+        }
       }
     });
     list.appendChild(div);
@@ -1381,8 +1729,7 @@ function syncHdrH(){
 window.addEventListener('load',function(){
   initMap(); populateFuelList(); syncHdrH();
   setTimeout(function(){
-    selectState('IL',document.querySelector('.stbtn'));
-    setTimeout(syncLayout,100);
+    syncLayout();
   },400);
 });
 window.addEventListener('resize',function(){ syncLayout(); });
@@ -1419,5 +1766,12 @@ window.addEventListener('orientationchange', function(){
   box-shadow:0 6px 24px rgba(0,0,0,.8);
   cursor:pointer;
 " title="Show map">🗺</button>
+<div id="stop-tip">
+  <div class="tip-name" id="tip-name"></div>
+  <div class="tip-city" id="tip-city"></div>
+  <span class="tip-badge" id="tip-badge"></span>
+  <div class="tip-desc" id="tip-desc"></div>
+  <div class="tip-hint">Click to open on map →</div>
+</div>
 </body>
 </html>
