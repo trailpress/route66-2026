@@ -994,6 +994,16 @@ const R66=[[-87.641,41.879],[-87.624,41.878],[-88.187,41.310],[-88.426,41.094],[
 let map=null, curState=null, curItin=7, popupRef=null;
 const allMarkers=[], fuelMarkers=[];
 let activeIdx=null, fuelOn=false;
+var _stopsRef=[], _onStopClick=function(e){
+  if(!e.features||!e.features.length) return;
+  var idx=e.features[0].properties.idx;
+  var st=_stopsRef[idx];
+  if(!st) return;
+  if(popupRef) popupRef.remove();
+  popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:18,focusAfterOpen:false})
+    .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+  activateStop(idx);
+};
 
 function isLandscape(){
   return window.innerWidth > window.innerHeight && window.innerHeight < 700;
@@ -1180,9 +1190,9 @@ function updateStats(){
 
 
 function selectState(code, btnEl){
-  if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});
+  try{if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});}catch(e){}
   activeIdx = ORDER.indexOf(code);
-  if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});
+  try{if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});}catch(e){}
   curState = code;
   var s = STATES[code], el;
   el=document.getElementById('state-title'); if(el) el.textContent=s.name.toUpperCase();
@@ -1233,8 +1243,16 @@ function buildPopup(st){
 
 
 function clearMarkers(){
+  // Remove GeoJSON marker layers
+  if(map){
+    try{
+      if(map.getLayer('stop-labels')) map.removeLayer('stop-labels');
+      if(map.getLayer('stop-circles')) map.removeLayer('stop-circles');
+      if(map.getSource('stops')) map.removeSource('stops');
+    }catch(e){}
+  }
+  // Also remove any lingering HTML markers (legacy)
   allMarkers.forEach(function(m){m.remove();}); allMarkers.length=0;
-  if(map){ try{ map.resize(); }catch(e){} }
   if(popupRef){popupRef.remove();popupRef=null;}
 }
 
@@ -1243,21 +1261,26 @@ function renderStops(){
   var s=STATES[curState], allowed=ITIN[curItin];
   var stops=s.stops.filter(function(st){return allowed.indexOf(st.s)>=0;});
   var el=document.getElementById('sc'); if(el) el.textContent=stops.length+' stops';
-  if(map){
-    stops.forEach(function(st,i){
-      var col=DCOL[st.s], wrap=document.createElement('div');
-      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;';
-      if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
-      var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
-      wrap.appendChild(dot);
-      wrap.addEventListener('click', function(){
-        if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        activateStop(i);
-      });
-      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
-    });
+  if(map && map.isStyleLoaded()){
+    var geojson={type:'FeatureCollection',features:stops.map(function(st,i){
+      return {type:'Feature',id:i,geometry:{type:'Point',coordinates:[st.lng,st.lat]},
+        properties:{idx:i,label:String(i+1),status:st.s,col:DCOL[st.s]}};
+    })};
+    map.addSource('stops',{type:'geojson',data:geojson});
+    map.addLayer({id:'stop-circles',type:'circle',source:'stops',paint:{
+      'circle-radius':['interpolate',['linear'],['zoom'],5,9,10,16],
+      'circle-color':['match',['get','status'],'worth','#22c55e','optional','#f59e0b','#94a3b8'],
+      'circle-stroke-color':'#ffffff','circle-stroke-width':2
+    }});
+    map.addLayer({id:'stop-labels',type:'symbol',source:'stops',layout:{
+      'text-field':['get','label'],'text-size':['interpolate',['linear'],['zoom'],5,8,10,13],
+      'text-font':['Open Sans Bold','Arial Unicode MS Bold'],'text-allow-overlap':true
+    },paint:{'text-color':'#ffffff','text-halo-color':'rgba(0,0,0,0.1)','text-halo-width':0.5}});
+    map.off('click','stop-circles',_onStopClick);
+    map.on('click','stop-circles',_onStopClick);
+    map.on('mouseenter','stop-circles',function(){map.getCanvas().style.cursor='pointer';});
+    map.on('mouseleave','stop-circles',function(){map.getCanvas().style.cursor='';});
+    _stopsRef=stops;
   }
   var list=document.getElementById('pane-stops');
   if(!stops.length){list.innerHTML='<div class="empty"><span class="big">66</span>No stops.</div>';return;}
