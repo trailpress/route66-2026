@@ -291,7 +291,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 
 /* ══ LANDSCAPE MOBILE ══ */
 @media(orientation:landscape)and(max-height:500px){
-  /* Header collapses to single row */
+  /* ── Single-row 46px header ── */
   #hdr{
     height:46px !important;
     flex-direction:row !important;
@@ -300,38 +300,40 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
     gap:8px !important;
   }
   #hdr-title p{display:none !important}
-  #hdr-title h1{font-size:14px !important}
-  .hbtn{
-    min-width:36px !important;height:36px !important;
-    padding:0 7px !important;gap:2px !important;
-    border-radius:8px !important;
-  }
+  #hdr-title h1{font-size:14px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbtn{min-width:36px !important;height:36px !important;padding:0 6px !important;gap:1px !important;border-radius:8px !important}
   .hbtn-label{display:none !important}
-  /* list-panel fills full body — JS handles display via syncLayout() */
-  #list-panel{min-height:0 !important}
-  /* Compact list items in landscape */
-  #list-itin{padding:6px 12px 5px !important;gap:5px !important}
-  .ib-m2{padding:7px 4px !important;font-size:12px !important;border-radius:8px !important}
-  .tab{padding:9px 4px !important;font-size:11px !important}
-  #stsel{padding:6px 12px !important}
-  .stbtn{padding:6px 12px !important;font-size:12px !important;border-radius:8px !important;margin-right:5px}
-  #rph{padding:7px 14px 5px !important}
-  #rt{font-size:16px !important}
-  #sc{font-size:11px !important}
+  /* JS syncLayout handles body/panel layout — these are fallbacks */
+  #view-toggle{display:none !important}
+  /* Compact list in landscape */
+  #list-itin{display:none !important}
+  #list-panel #stsel{padding:5px 10px !important}
+  .stbtn{padding:5px 11px !important;font-size:12px !important;border-radius:8px !important;margin-right:4px !important}
+  .tab{padding:8px 3px !important;font-size:11px !important}
+  #rph{padding:6px 12px 4px !important}
+  #rt{font-size:15px !important}
   #rph-sub{display:none !important}
-  /* 2-column stop grid in landscape */
+  /* Stops 2-column grid in landscape */
   #pane-stops.active{
     display:grid !important;
     grid-template-columns:1fr 1fr !important;
     align-content:start !important;
     overflow-y:auto !important;
   }
-  .si{padding:10px 13px !important}
-  .nm{font-size:15px !important;line-height:1.2 !important}
+  .si{padding:9px 12px !important}
+  .nm{font-size:14px !important;line-height:1.2 !important}
   .cy{font-size:12px !important}
   .ds{font-size:12px !important}
   .sb{font-size:10px !important;padding:3px 6px !important}
-  /* Panels */
+  /* Map footer compact */
+  #mh{padding:5px 10px !important}
+  #state-title{font-size:16px !important}
+  #mf{padding:5px 10px !important;gap:5px !important}
+  #itin-bar{display:none !important}
+  #leg{gap:8px !important}
+  .lgi{font-size:11px !important}
+  #gnav{padding:7px !important;font-size:11px !important}
+  /* Panels offset for 46px header */
   #dlpanel,#cent-panel{top:46px !important}
 }
 
@@ -343,7 +345,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v26</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v27</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1000,44 +1002,48 @@ function isLandscape(){
 }
 
 function syncLayout(){
-  var mp  = document.getElementById('map-panel');
-  var lp  = document.getElementById('list-panel');
-  var bod = document.getElementById('body');
-  var tog = document.getElementById('view-toggle');
-  var li  = document.getElementById('list-itin');
-  var lsBtn = document.getElementById('ls-map-btn');
-  var ls  = isLandscape();
-  var mapOn = document.getElementById('vt-map').classList.contains('on');
-  // Always set body height from real viewport (fixes iOS Safari 100vh bug)
-  var hdrH = document.getElementById('hdr').offsetHeight || 58;
-  bod.style.height = (window.innerHeight - hdrH) + 'px';
+  var mp   = document.getElementById('map-panel');
+  var lp   = document.getElementById('list-panel');
+  var bod  = document.getElementById('body');
+  var tog  = document.getElementById('view-toggle');
+  var li   = document.getElementById('list-itin');
+  var lsBtn= document.getElementById('ls-map-btn');
+  if(!mp||!lp||!bod) return;
+
+  var desktop = window.innerWidth >= 1024;
+  var ls      = !desktop && window.innerWidth > window.innerHeight && window.innerHeight < 700;
+
+  if(desktop){
+    // Desktop: CSS grid handles everything — clear any inline overrides
+    bod.style.cssText='';
+    mp.style.cssText='';
+    lp.style.cssText='';
+    if(tog) tog.style.display='none';
+    if(li)  li.style.display='none';
+    if(lsBtn) lsBtn.style.display='none';
+    setTimeout(function(){ if(map) map.resize(); }, 80);
+    return;
+  }
 
   if(ls){
-    // LANDSCAPE: list full screen, map hidden, floating button to open map
-    bod.style.display = 'flex';
-    bod.style.flexDirection = 'column';
-    bod.style.gridTemplateColumns = '';
-    mp.style.display = 'none';
-    lp.style.display = 'flex';
-    mp.style.borderRight = '';
-    if(tog) tog.style.display = 'none';
-    if(li)  li.style.display  = 'flex';
-    if(lsBtn) lsBtn.style.display = 'flex';
+    // LANDSCAPE: side-by-side, BOTH panels visible, map always has size
+    bod.style.cssText='display:flex;flex-direction:row;height:calc(100vh - 46px)';
+    mp.style.cssText='display:flex;flex-direction:column;flex:0 0 52%;min-width:0';
+    lp.style.cssText='display:flex;flex-direction:column;flex:1;min-width:0;border-left:1px solid rgba(240,232,213,.08)';
+    if(tog) tog.style.display='none';
+    if(li)  li.style.display='none';
+    if(lsBtn) lsBtn.style.display='none';
+    setTimeout(function(){ if(map) map.resize(); }, 80);
   } else {
-    // PORTRAIT: standard map/list toggle
-    bod.style.display = 'flex';
-    bod.style.flexDirection = 'column';
-    bod.style.gridTemplateColumns = '';
-    mp.style.borderRight = '';
-    mp.style.display = mapOn ? 'flex' : 'none';
-    lp.style.display = mapOn ? 'none' : 'flex';
-    if(tog) tog.style.display = '';
-    if(li)  li.style.display  = mapOn ? 'none' : 'flex';
-    if(lsBtn) lsBtn.style.display = 'none';
-    if(map && mapOn){
-      map.resize();
-      setTimeout(function(){ map.resize(); }, 80);
-    }
+    // PORTRAIT: toggle between map and list
+    var mapOn = document.getElementById('vt-map').classList.contains('on');
+    bod.style.cssText='display:flex;flex-direction:column;height:calc(100% - 58px)';
+    mp.style.cssText = mapOn  ? 'display:flex;flex-direction:column;flex:1;min-height:0' : 'display:none';
+    lp.style.cssText = !mapOn ? 'display:flex;flex-direction:column;flex:1;min-height:0' : 'display:none';
+    if(tog) tog.style.display='';
+    if(li)  li.style.display='none';
+    if(lsBtn) lsBtn.style.display='none';
+    if(map && mapOn) setTimeout(function(){ map.resize(); }, 80);
   }
 }
 
@@ -1111,15 +1117,16 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    // Fix: set exact body height, resize map, THEN place markers — in that order
-    var hdrH=document.getElementById('hdr').offsetHeight;
-    var bod=document.getElementById('body');
-    bod.style.height=(window.innerHeight-hdrH)+'px';
-    map.resize();
-    requestAnimationFrame(function(){
-      map.resize();
-      if(curState){ clearMarkers(); renderStops(); }
-    });
+    requestAnimationFrame(()=>map.resize());
+    setTimeout(()=>map.resize(),300);
+    // Re-render markers after map tiles load (auto-select may have run before map was ready)
+    setTimeout(function(){
+      if(curState){
+        clearMarkers();
+        renderStops();
+        setTimeout(function(){ if(map) map.resize(); }, 150);
+      }
+    }, 600);
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1379,29 +1386,18 @@ window.addEventListener('load',function(){
   },400);
 });
 window.addEventListener('resize',function(){ syncLayout(); });
-window.addEventListener('orientationchange',function(){ setTimeout(syncLayout,350); });
+window.addEventListener('orientationchange',function(){
+  setTimeout(function(){
+    syncLayout();
+    syncHdrH();
+    if(map) setTimeout(function(){ map.resize(); },200);
+  },300);
+});
 
 
 // Landscape map toggle
 var _lsMapOpen = false;
-function lsToggleMap(){
-  _lsMapOpen = !_lsMapOpen;
-  var mp  = document.getElementById('map-panel');
-  var lp  = document.getElementById('list-panel');
-  var btn = document.getElementById('ls-map-btn');
-  if(_lsMapOpen){
-    mp.style.display = 'flex';
-    lp.style.display = 'none';
-    btn.textContent  = '✕';
-    btn.title        = 'Back to list';
-    if(map) setTimeout(function(){ map.resize(); }, 120);
-  } else {
-    mp.style.display = 'none';
-    lp.style.display = 'flex';
-    btn.textContent  = '🗺';
-    btn.title        = 'Show map';
-  }
-}
+function lsToggleMap(){ /* disabled — map always visible in landscape */ }
 window.addEventListener('orientationchange', function(){
   setTimeout(function(){
     _lsMapOpen = false;
