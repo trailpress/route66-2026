@@ -45,7 +45,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 /* ══ BODY: full height below header ══ */
 #body{
   display:flex;flex-direction:column;
-  height:calc(var(--vh,1vh)*100 - 58px);
+  height:calc(100% - 58px);
   position:relative;overflow:hidden;
 }
 
@@ -994,16 +994,6 @@ const R66=[[-87.641,41.879],[-87.624,41.878],[-88.187,41.310],[-88.426,41.094],[
 let map=null, curState=null, curItin=7, popupRef=null;
 const allMarkers=[], fuelMarkers=[];
 let activeIdx=null, fuelOn=false;
-var _stopsRef=[], _onStopClick=function(e){
-  if(!e.features||!e.features.length) return;
-  var idx=e.features[0].properties.idx;
-  var st=_stopsRef[idx];
-  if(!st) return;
-  if(popupRef) popupRef.remove();
-  popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:18,focusAfterOpen:false})
-    .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-  activateStop(idx);
-};
 
 function isLandscape(){
   return window.innerWidth > window.innerHeight && window.innerHeight < 700;
@@ -1018,10 +1008,9 @@ function syncLayout(){
   var lsBtn = document.getElementById('ls-map-btn');
   var ls  = isLandscape();
   var mapOn = document.getElementById('vt-map').classList.contains('on');
-
-  // Always set body height from actual header height
-  var hdrH = document.getElementById('hdr').offsetHeight;
-  bod.style.height = 'calc(' + (window.innerHeight - hdrH) + 'px)';
+  // Always set body height from real viewport (fixes iOS Safari 100vh bug)
+  var hdrH = document.getElementById('hdr').offsetHeight || 58;
+  bod.style.height = (window.innerHeight - hdrH) + 'px';
 
   if(ls){
     // LANDSCAPE: list full screen, map hidden, floating button to open map
@@ -1030,7 +1019,6 @@ function syncLayout(){
     bod.style.gridTemplateColumns = '';
     mp.style.display = 'none';
     lp.style.display = 'flex';
-    lp.style.flex = '1';
     mp.style.borderRight = '';
     if(tog) tog.style.display = 'none';
     if(li)  li.style.display  = 'flex';
@@ -1046,7 +1034,10 @@ function syncLayout(){
     if(tog) tog.style.display = '';
     if(li)  li.style.display  = mapOn ? 'none' : 'flex';
     if(lsBtn) lsBtn.style.display = 'none';
-    if(map && mapOn) setTimeout(function(){ map.resize(); }, 80);
+    if(map && mapOn){
+      map.resize();
+      setTimeout(function(){ map.resize(); }, 80);
+    }
   }
 }
 
@@ -1120,12 +1111,15 @@ function initMap(){
   map.addControl(new maplibregl.ScaleControl({maxWidth:90,unit:'imperial'}),'bottom-left');
   map.on('load',()=>{
     addTrack(); addPolygons(); updateStats();
-    requestAnimationFrame(()=>map.resize());
-    setTimeout(()=>map.resize(),300);
-    // Re-render markers after map tiles load (auto-select may have run before map was ready)
-    setTimeout(function(){
+    // Fix: set exact body height, resize map, THEN place markers — in that order
+    var hdrH=document.getElementById('hdr').offsetHeight;
+    var bod=document.getElementById('body');
+    bod.style.height=(window.innerHeight-hdrH)+'px';
+    map.resize();
+    requestAnimationFrame(function(){
+      map.resize();
       if(curState){ clearMarkers(); renderStops(); }
-    }, 600);
+    });
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1190,9 +1184,9 @@ function updateStats(){
 
 
 function selectState(code, btnEl){
-  try{if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});}catch(e){}
+  if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});
   activeIdx = ORDER.indexOf(code);
-  try{if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});}catch(e){}
+  if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});
   curState = code;
   var s = STATES[code], el;
   el=document.getElementById('state-title'); if(el) el.textContent=s.name.toUpperCase();
@@ -1243,16 +1237,8 @@ function buildPopup(st){
 
 
 function clearMarkers(){
-  // Remove GeoJSON marker layers
-  if(map){
-    try{
-      if(map.getLayer('stop-labels')) map.removeLayer('stop-labels');
-      if(map.getLayer('stop-circles')) map.removeLayer('stop-circles');
-      if(map.getSource('stops')) map.removeSource('stops');
-    }catch(e){}
-  }
-  // Also remove any lingering HTML markers (legacy)
   allMarkers.forEach(function(m){m.remove();}); allMarkers.length=0;
+  if(map){ try{ map.resize(); }catch(e){} }
   if(popupRef){popupRef.remove();popupRef=null;}
 }
 
@@ -1262,34 +1248,20 @@ function renderStops(){
   var stops=s.stops.filter(function(st){return allowed.indexOf(st.s)>=0;});
   var el=document.getElementById('sc'); if(el) el.textContent=stops.length+' stops';
   if(map){
-    var _addGeoMarkers=function(){
-      if(!map.isStyleLoaded()){setTimeout(_addGeoMarkers,200);return;}
-      try{
-        var geojson={type:'FeatureCollection',features:stops.map(function(st,i){
-          return{type:'Feature',id:i,geometry:{type:'Point',coordinates:[st.lng,st.lat]},
-            properties:{idx:i,label:String(i+1),status:st.s}};
-        })};
-        map.addSource('stops',{type:'geojson',data:geojson});
-        map.addLayer({id:'stop-circles',type:'circle',source:'stops',paint:{
-          'circle-radius':['interpolate',['linear'],['zoom'],4,8,10,18],
-          'circle-color':['match',['get','status'],'worth','#22c55e','optional','#f59e0b','#94a3b8'],
-          'circle-stroke-color':'#ffffff','circle-stroke-width':2.5,
-          'circle-stroke-opacity':1
-        }});
-        map.addLayer({id:'stop-labels',type:'symbol',source:'stops',layout:{
-          'text-field':['get','label'],
-          'text-size':['interpolate',['linear'],['zoom'],4,9,10,14],
-          'text-allow-overlap':true,'text-ignore-placement':true,
-          'text-font':['Noto Sans Bold','Noto Sans Regular']
-        },paint:{'text-color':'#ffffff'}});
-        map.off('click','stop-circles',_onStopClick);
-        map.on('click','stop-circles',_onStopClick);
-        map.on('mouseenter','stop-circles',function(){map.getCanvas().style.cursor='pointer';});
-        map.on('mouseleave','stop-circles',function(){map.getCanvas().style.cursor='';});
-        _stopsRef=stops;
-      }catch(err){console.error('GeoMarker error:',err);}
-    };
-    _addGeoMarkers();
+    stops.forEach(function(st,i){
+      var col=DCOL[st.s], wrap=document.createElement('div');
+      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;';
+      if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
+      var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
+      wrap.appendChild(dot);
+      wrap.addEventListener('click', function(){
+        if(popupRef) popupRef.remove();
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        activateStop(i);
+      });
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
+    });
   }
   var list=document.getElementById('pane-stops');
   if(!stops.length){list.innerHTML='<div class="empty"><span class="big">66</span>No stops.</div>';return;}
@@ -1399,10 +1371,6 @@ function syncHdrH(){
   if(cp)  cp.style.top=h+'px';
 }
 
-function setVH(){document.documentElement.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}
-setVH();
-window.addEventListener('resize',function(){setVH();});
-window.addEventListener('orientationchange',function(){setTimeout(setVH,100);});
 window.addEventListener('load',function(){
   initMap(); populateFuelList(); syncHdrH();
   setTimeout(function(){
