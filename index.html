@@ -45,7 +45,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 /* ══ BODY: full height below header ══ */
 #body{
   display:flex;flex-direction:column;
-  height:calc(100% - 58px);
+  height:calc(var(--vh,1vh)*100 - 58px);
   position:relative;overflow:hidden;
 }
 
@@ -1011,7 +1011,7 @@ function syncLayout(){
 
   // Always set body height from actual header height
   var hdrH = document.getElementById('hdr').offsetHeight;
-  bod.style.height = 'calc(100svh - ' + hdrH + 'px)';
+  bod.style.height = 'calc(' + (window.innerHeight - hdrH) + 'px)';
 
   if(ls){
     // LANDSCAPE: list full screen, map hidden, floating button to open map
@@ -1367,6 +1367,10 @@ function syncHdrH(){
   if(cp)  cp.style.top=h+'px';
 }
 
+function setVH(){document.documentElement.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}
+setVH();
+window.addEventListener('resize',function(){setVH();});
+window.addEventListener('orientationchange',function(){setTimeout(setVH,100);});
 window.addEventListener('load',function(){
   initMap(); populateFuelList(); syncHdrH();
   setTimeout(function(){
