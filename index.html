@@ -15,7 +15,7 @@
   --bd2:rgba(240,232,213,.14);--grn:#27AE60;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-fill-available;overflow:hidden;background:var(--bg);color:var(--cream);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
 
 /* ══ HEADER ══ */
 #hdr{
@@ -46,7 +46,6 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 #body{
   display:flex;flex-direction:column;
   height:calc(100% - 58px);
-  height:calc(100svh - 58px);
   position:relative;overflow:hidden;
 }
 
@@ -144,7 +143,6 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 .empty .big{font-family:'Bebas Neue',cursive;font-size:44px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:8px}
 
 /* ══ POPUP ══ */
-.maplibregl-popup{z-index:700!important}
 .maplibregl-popup-content{background:#150F08!important;border:1px solid rgba(192,57,43,.4)!important;border-radius:14px!important;padding:0!important;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.9)!important;min-width:250px;max-width:280px;font-family:'DM Sans',sans-serif!important;color:var(--cream)!important}
 .maplibregl-popup-tip{border-top-color:#150F08!important;border-bottom-color:#150F08!important}
 .maplibregl-popup-close-button{color:rgba(240,232,213,.35)!important;font-size:20px!important;padding:7px 10px!important;background:transparent!important}
@@ -160,7 +158,7 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 
 /* ══ MARKERS ══ */
 .dot{position:absolute;top:5px;left:5px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
-.mring{position:absolute;top:-1px;left:-1px;width:38px;height:38px;border-radius:50%;border:2px solid var(--grn);animation:pulse 2.2s ease-out infinite;pointer-events:none;will-change:transform;isolation:isolate}
+.mring{position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;border:2px solid var(--grn);animation:pulse 2.2s ease-out infinite;pointer-events:none}
 @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(2.4);opacity:0}100%{transform:scale(2.4);opacity:0}}
 .fdot{width:26px;height:26px;background:#E8880A;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
 #map .maplibregl-canvas{outline:none}
@@ -246,26 +244,6 @@ html{height:100%;height:-webkit-fill-available}body{height:100%;height:-webkit-f
 .state-evt-link{font-size:13px;font-weight:700;color:var(--gold);text-decoration:none;flex-shrink:0;padding:6px 12px;border:1.5px solid rgba(212,160,23,.2);border-radius:8px;background:rgba(212,160,23,.06)}
 .evt-why-box{font-size:13px;color:var(--mu);line-height:1.6;background:rgba(255,255,255,.025);border-left:3px solid rgba(212,160,23,.3);padding:11px 13px;border-radius:0 6px 6px 0;margin-top:16px}
 .evt-why-box strong{color:rgba(212,160,23,.7)}
-
-
-/* ══ LAYOUT CONTROL VIA JS CLASSES ══ */
-/* Portrait: map view */
-html.v-map  #map-panel  { display:flex !important }
-html.v-map  #list-panel { display:none !important }
-html.v-map  #view-toggle{ display:flex }
-html.v-map  #list-itin  { display:none !important }
-
-/* Portrait: list view */
-html.v-list #map-panel  { display:none !important }
-html.v-list #list-panel { display:flex !important; flex:1 }
-html.v-list #view-toggle{ display:flex }
-html.v-list #list-itin  { display:flex !important }
-
-/* Landscape */
-html.ls #map-panel  { display:none !important }
-html.ls #list-panel { display:flex !important; flex:1 }
-html.ls #view-toggle{ display:none !important }
-html.ls #list-itin  { display:flex !important }
 
 /* ══ DESKTOP (≥1024px) ══ */
 @media(min-width:1024px){
@@ -360,7 +338,6 @@ html.ls #list-itin  { display:flex !important }
 
 </style>
 
-<!-- deployed: 2026-04-13T17:12:57.067342 -->
 </head>
 <body>
 <div id="hdr">
@@ -1023,31 +1000,44 @@ function isLandscape(){
 }
 
 function syncLayout(){
-  var ls    = isLandscape();
-  var mapOn = document.getElementById('vt-map').classList.contains('on');
-  var root  = document.documentElement;
-
-  // Single source of truth: CSS classes on <html>
-  root.classList.toggle('ls',  ls);
-  root.classList.toggle('v-map',  !ls && mapOn);
-  root.classList.toggle('v-list', !ls && !mapOn);
-
-  // Update body height from real header height (handles both portrait & landscape)
-  var hdr = document.getElementById('hdr');
-  var hh  = hdr ? hdr.offsetHeight : 58;
-  document.getElementById('body').style.height = 'calc(100svh - ' + hh + 'px)';
-
-  // Map resize after it becomes visible
-  if(map){
-    var mpVis = ls ? _lsMapOpen : mapOn;
-    if(mpVis) setTimeout(function(){ map.resize(); }, 60);
-  }
-
-  // Landscape map toggle button visibility
+  var mp  = document.getElementById('map-panel');
+  var lp  = document.getElementById('list-panel');
+  var bod = document.getElementById('body');
+  var tog = document.getElementById('view-toggle');
+  var li  = document.getElementById('list-itin');
   var lsBtn = document.getElementById('ls-map-btn');
-  if(lsBtn) lsBtn.style.display = ls ? 'flex' : 'none';
+  var ls  = isLandscape();
+  var mapOn = document.getElementById('vt-map').classList.contains('on');
 
-  if(ls) _lsMapOpen = false;
+  // Always set body height from actual header height
+  var hdrH = document.getElementById('hdr').offsetHeight;
+  bod.style.height = 'calc(100svh - ' + hdrH + 'px)';
+
+  if(ls){
+    // LANDSCAPE: list full screen, map hidden, floating button to open map
+    bod.style.display = 'flex';
+    bod.style.flexDirection = 'column';
+    bod.style.gridTemplateColumns = '';
+    mp.style.display = 'none';
+    lp.style.display = 'flex';
+    lp.style.flex = '1';
+    mp.style.borderRight = '';
+    if(tog) tog.style.display = 'none';
+    if(li)  li.style.display  = 'flex';
+    if(lsBtn) lsBtn.style.display = 'flex';
+  } else {
+    // PORTRAIT: standard map/list toggle
+    bod.style.display = 'flex';
+    bod.style.flexDirection = 'column';
+    bod.style.gridTemplateColumns = '';
+    mp.style.borderRight = '';
+    mp.style.display = mapOn ? 'flex' : 'none';
+    lp.style.display = mapOn ? 'none' : 'flex';
+    if(tog) tog.style.display = '';
+    if(li)  li.style.display  = mapOn ? 'none' : 'flex';
+    if(lsBtn) lsBtn.style.display = 'none';
+    if(map && mapOn) setTimeout(function(){ map.resize(); }, 80);
+  }
 }
 
 function setView(v){
@@ -1122,6 +1112,7 @@ function initMap(){
     addTrack(); addPolygons(); updateStats();
     requestAnimationFrame(()=>map.resize());
     setTimeout(()=>map.resize(),300);
+    // Re-render markers after map tiles load (auto-select may have run before map was ready)
     setTimeout(function(){
       if(curState){ clearMarkers(); renderStops(); }
     }, 600);
@@ -1189,9 +1180,9 @@ function updateStats(){
 
 
 function selectState(code, btnEl){
-  try{if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});}catch(e){}
+  if(map && activeIdx!==null) map.setFeatureState({source:'st',id:activeIdx},{active:false});
   activeIdx = ORDER.indexOf(code);
-  try{if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});}catch(e){}
+  if(map) map.setFeatureState({source:'st',id:activeIdx},{active:true});
   curState = code;
   var s = STATES[code], el;
   el=document.getElementById('state-title'); if(el) el.textContent=s.name.toUpperCase();
@@ -1204,14 +1195,13 @@ function selectState(code, btnEl){
   document.querySelectorAll('.stbtn').forEach(function(b){b.classList.remove('on');});
   if(btnEl) btnEl.classList.add('on');
   else document.querySelectorAll('.stbtn').forEach(function(b){if(b.textContent===code)b.classList.add('on');});
-  clearMarkers();
-  renderStops(); // renders list + native map layers immediately
   if(map){
     var bb=s.bbox;
     map.fitBounds([[bb[0][0],bb[0][1]],[bb[1][0],bb[1][1]]],{
-      padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:800,easing:easeInOutCubic
+      padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:1000,easing:easeInOutCubic
     });
   }
+  clearMarkers(); renderStops();
 }
 
 function buildPopup(st){
@@ -1243,99 +1233,9 @@ function buildPopup(st){
 
 
 function clearMarkers(){
+  allMarkers.forEach(function(m){m.remove();}); allMarkers.length=0;
+  if(map){ try{ map.resize(); }catch(e){} }
   if(popupRef){popupRef.remove();popupRef=null;}
-  if(!map) return;
-  // Clear native GeoJSON source (layers persist, only data changes)
-  if(map.getSource('stops')){
-    map.getSource('stops').setData({type:'FeatureCollection',features:[]});
-  }
-  allMarkers=[]; // kept for API compatibility
-}
-
-function renderMarkers(stops){
-  if(!map || !map.isStyleLoaded()) return;
-  var colMap = {worth:'#27AE60',optional:'#D4A017',skip:'#666666'};
-  var features = stops.map(function(st,i){
-    return {
-      type:'Feature', id:i,
-      properties:{
-        num:i+1, status:st.s,
-        col:colMap[st.s]||'#888888',
-        name:st.n, city:st.cy, desc:st.d,
-        lat:st.lat, lng:st.lng, nav:st.nav||''
-      },
-      geometry:{type:'Point',coordinates:[st.lng,st.lat]}
-    };
-  });
-  var geojson = {type:'FeatureCollection',features:features};
-
-  try{
-    if(map.getSource('stops')){
-      map.getSource('stops').setData(geojson);
-    } else {
-      map.addSource('stops',{type:'geojson',data:geojson,generateId:false});
-
-      // Worth-It glow ring
-      map.addLayer({
-        id:'stop-glow', type:'circle', source:'stops',
-        filter:['==',['get','status'],'worth'],
-        paint:{
-          'circle-radius':['interpolate',['linear'],['zoom'],4,14,8,22,12,30],
-          'circle-color':'rgba(0,0,0,0)',
-          'circle-stroke-color':'#27AE60',
-          'circle-stroke-width':2,
-          'circle-opacity':1,
-          'circle-stroke-opacity':0.8
-        }
-      });
-
-      // Main dot
-      map.addLayer({
-        id:'stop-circles', type:'circle', source:'stops',
-        paint:{
-          'circle-radius':['interpolate',['linear'],['zoom'],4,8,8,13,12,17],
-          'circle-color':['match',['get','status'],'worth','#27AE60','optional','#D4A017','#666666'],
-          'circle-stroke-color':'rgba(255,255,255,0.95)',
-          'circle-stroke-width':2
-        }
-      });
-
-      // Number text — use Noto Sans Bold (in liberty style)
-      map.addLayer({
-        id:'stop-nums', type:'symbol', source:'stops',
-        layout:{
-          'text-field':['to-string',['get','num']],
-          'text-size':['interpolate',['linear'],['zoom'],4,9,8,11,12,13],
-          'text-font':['Noto Sans Bold','Arial Unicode MS Bold'],
-          'text-allow-overlap':true,
-          'text-ignore-placement':true
-        },
-        paint:{
-          'text-color':'#ffffff',
-          'text-halo-color':'rgba(0,0,0,0.4)',
-          'text-halo-width':0.5
-        }
-      });
-
-      // Popup on click
-      map.on('click','stop-circles',function(e){
-        if(!e.features.length) return;
-        var p=e.features[0].properties;
-        var coords=[p.lng, p.lat];
-        var st={n:p.name,cy:p.city,d:p.desc,s:p.status,lat:p.lat,lng:p.lng,nav:p.nav};
-        if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({
-          closeButton:true,maxWidth:'290px',
-          offset:[0,-16],anchor:'bottom',focusAfterOpen:false
-        }).setDOMContent(buildPopup(st)).setLngLat(coords).addTo(map);
-        activateStop(e.features[0].id);
-      });
-      map.on('mouseenter','stop-circles',function(){ map.getCanvas().style.cursor='pointer'; });
-      map.on('mouseleave','stop-circles',function(){ map.getCanvas().style.cursor=''; });
-    }
-  } catch(err){
-    console.warn('renderMarkers error:', err);
-  }
 }
 
 function renderStops(){
@@ -1344,12 +1244,20 @@ function renderStops(){
   var stops=s.stops.filter(function(st){return allowed.indexOf(st.s)>=0;});
   var el=document.getElementById('sc'); if(el) el.textContent=stops.length+' stops';
   if(map){
-    if(map.isStyleLoaded()){
-      renderMarkers(stops);
-    } else {
-      // Style not ready yet — retry when loaded
-      map.once('load', function(){ if(curState) renderStops(); });
-    }
+    stops.forEach(function(st,i){
+      var col=DCOL[st.s], wrap=document.createElement('div');
+      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;';
+      if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
+      var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
+      wrap.appendChild(dot);
+      wrap.addEventListener('click', function(){
+        if(popupRef) popupRef.remove();
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        activateStop(i);
+      });
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
+    });
   }
   var list=document.getElementById('pane-stops');
   if(!stops.length){list.innerHTML='<div class="empty"><span class="big">66</span>No stops.</div>';return;}
@@ -1371,23 +1279,10 @@ function renderStops(){
     div.addEventListener('click',function(){
       activateStop(i);
       if(map){
-        // Switch to map view FIRST so map container is visible before popup
-        var wasHidden = document.getElementById('map-panel').style.display==='none';
-        if(wasHidden && !isLandscape()){
-          setView('map');
-          setTimeout(function(){
-            map.resize();
-            if(popupRef) popupRef.remove();
-            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
-              .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-            map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
-          }, 100);
-        } else {
-          if(popupRef) popupRef.remove();
-          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'290px',offset:[0,-2],anchor:'bottom',focusAfterOpen:false})
-            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-          map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:600,essential:true});
-        }
+        if(popupRef) popupRef.remove();
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
       }
     });
     list.appendChild(div);
@@ -1409,9 +1304,7 @@ function activateStop(i){
     img.onerror=function(){this.remove();};
     var ds=el.querySelector('.ds'); if(ds) ds.parentNode.insertBefore(img,ds);
   }
-  // Only scroll if list panel is visible
-  var lp = document.getElementById('list-panel');
-  if(lp && lp.style.display !== 'none') el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
 
@@ -1475,38 +1368,43 @@ function syncHdrH(){
 }
 
 window.addEventListener('load',function(){
-  initMap(); populateFuelList();
-  syncLayout(); syncHdrH();
+  initMap(); populateFuelList(); syncHdrH();
   setTimeout(function(){
-    selectState('IL', document.querySelector('.stbtn'));
-    setTimeout(syncLayout, 100);
-  }, 400);
+    selectState('IL',document.querySelector('.stbtn'));
+    setTimeout(syncLayout,100);
+  },400);
 });
-window.addEventListener('resize', function(){ syncLayout(); syncHdrH(); });
-window.addEventListener('orientationchange', function(){
-  setTimeout(function(){ _lsMapOpen=false; syncLayout(); syncHdrH(); }, 350);
-});
+window.addEventListener('resize',function(){ syncLayout(); });
+window.addEventListener('orientationchange',function(){ setTimeout(syncLayout,350); });
 
 
 // Landscape map toggle
 var _lsMapOpen = false;
 function lsToggleMap(){
   _lsMapOpen = !_lsMapOpen;
-  var btn = document.getElementById('ls-map-btn');
   var mp  = document.getElementById('map-panel');
   var lp  = document.getElementById('list-panel');
+  var btn = document.getElementById('ls-map-btn');
   if(_lsMapOpen){
     mp.style.display = 'flex';
     lp.style.display = 'none';
-    if(btn){ btn.textContent='✕'; btn.title='Back to list'; }
-    if(map) setTimeout(function(){ map.resize(); }, 80);
+    btn.textContent  = '✕';
+    btn.title        = 'Back to list';
+    if(map) setTimeout(function(){ map.resize(); }, 120);
   } else {
-    mp.style.display = '';
-    lp.style.display = '';
-    if(btn){ btn.textContent='🗺'; btn.title='Show map'; }
+    mp.style.display = 'none';
+    lp.style.display = 'flex';
+    btn.textContent  = '🗺';
+    btn.title        = 'Show map';
   }
 }
-// orientationchange handled by main listener
+window.addEventListener('orientationchange', function(){
+  setTimeout(function(){
+    _lsMapOpen = false;
+    syncLayout();
+    syncHdrH();
+  }, 250);
+});
 </script>
 
 <!-- Landscape floating map button -->
