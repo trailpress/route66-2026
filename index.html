@@ -374,7 +374,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v29</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v30</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1065,7 +1065,7 @@ const R66=[[-87.641,41.879],[-87.624,41.878],[-88.187,41.310],[-88.426,41.094],[
 // ── Tab switching ──
 
 // ─── Runtime state ──────────────────────────────────────────────────────
-let map=null, curState=null, curItin=7, popupRef=null;
+let map=null, curState=null, curItin=7, popupRef=null, hoverPopup=null;
 const allMarkers=[], fuelMarkers=[];
 let activeIdx=null, fuelOn=false;
 
@@ -1298,7 +1298,7 @@ function showFullRoute(){
           }
         }, 400);
       });
-      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center',rotationAlignment:'map',pitchAlignment:'map'}).setLngLat([st.lng,st.lat]).addTo(map));
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
   // Update list panel to show "Select a state"
@@ -1457,15 +1457,18 @@ function renderStops(){
         map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),11),duration:500,essential:true});
         activateStop(i);
       });
-      // Add hover popup on marker (desktop mouseenter, mobile touchstart)
+      // Hover popup (desktop only) - uses separate ref so click popup survives
       wrap.addEventListener('mouseenter', function(){
-        if(window.innerWidth >= 1024){
-          if(popupRef) popupRef.remove();
-          popupRef = new maplibregl.Popup({closeButton:false,maxWidth:'270px',offset:18,focusAfterOpen:false,anchor:'bottom'})
-            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-        }
+        if(window.innerWidth < 1024) return;
+        if(hoverPopup) hoverPopup.remove();
+        hoverPopup = new maplibregl.Popup({closeButton:false,maxWidth:'240px',offset:18,focusAfterOpen:false,anchor:'bottom'})
+          .setHTML('<div style="font-weight:700;font-size:14px;color:#F0E8D5;margin-bottom:2px">'+st.n+'</div><div style="font-size:12px;color:rgba(240,232,213,.6)">'+st.cy+'</div><div style="font-size:11px;color:rgba(240,232,213,.5);margin-top:3px">Click to open →</div>')
+          .setLngLat([st.lng,st.lat]).addTo(map);
       });
-      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center',rotationAlignment:'map',pitchAlignment:'map'}).setLngLat([st.lng,st.lat]).addTo(map));
+      wrap.addEventListener('mouseleave', function(){
+        if(hoverPopup){ hoverPopup.remove(); hoverPopup=null; }
+      });
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
   var list=document.getElementById('pane-stops');
