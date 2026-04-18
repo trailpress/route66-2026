@@ -187,7 +187,7 @@ transition:opacity .15s, transform .15s;
 .pnv:active{filter:brightness(.9)}
 
 /* ══ MARKERS ══ */
-.dot{position:absolute;top:5px;left:5px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:‘DM Sans’,sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
+.dot{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:‘DM Sans’,sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
 .mring{position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;border:2px solid var(–grn);animation:pulse 2.2s ease-out infinite;pointer-events:none}
 @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(2.4);opacity:0}100%{transform:scale(2.4);opacity:0}}
 .fdot{width:26px;height:26px;background:#E8880A;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
@@ -374,7 +374,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v27</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v29</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1298,7 +1298,7 @@ function showFullRoute(){
           }
         }, 400);
       });
-      allMarkers.push(new maplibregl.Marker({element:wrap, anchor:'center'}).setLngLat([st.lng, st.lat]).addTo(map));
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center',rotationAlignment:'map',pitchAlignment:'map'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
   // Update list panel to show "Select a state"
@@ -1452,11 +1452,20 @@ function renderStops(){
       wrap.appendChild(dot);
       wrap.addEventListener('click', function(){
         if(popupRef) popupRef.remove();
-        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:18,focusAfterOpen:false,anchor:'bottom'})
           .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),11),duration:500,essential:true});
         activateStop(i);
       });
-      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center'}).setLngLat([st.lng,st.lat]).addTo(map));
+      // Add hover popup on marker (desktop mouseenter, mobile touchstart)
+      wrap.addEventListener('mouseenter', function(){
+        if(window.innerWidth >= 1024){
+          if(popupRef) popupRef.remove();
+          popupRef = new maplibregl.Popup({closeButton:false,maxWidth:'270px',offset:18,focusAfterOpen:false,anchor:'bottom'})
+            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        }
+      });
+      allMarkers.push(new maplibregl.Marker({element:wrap,anchor:'center',rotationAlignment:'map',pitchAlignment:'map'}).setLngLat([st.lng,st.lat]).addTo(map));
     });
   }
   var list=document.getElementById('pane-stops');
