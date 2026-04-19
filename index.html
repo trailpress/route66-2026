@@ -183,8 +183,11 @@ transition:opacity .15s, transform .15s;
 .pti{font-size:15px;font-weight:700;line-height:1.25}
 .pb2{padding:10px 14px 12px}.pci{font-size:12px;color:var(–mu);margin-bottom:5px}
 .pds{font-size:13px;color:rgba(240,232,213,.65);line-height:1.55;margin-bottom:10px}
-.pnv{display:flex;align-items:center;justify-content:center;gap:6px;background:var(–rust);color:#fff;width:100%;padding:13px;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:‘DM Sans’,sans-serif}
-.pnv:active{filter:brightness(.9)}
+.pnv{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:‘DM Sans’,sans-serif;letter-spacing:.2px;transition:opacity .15s}
+.pnv:active{opacity:.8}
+.pnv-pri{background:var(–rust);color:#fff;flex:1}
+.pnv-sec{background:rgba(240,232,213,.07);color:rgba(240,232,213,.6);border:1px solid rgba(240,232,213,.12);flex-shrink:0}
+.p-actions{display:flex;gap:8px;margin-top:10px}
 
 /* ══ MARKERS ══ */
 .dot{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:‘DM Sans’,sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
@@ -374,7 +377,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v35</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v36</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1394,7 +1397,7 @@ function selectState(code, btnEl){
   if(map){
     var bb=s.bbox;
     map.fitBounds([[bb[0][0],bb[0][1]],[bb[1][0],bb[1][1]]],{
-      padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:1000,easing:easeInOutCubic
+      padding:{top:100,bottom:80,left:50,right:50},maxZoom:9,duration:1000,easing:easeInOutCubic
     });
   }
   clearMarkers(); renderStops();
@@ -1403,28 +1406,54 @@ function selectState(code, btnEl){
 function buildPopup(st){
   const col=DCOL[st.s], badge=DLABEL[st.s], imgSrc=IMGS[st.n];
   const wrap=document.createElement('div');
+
+  // Image header
   if(imgSrc){
     const iw=document.createElement('div'); iw.className='pi';
     const orient=IMG_ORIENT[st.n]||'landscape';
     const img=document.createElement('img');
     img.src=imgSrc; img.alt=st.n;
-    img.style.cssText=orient==='portrait'?'width:100%;height:150px;object-fit:cover;object-position:center top;display:block':'width:100%;height:110px;object-fit:cover;display:block';
-    img.onerror=()=>{iw.innerHTML='<div class="pi-ph">US 66</div>';};
+    img.style.cssText=orient==='portrait'
+      ?'width:100%;height:150px;object-fit:cover;object-position:center top;display:block'
+      :'width:100%;height:110px;object-fit:cover;display:block';
+    img.onerror=function(){iw.innerHTML='<div class="pi-ph">US 66</div>';};
     iw.appendChild(img);
     const ov=document.createElement('div'); ov.className='p-ov';
     ov.innerHTML='<div class="pbg" style="color:'+col+'">'+badge+'</div><div class="pti">'+st.n+'</div>';
     iw.appendChild(ov); wrap.appendChild(iw);
   } else {
-    wrap.innerHTML='<div class="pi"><div class="pi-ph">US 66</div></div>';
     const hd=document.createElement('div');
-    hd.style='padding:5px 10px 0';
-    hd.innerHTML='<div class="pbg" style="color:'+col+'">'+badge+'</div><div class="pti" style="font-size:12.5px;font-weight:700">'+st.n+'</div>';
+    hd.style.cssText='padding:14px 14px 0';
+    hd.innerHTML='<div class="pbg" style="color:'+col+'">'+badge+'</div><div class="pti" style="font-size:13px;font-weight:700;margin-top:4px">'+st.n+'</div>';
     wrap.appendChild(hd);
   }
+
+  // Body
   const body=document.createElement('div'); body.className='pb2';
-  var isMob = window.innerWidth < 1024;
-  var backBtn = isMob ? '<button class="pnv" style="background:rgba(240,232,213,.08);color:var(--mu);border-color:rgba(240,232,213,.15);margin-right:6px" onclick="setView(\'list\')" type="button">&#8592; List</button>' : '';
-  body.innerHTML='<div class="pci">'+st.cy+'</div><div class="pds">'+st.d+'</div><div style="display:flex;gap:6px;flex-wrap:wrap">'+backBtn+'<button class="pnv" onclick="smartNav('+st.lat+','+st.lng+',\''+st.nav+'\')" type="button">&#9654; Navigate</button></div>';
+  const isMob=window.innerWidth<1024;
+
+  // SVG icons
+  const svgNav='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>';
+  const svgList='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>';
+
+
+
+    const pci=document.createElement('div'); pci.className='pci'; pci.textContent=st.cy;
+  const pds=document.createElement('div'); pds.className='pds'; pds.textContent=st.d;
+  const actions=document.createElement('div'); actions.className='p-actions';
+  if(isMob){
+    const lBtn=document.createElement('button');
+    lBtn.className='pnv pnv-sec'; lBtn.type='button';
+    lBtn.innerHTML=svgList+' List';
+    lBtn.onclick=function(){setView('list');};
+    actions.appendChild(lBtn);
+  }
+  const nBtn=document.createElement('button');
+  nBtn.className='pnv pnv-pri'; nBtn.type='button';
+  nBtn.innerHTML=svgNav+' Navigate';
+  (function(lat,lng,nav){ nBtn.onclick=function(){smartNav(lat,lng,nav);}; })(st.lat,st.lng,st.nav);
+  actions.appendChild(nBtn);
+  body.appendChild(pci); body.appendChild(pds); body.appendChild(actions);
   wrap.appendChild(body);
   return wrap;
 }
