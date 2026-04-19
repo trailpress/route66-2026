@@ -374,7 +374,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v31</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v32</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1191,9 +1191,7 @@ function initMap(){
     addTrack(); addPolygons(); updateStats();
     requestAnimationFrame(()=>map.resize());
     setTimeout(()=>map.resize(),300);
-    setTimeout(function(){
-      if(curState){ clearMarkers(); renderStops(); }
-    }, 600);
+    // No double render here - selectState handles it via moveend
   });
   map.on('error',()=>{
     if(!map._loaded) setTimeout(()=>{
@@ -1399,7 +1397,13 @@ function selectState(code, btnEl){
       padding:{top:50,bottom:60,left:50,right:50},maxZoom:9,duration:1000,easing:easeInOutCubic
     });
   }
-  clearMarkers(); renderStops();
+  clearMarkers();
+  // Wait for fitBounds animation to complete before placing markers
+  if(map){
+    map.once('moveend', function(){ renderStops(); });
+  } else {
+    renderStops();
+  }
 }
 
 function buildPopup(st){
@@ -1496,29 +1500,17 @@ function renderStops(){
       hideStopTooltip();
     });
     div.addEventListener('click',function(){
+      // Expand info inline in list - do NOT switch to map view on mobile
       activateStop(i);
-      // On mobile: switch to map view so popup is visible
-      var isMobile = window.innerWidth < 1024;
-      if(isMobile){
-        setView('map');
-        setTimeout(function(){
-          if(map){
-            if(popupRef) popupRef.remove();
-            popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-              .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-            map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),11),duration:700,essential:true});
-          }
-        }, 200);
-      } else {
-        if(map){
-          if(popupRef) popupRef.remove();
-          popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:14,focusAfterOpen:false})
-            .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
-          map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),10.5),duration:800,essential:true});
-        }
+      // Also update map silently (fly to stop, open popup on map)
+      if(map){
+        if(popupRef) popupRef.remove();
+        popupRef=new maplibregl.Popup({closeButton:true,maxWidth:'270px',offset:18,focusAfterOpen:false,anchor:'bottom'})
+          .setDOMContent(buildPopup(st)).setLngLat([st.lng,st.lat]).addTo(map);
+        map.flyTo({center:[st.lng,st.lat],zoom:Math.max(map.getZoom(),11),duration:600,essential:true});
       }
     });
-    list.appendChild(div);
+        list.appendChild(div);
   });
 }
 
