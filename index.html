@@ -374,7 +374,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v33</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v34</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1437,11 +1437,11 @@ function clearMarkers(){
 }
 
 function renderStops(){
-  if(!curState || !map) return;
+  if(!curState) return;
 
   // ── 1. Clear all existing markers ──
   allMarkers.forEach(function(m){ m.remove(); });
-  allMarkers = [];
+  allMarkers.splice(0, allMarkers.length);
   if(hoverPopup){ hoverPopup.remove(); hoverPopup=null; }
 
   // ── 2. Filter stops ──
@@ -1452,8 +1452,8 @@ function renderStops(){
   var sc=document.getElementById('sc');
   if(sc) sc.textContent=stops.length+' stops';
 
-  // ── 4. Add map markers ──
-  stops.forEach(function(st,i){
+  // ── 4. Add map markers (only if map is loaded) ──
+  if(map) stops.forEach(function(st,i){
     var col=DCOL[st.s];
 
     // Marker element: simple fixed-size div, NO position:relative (MapLibre handles positioning)
@@ -1511,6 +1511,7 @@ function renderStops(){
       .addTo(map);
     allMarkers.push(marker);
   });
+
 
   // ── 5. Render list ──
   var list=document.getElementById('pane-stops');
