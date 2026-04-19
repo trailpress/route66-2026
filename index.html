@@ -374,7 +374,7 @@ overflow-y:auto !important;
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v30</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v31</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1272,7 +1272,7 @@ function showFullRoute(){
       var st = item.st;
       var col = DCOL[st.s];
       var wrap = document.createElement('div');
-      wrap.style.cssText = 'position:relative;width:28px;height:28px;cursor:pointer;';
+      wrap.style.cssText = 'position:relative;width:28px;height:28px;cursor:pointer;will-change:transform';
       var dot = document.createElement('div');
       dot.className = 'dot';
       dot.style.cssText = 'background:' + col + ';width:22px;height:22px;font-size:9px;';
@@ -1446,7 +1446,7 @@ function renderStops(){
   if(map){
     stops.forEach(function(st,i){
       var col=DCOL[st.s], wrap=document.createElement('div');
-      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;';
+      wrap.style.cssText='position:relative;width:36px;height:36px;cursor:pointer;will-change:transform';
       if(st.s==='worth'){var r=document.createElement('div');r.className='mring';r.style.borderColor=col;wrap.appendChild(r);}
       var dot=document.createElement('div'); dot.className='dot'; dot.style.background=col; dot.textContent=i+1;
       wrap.appendChild(dot);
