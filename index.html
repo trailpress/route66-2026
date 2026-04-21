@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,83 +19,83 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 
 /* ══ HEADER ══ */
 #hdr{
-height:58px;background:var(–bg);
-border-bottom:1px solid var(–bd2);
-padding:0 14px;display:flex;align-items:center;gap:10px;
-flex-shrink:0;z-index:20;position:relative;
+  height:58px;background:var(--bg);
+  border-bottom:1px solid var(--bd2);
+  padding:0 14px;display:flex;align-items:center;gap:10px;
+  flex-shrink:0;z-index:20;position:relative;
 }
 .shield{width:34px;height:42px;background:linear-gradient(160deg,#C0392B,#8B0000);clip-path:polygon(50% 0%,100% 18%,100% 72%,50% 100%,0% 72%,0% 18%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.shield span{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:9px;color:#fff;text-align:center;line-height:1.1}
+.shield span{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:9px;color:#fff;text-align:center;line-height:1.1}
 #hdr-title{flex:1;min-width:0}
-#hdr-title h1{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:18px;letter-spacing:2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#hdr-title p{font-size:10px;letter-spacing:1px;color:var(–gold);margin-top:1px}
+#hdr-title h1{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:18px;letter-spacing:2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hdr-title p{font-size:10px;letter-spacing:1px;color:var(--gold);margin-top:1px}
 #hdr-btns{display:flex;gap:6px;flex-shrink:0}
 .hbtn{
-background:rgba(255,255,255,.06);border:1px solid var(–bd2);color:var(–mu);
-min-width:48px;height:44px;padding:0 8px;border-radius:12px;
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-cursor:pointer;transition:all .18s;flex-shrink:0;
+  background:rgba(255,255,255,.06);border:1px solid var(--bd2);color:var(--mu);
+  min-width:48px;height:44px;padding:0 8px;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  cursor:pointer;transition:all .18s;flex-shrink:0;
 }
 .hbtn svg{stroke:currentColor;flex-shrink:0}
 .hbtn-label{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;line-height:1;opacity:.7}
 .hbtn.on .hbtn-label{opacity:1}
 .hbtn:active{transform:scale(.92);background:rgba(255,255,255,.1)}
-.hbtn.on{border-color:var(–rust);background:rgba(192,57,43,.2);color:var(–cream)}
+.hbtn.on{border-color:var(--rust);background:rgba(192,57,43,.2);color:var(--cream)}
 
 /* ══ BODY: full height below header ══ */
 #body{
-display:flex;flex-direction:column;
-height:calc(100% - 58px);
-position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  height:calc(100% - 58px);
+  position:relative;overflow:hidden;
 }
 
 /* ══ MAP PANEL ══ */
 #map-panel{
-display:flex;flex-direction:column;
-flex:1;min-height:0;
+  display:flex;flex-direction:column;
+  flex:1;min-height:0;
 }
 #mh{padding:8px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;background:rgba(15,12,7,.9)}
-#state-title{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:20px;letter-spacing:2px}
-#state-miles{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(–rust);color:#fff;padding:3px 8px;border-radius:6px;display:none}
-#mh-info{font-size:11px;color:var(–mu);margin-left:auto;display:none}
-#mh-info strong{color:var(–gold)}
+#state-title{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:20px;letter-spacing:2px}
+#state-miles{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--rust);color:#fff;padding:3px 8px;border-radius:6px;display:none}
+#mh-info{font-size:11px;color:var(--mu);margin-left:auto;display:none}
+#mh-info strong{color:var(--gold)}
 #map{flex:1;min-height:0}
-#map-error{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;background:var(–bg);color:var(–mu);font-size:15px;text-align:center;padding:24px}
-#map-error .err-t{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:24px;color:var(–rust);letter-spacing:2px}
-#mf{padding:8px 14px 10px;border-top:1px solid var(–bd2);background:rgba(15,12,7,.95);flex-shrink:0;display:flex;flex-direction:column;gap:8px}
+#map-error{display:none;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;background:var(--bg);color:var(--mu);font-size:15px;text-align:center;padding:24px}
+#map-error .err-t{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:24px;color:var(--rust);letter-spacing:2px}
+#mf{padding:8px 14px 10px;border-top:1px solid var(--bd2);background:rgba(15,12,7,.95);flex-shrink:0;display:flex;flex-direction:column;gap:8px}
 #itin-bar{display:flex;gap:6px}
-.ib-m{flex:1;background:transparent;border:1.5px solid var(–bd2);color:var(–mu);padding:10px 4px;font-size:14px;font-weight:700;border-radius:10px;cursor:pointer;font-family:‘DM Sans’,sans-serif;text-align:center;transition:all .18s}
-.ib-m.on{background:rgba(192,57,43,.2);border-color:var(–rust);color:#F0A090}
+.ib-m{flex:1;background:transparent;border:1.5px solid var(--bd2);color:var(--mu);padding:10px 4px;font-size:14px;font-weight:700;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all .18s}
+.ib-m.on{background:rgba(192,57,43,.2);border-color:var(--rust);color:#F0A090}
 .ib-m:active{transform:scale(.96)}
 #leg{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.lgi{display:flex;align-items:center;gap:5px;font-size:12px;color:var(–mu)}
+.lgi{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--mu)}
 .lgd{width:9px;height:9px;border-radius:50%}
-.lgline{width:16px;height:3px;background:var(–rust);border-radius:2px}
-#gnav{display:flex;align-items:center;justify-content:center;gap:6px;background:var(–rust);color:#fff;padding:10px;font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;border-radius:10px;width:100%}
+.lgline{width:16px;height:3px;background:var(--rust);border-radius:2px}
+#gnav{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--rust);color:#fff;padding:10px;font-size:13px;font-weight:700;letter-spacing:1px;text-decoration:none;border-radius:10px;width:100%}
 
 /* ══ LIST PANEL ══ */
 #list-panel{
-display:none;flex-direction:column;
-flex:1;min-height:0;background:var(–sur);
+  display:none;flex-direction:column;
+  flex:1;min-height:0;background:var(--sur);
 }
 /* Mobile itinerary in list panel */
-#list-itin{display:flex;gap:6px;padding:10px 14px 8px;border-bottom:1px solid var(–bd);background:var(–sur2);flex-shrink:0}
-.ib-m2{flex:1;background:transparent;border:1.5px solid var(–bd2);color:var(–mu);padding:10px 4px;font-size:14px;font-weight:700;border-radius:10px;cursor:pointer;font-family:‘DM Sans’,sans-serif;text-align:center;transition:all .18s}
-.ib-m2.on{background:rgba(192,57,43,.2);border-color:var(–rust);color:#F0A090}
+#list-itin{display:flex;gap:6px;padding:10px 14px 8px;border-bottom:1px solid var(--bd);background:var(--sur2);flex-shrink:0}
+.ib-m2{flex:1;background:transparent;border:1.5px solid var(--bd2);color:var(--mu);padding:10px 4px;font-size:14px;font-weight:700;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;transition:all .18s}
+.ib-m2.on{background:rgba(192,57,43,.2);border-color:var(--rust);color:#F0A090}
 .ib-m2:active{transform:scale(.96)}
-#tabs{display:flex;flex-shrink:0;border-bottom:2px solid var(–bd2);background:var(–sur2)}
-.tab{flex:1;padding:13px 4px;font-size:13px;font-weight:700;text-transform:uppercase;color:var(–mu);cursor:pointer;text-align:center;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .15s}
-.tab.on{color:var(–gold);border-bottom-color:var(–gold)}
-#stsel{padding:10px 14px;border-bottom:1px solid var(–bd);overflow-x:auto;white-space:nowrap;scrollbar-width:none;background:var(–sur2);flex-shrink:0}
+#tabs{display:flex;flex-shrink:0;border-bottom:2px solid var(--bd2);background:var(--sur2)}
+.tab{flex:1;padding:13px 4px;font-size:13px;font-weight:700;text-transform:uppercase;color:var(--mu);cursor:pointer;text-align:center;border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+#stsel{padding:10px 14px;border-bottom:1px solid var(--bd);overflow-x:auto;white-space:nowrap;scrollbar-width:none;background:var(--sur2);flex-shrink:0}
 #stsel::-webkit-scrollbar{display:none}
-.stbtn{display:inline-block;margin-right:7px;background:transparent;border:1.5px solid var(–bd2);color:var(–mu);padding:8px 16px;font-size:15px;font-weight:700;cursor:pointer;border-radius:10px;font-family:‘DM Sans’,sans-serif;transition:all .15s}
-.stbtn.on{background:rgba(192,57,43,.2);border-color:var(–rust);color:#F0A090}
+.stbtn{display:inline-block;margin-right:7px;background:transparent;border:1.5px solid var(--bd2);color:var(--mu);padding:8px 16px;font-size:15px;font-weight:700;cursor:pointer;border-radius:10px;font-family:'DM Sans',sans-serif;transition:all .15s}
+.stbtn.on{background:rgba(192,57,43,.2);border-color:var(--rust);color:#F0A090}
 .stbtn:active{transform:scale(.94)}
-#rph{padding:10px 16px 8px;border-bottom:1px solid var(–bd);flex-shrink:0;background:var(–sur2)}
+#rph{padding:10px 16px 8px;border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--sur2)}
 #rph-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2px}
-#rt{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:20px;letter-spacing:2px}
-#sc{font-size:12px;color:var(–mu)}
-#rph-sub{font-size:13px;color:var(–mu);line-height:1.4}
+#rt{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:20px;letter-spacing:2px}
+#sc{font-size:12px;color:var(--mu)}
+#rph-sub{font-size:13px;color:var(--mu);line-height:1.4}
 .pane{flex:1;overflow-y:auto;display:none;min-height:0}
 .pane.active{display:flex;flex-direction:column}
 .pane::-webkit-scrollbar{width:3px}
@@ -104,34 +103,34 @@ flex:1;min-height:0;background:var(–sur);
 #rp{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 
 /* ══ STOPS ══ */
-.si{padding:14px 16px;border-bottom:1px solid var(–bd);border-left:4px solid transparent;cursor:pointer;transition:background .12s}
+.si{padding:14px 16px;border-bottom:1px solid var(--bd);border-left:4px solid transparent;cursor:pointer;transition:background .12s}
 .si:active{background:rgba(255,255,255,.04)}
-.si.worth{border-left-color:var(–grn)}.si.optional{border-left-color:var(–gold)}.si.skip{border-left-color:#333;opacity:.5}.si.act{background:rgba(192,57,43,.1);border-left-color:var(–rust)}
+.si.worth{border-left-color:var(--grn)}.si.optional{border-left-color:var(--gold)}.si.skip{border-left-color:#333;opacity:.5}.si.act{background:rgba(192,57,43,.1);border-left-color:var(--rust)}
 .sr{display:flex;align-items:flex-start;gap:10px}
-.sn{font-size:13px;color:var(–mu);font-weight:600;flex-shrink:0;padding-top:3px;min-width:22px;text-align:right}
+.sn{font-size:13px;color:var(--mu);font-weight:600;flex-shrink:0;padding-top:3px;min-width:22px;text-align:right}
 .si-in{flex:1;min-width:0}
 .nm{font-size:19px;font-weight:700;line-height:1.3;letter-spacing:-.3px}
-.cy{font-size:15px;color:var(–mu);margin-top:2px}
+.cy{font-size:15px;color:var(--mu);margin-top:2px}
 .ds{font-size:14px;color:rgba(240,232,213,.6);margin-top:8px;line-height:1.6;display:none}
 .si.act .ds{display:block}
 .sb{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:4px 9px;border-radius:8px;flex-shrink:0;margin-top:3px;white-space:nowrap}
 .bw{background:rgba(39,174,96,.15);color:#5DEB9E;border:1px solid rgba(39,174,96,.25)}
-.bo{background:rgba(212,160,23,.12);color:var(–gold);border:1px solid rgba(212,160,23,.2)}
+.bo{background:rgba(212,160,23,.12);color:var(--gold);border:1px solid rgba(212,160,23,.2)}
 .bs{background:rgba(255,255,255,.03);color:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.06)}
-.sna{display:none;align-items:center;gap:5px;font-size:13px;color:var(–gold);font-weight:700;margin-top:8px;padding:8px 12px;background:rgba(212,160,23,.08);border:1.5px solid rgba(212,160,23,.2);border-radius:10px;cursor:pointer;font-family:‘DM Sans’,sans-serif}
+.sna{display:none;align-items:center;gap:5px;font-size:13px;color:var(--gold);font-weight:700;margin-top:8px;padding:8px 12px;background:rgba(212,160,23,.08);border:1.5px solid rgba(212,160,23,.2);border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif}
 .si.act .sna{display:inline-flex}
 
 /* ══ LODGING ══ */
-.lodge-state{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:15px;letter-spacing:2px;color:var(–rust);padding:12px 16px 4px;flex-shrink:0}
-.lodge-item{padding:12px 16px;border-bottom:1px solid var(–bd);display:flex;flex-direction:column;gap:4px}
-.lodge-name{font-size:17px;font-weight:700;color:var(–cream)}
-.lodge-addr{font-size:14px;color:var(–gold)}
-.lodge-note{font-size:14px;color:var(–mu);line-height:1.5}
-.lodge-nav{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:14px;font-weight:700;color:var(–gold);text-decoration:none;padding:8px 14px;background:rgba(212,160,23,.08);border:1.5px solid rgba(212,160,23,.2);border-radius:10px;font-family:‘DM Sans’,sans-serif}
+.lodge-state{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:15px;letter-spacing:2px;color:var(--rust);padding:12px 16px 4px;flex-shrink:0}
+.lodge-item{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:4px}
+.lodge-name{font-size:17px;font-weight:700;color:var(--cream)}
+.lodge-addr{font-size:14px;color:var(--gold)}
+.lodge-note{font-size:14px;color:var(--mu);line-height:1.5}
+.lodge-nav{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:14px;font-weight:700;color:var(--gold);text-decoration:none;padding:8px 14px;background:rgba(212,160,23,.08);border:1.5px solid rgba(212,160,23,.2);border-radius:10px;font-family:'DM Sans',sans-serif}
 .ra-hdr{padding:10px 12px 8px;border-bottom:2px solid rgba(192,57,43,.18);background:rgba(192,57,43,.04)}
-.ra-item{padding:12px 16px;border-bottom:1px solid var(–bd);display:flex;flex-direction:column;gap:4px}
-.ra-name{font-size:16px;font-weight:700;color:var(–cream)}
-.ra-loc{font-size:13px;color:var(–mu)}
+.ra-item{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;flex-direction:column;gap:4px}
+.ra-name{font-size:16px;font-weight:700;color:var(--cream)}
+.ra-loc{font-size:13px;color:var(--mu)}
 .ra-note{font-size:13.5px;color:rgba(240,232,213,.78);line-height:1.55}
 .ra-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10.5px;font-weight:700;letter-spacing:.6px;margin-bottom:2px}
 .rb-trap{background:rgba(192,57,43,.18);color:#E74C3C;border:1px solid rgba(231,76,60,.3)}
@@ -143,232 +142,233 @@ flex:1;min-height:0;background:var(–sur);
 #tabs::-webkit-scrollbar{display:none}
 /* Stop tooltip (desktop hover) */
 #stop-tip{
-position:fixed;z-index:9000;pointer-events:none;
-background:var(–sur2);border:1px solid var(–bd2);
-border-radius:12px;padding:14px 16px;
-box-shadow:0 8px 32px rgba(0,0,0,.6);
-max-width:260px;min-width:200px;
-opacity:0;transform:translateY(6px);
-transition:opacity .15s, transform .15s;
+  position:fixed;z-index:9000;pointer-events:none;
+  background:var(--sur2);border:1px solid var(--bd2);
+  border-radius:12px;padding:14px 16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.6);
+  max-width:260px;min-width:200px;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .15s, transform .15s;
 }
 #stop-tip.show{opacity:1;transform:translateY(0)}
-.tip-name{font-size:15px;font-weight:700;color:var(–cream);margin-bottom:3px}
-.tip-city{font-size:12px;color:var(–mu);margin-bottom:6px}
+.tip-name{font-size:15px;font-weight:700;color:var(--cream);margin-bottom:3px}
+.tip-city{font-size:12px;color:var(--mu);margin-bottom:6px}
 .tip-desc{font-size:12px;color:rgba(240,232,213,.7);line-height:1.5;margin-bottom:8px}
 .tip-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
-.tip-hint{font-size:10.5px;color:var(–mu);margin-top:6px;font-style:italic}
+.tip-hint{font-size:10.5px;color:var(--mu);margin-top:6px;font-style:italic}
 
 /* ══ METHOD ══ */
 #mpanel{flex-shrink:0;border-top:2px solid rgba(212,160,23,.18);overflow-y:auto;max-height:200px}
 .mb{padding:12px 16px}
-.mbt{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:14px;letter-spacing:2px;color:var(–gold);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.mbt::after{content:’’;flex:1;height:1px;background:rgba(212,160,23,.15)}
+.mbt{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.mbt::after{content:'';flex:1;height:1px;background:rgba(212,160,23,.15)}
 .mrow{display:flex;gap:8px;margin-bottom:5px}
-.mn{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(–rust);flex-shrink:0;padding-top:2px;min-width:90px}
-.md{font-size:13px;color:var(–mu);line-height:1.5}
-.tip{padding:10px 16px;border-top:1px solid var(–bd);font-size:13px;color:var(–mu);line-height:1.5}
+.mn{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--rust);flex-shrink:0;padding-top:2px;min-width:90px}
+.md{font-size:13px;color:var(--mu);line-height:1.5}
+.tip{padding:10px 16px;border-top:1px solid var(--bd);font-size:13px;color:var(--mu);line-height:1.5}
 
 /* ══ EMPTY ══ */
-.empty{padding:40px 16px;text-align:center;color:var(–mu);font-size:15px;line-height:2.2}
-.empty .big{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:44px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:8px}
+.empty{padding:40px 16px;text-align:center;color:var(--mu);font-size:15px;line-height:2.2}
+.empty .big{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:44px;letter-spacing:3px;color:rgba(192,57,43,.15);display:block;margin-bottom:8px}
 
 /* ══ POPUP ══ */
-.maplibregl-popup{z-index:700!important}.maplibregl-popup-content{background:#150F08!important;border:1px solid rgba(192,57,43,.4)!important;border-radius:14px!important;padding:0!important;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.9)!important;min-width:250px;max-width:280px;font-family:‘DM Sans’,sans-serif!important;color:var(–cream)!important}
+.maplibregl-popup{z-index:700!important}.maplibregl-popup-content{background:#150F08!important;border:1px solid rgba(192,57,43,.4)!important;border-radius:14px!important;padding:0!important;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.9)!important;min-width:250px;max-width:280px;font-family:'DM Sans',sans-serif!important;color:var(--cream)!important}
 .maplibregl-popup-tip{border-top-color:#150F08!important;border-bottom-color:#150F08!important}
 .maplibregl-popup-close-button{color:rgba(240,232,213,.35)!important;font-size:20px!important;padding:7px 10px!important;background:transparent!important}
 .pi{position:relative}.pi img{width:100%;height:120px;object-fit:cover;display:block}
-.pi-ph{width:100%;height:70px;background:#0A0705;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:2px;color:var(–mu)}
+.pi-ph{width:100%;height:70px;background:#0A0705;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:2px;color:var(--mu)}
 .p-ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(10,6,2,.95),transparent);padding:16px 14px 8px}
 .pbg{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
 .pti{font-size:15px;font-weight:700;line-height:1.25}
-.pb2{padding:10px 14px 12px}.pci{font-size:12px;color:var(–mu);margin-bottom:5px}
+.pb2{padding:10px 14px 12px}.pci{font-size:12px;color:var(--mu);margin-bottom:5px}
 .pds{font-size:13px;color:rgba(240,232,213,.65);line-height:1.55;margin-bottom:10px}
-.pnv{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:‘DM Sans’,sans-serif;letter-spacing:.2px;transition:opacity .15s}
+.pnv{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.2px;transition:opacity .15s}
 .pnv:active{opacity:.8}
-.pnv-pri{background:var(–rust);color:#fff;flex:1}
+.pnv-pri{background:var(--rust);color:#fff;flex:1}
 .pnv-sec{background:rgba(240,232,213,.07);color:rgba(240,232,213,.6);border:1px solid rgba(240,232,213,.12);flex-shrink:0}
 .p-actions{display:flex;gap:8px;margin-top:10px}
 
 /* ══ MARKERS ══ */
-.dot{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:‘DM Sans’,sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
-.mring{position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;border:2px solid var(–grn);animation:pulse 2.2s ease-out infinite;pointer-events:none}
+.dot{position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:'DM Sans',sans-serif;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
+.mring{position:absolute;top:0;left:0;width:38px;height:38px;border-radius:50%;border:2px solid var(--grn);animation:pulse 2.2s ease-out infinite;pointer-events:none}
 @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(2.4);opacity:0}100%{transform:scale(2.4);opacity:0}}
 .fdot{width:26px;height:26px;background:#E8880A;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 12px rgba(0,0,0,.8);cursor:pointer}
 #map .maplibregl-canvas{outline:none}
 #map .maplibregl-ctrl-logo{display:none}
 #map .maplibregl-ctrl-attrib{font-size:9px;background:rgba(0,0,0,.6)!important;color:rgba(255,255,255,.3)!important}
 #map .maplibregl-ctrl-attrib a{color:rgba(255,255,255,.3)!important}
-#map .maplibregl-ctrl-group{background:rgba(15,12,7,.9)!important;border:1px solid var(–bd2)!important;border-radius:10px!important;overflow:hidden}
+#map .maplibregl-ctrl-group{background:rgba(15,12,7,.9)!important;border:1px solid var(--bd2)!important;border-radius:10px!important;overflow:hidden}
 #map .maplibregl-ctrl-group button{background:transparent!important}
 #map .maplibregl-ctrl-icon{filter:invert(0.65)}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(192,57,43,.3);border-radius:2px}
 
 /* ══ TOGGLE PILL ══ */
 #view-toggle{
-position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
-z-index:600;background:rgba(20,14,6,.95);
-border:1px solid rgba(255,255,255,.1);border-radius:32px;
-display:flex;box-shadow:0 8px 30px rgba(0,0,0,.7);
-overflow:hidden;backdrop-filter:blur(20px);
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  z-index:600;background:rgba(20,14,6,.95);
+  border:1px solid rgba(255,255,255,.1);border-radius:32px;
+  display:flex;box-shadow:0 8px 30px rgba(0,0,0,.7);
+  overflow:hidden;backdrop-filter:blur(20px);
 }
-.vt-btn{padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;color:var(–mu);background:transparent;border:none;font-family:‘DM Sans’,sans-serif;display:flex;align-items:center;gap:7px;transition:all .2s;letter-spacing:.3px}
+.vt-btn{padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;color:var(--mu);background:transparent;border:none;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;transition:all .2s;letter-spacing:.3px}
 .vt-btn svg{opacity:.6;transition:opacity .2s}
-.vt-btn.on{color:var(–cream);background:rgba(192,57,43,.25)}
+.vt-btn.on{color:var(--cream);background:rgba(192,57,43,.25)}
 .vt-btn.on svg{opacity:1}
 .vt-sep{width:1px;background:rgba(255,255,255,.1)}
 
 /* ══ DOWNLOAD PANEL ══ */
-#dlpanel{position:fixed;top:0;right:0;bottom:0;left:0;background:var(–sur);z-index:800;display:none;flex-direction:column}
+#dlpanel{position:fixed;top:0;right:0;bottom:0;left:0;background:var(--sur);z-index:800;display:none;flex-direction:column}
 #dlpanel.open{display:flex}
-#dlhdr{padding:14px 18px 10px;background:var(–sur2);border-bottom:1px solid var(–bd);flex-shrink:0;position:relative}
-#dlhdr h2{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:22px;letter-spacing:2px;color:var(–gold)}
-#dlhdr p{font-size:13px;color:var(–mu);margin-top:2px}
-#dlclose{position:fixed;top:14px;right:14px;background:var(–bd2);border:none;color:var(–cream);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+#dlhdr{padding:14px 18px 10px;background:var(--sur2);border-bottom:1px solid var(--bd);flex-shrink:0;position:relative}
+#dlhdr h2{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:22px;letter-spacing:2px;color:var(--gold)}
+#dlhdr p{font-size:13px;color:var(--mu);margin-top:2px}
+#dlclose{position:fixed;top:14px;right:14px;background:var(--bd2);border:none;color:var(--cream);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 #dlbody{flex:1;overflow-y:auto;padding:16px 18px 40px}
 .dls{margin-bottom:22px}
-.dls-t{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:16px;letter-spacing:2px;color:var(–gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.dls-t::after{content:’’;flex:1;height:1px;background:rgba(212,160,23,.15)}
-.gpxbtn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:8px;background:rgba(212,160,23,.07);border:1.5px solid rgba(212,160,23,.18);border-radius:12px;cursor:pointer;text-decoration:none;color:var(–cream)}
-.gpxbtn-n{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:17px;letter-spacing:1.5px;color:var(–gold)}
-.gpxbtn-s{font-size:13px;color:var(–mu)}
+.dls-t{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.dls-t::after{content:'';flex:1;height:1px;background:rgba(212,160,23,.15)}
+.gpxbtn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:8px;background:rgba(212,160,23,.07);border:1.5px solid rgba(212,160,23,.18);border-radius:12px;cursor:pointer;text-decoration:none;color:var(--cream)}
+.gpxbtn-n{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:17px;letter-spacing:1.5px;color:var(--gold)}
+.gpxbtn-s{font-size:13px;color:var(--mu)}
 .appgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.appc{padding:12px 13px;background:rgba(255,255,255,.03);border:1.5px solid var(–bd2);border-radius:12px}
-.appc-n{font-size:14px;font-weight:700;color:var(–cream);margin-bottom:4px}
+.appc{padding:12px 13px;background:rgba(255,255,255,.03);border:1.5px solid var(--bd2);border-radius:12px}
+.appc-n{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:4px}
 .appc-b{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px;margin-bottom:4px}
 .free{background:rgba(39,174,96,.12);color:#5DEB9E;border:1px solid rgba(39,174,96,.2)}
 .paid{background:rgba(192,57,43,.1);color:#F0A090;border:1px solid rgba(192,57,43,.18)}
-.appc-s{font-size:12px;color:var(–mu);line-height:1.5}
-.dtip{font-size:13px;color:var(–mu);line-height:1.55;background:rgba(255,255,255,.03);border:1.5px solid var(–bd);border-radius:10px;padding:10px 13px;margin-bottom:10px}
-.dtip strong{color:var(–cream)}
-.fuel-list .fi{border-bottom:1px solid var(–bd);padding:12px 0}
-.fi-n{font-size:15px;font-weight:700;color:var(–cream)}
+.appc-s{font-size:12px;color:var(--mu);line-height:1.5}
+.dtip{font-size:13px;color:var(--mu);line-height:1.55;background:rgba(255,255,255,.03);border:1.5px solid var(--bd);border-radius:10px;padding:10px 13px;margin-bottom:10px}
+.dtip strong{color:var(--cream)}
+.fuel-list .fi{border-bottom:1px solid var(--bd);padding:12px 0}
+.fi-n{font-size:15px;font-weight:700;color:var(--cream)}
 .fi-n.crit{color:#F0A090}
-.fi-d{font-size:14px;color:var(–mu);line-height:1.45}
+.fi-d{font-size:14px;color:var(--mu);line-height:1.45}
 .fi-nav{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:14px;font-weight:700;color:rgba(232,136,10,.8);padding:7px 12px;background:rgba(232,136,10,.07);border:1.5px solid rgba(232,136,10,.2);border-radius:10px;cursor:pointer;font-family:inherit}
 
 /* ══ CENTENNIAL PANEL ══ */
-#cent-panel{position:fixed;top:0;right:0;bottom:0;left:0;background:var(–sur);z-index:800;display:none;flex-direction:column}
+#cent-panel{position:fixed;top:0;right:0;bottom:0;left:0;background:var(--sur);z-index:800;display:none;flex-direction:column}
 #cent-panel.open{display:flex}
 #cent-hdr{padding:0;padding-top:58px;flex-shrink:0;position:relative;overflow:hidden}
 #cent-hero{background:linear-gradient(180deg,#0A1628 0%,#0D2550 40%,#8B1010 70%,#C0392B 100%);padding:22px 18px 16px;position:relative}
-#cent-hero::before{content:‘★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★’;position:absolute;top:10px;left:50%;transform:translateX(-50%);color:rgba(255,220,50,.65);font-size:11px;letter-spacing:4px;white-space:nowrap}
-#cent-hero::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(180deg,rgba(192,57,43,.9) 0px,rgba(192,57,43,.9) 5px,rgba(255,255,255,.12) 5px,rgba(255,255,255,.12) 10px,rgba(192,57,43,.9) 10px,rgba(192,57,43,.9) 15px,rgba(255,255,255,.12) 15px,rgba(255,255,255,.12) 20px,rgba(192,57,43,.9) 20px,rgba(192,57,43,.9) 25px,rgba(255,255,255,.12) 25px,rgba(255,255,255,.12) 30px,rgba(192,57,43,.9) 30px,rgba(192,57,43,.9) 35px,rgba(255,255,255,.12) 35px,rgba(255,255,255,.12) 40px);opacity:.5}
-#cent-title{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:26px;letter-spacing:4px;color:#fff;text-align:center;margin-top:10px;position:relative;z-index:1;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+#cent-hero::before{content:'★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★';position:absolute;top:10px;left:50%;transform:translateX(-50%);color:rgba(255,220,50,.65);font-size:11px;letter-spacing:4px;white-space:nowrap}
+#cent-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:repeating-linear-gradient(180deg,rgba(192,57,43,.9) 0px,rgba(192,57,43,.9) 5px,rgba(255,255,255,.12) 5px,rgba(255,255,255,.12) 10px,rgba(192,57,43,.9) 10px,rgba(192,57,43,.9) 15px,rgba(255,255,255,.12) 15px,rgba(255,255,255,.12) 20px,rgba(192,57,43,.9) 20px,rgba(192,57,43,.9) 25px,rgba(255,255,255,.12) 25px,rgba(255,255,255,.12) 30px,rgba(192,57,43,.9) 30px,rgba(192,57,43,.9) 35px,rgba(255,255,255,.12) 35px,rgba(255,255,255,.12) 40px);opacity:.5}
+#cent-title{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:26px;letter-spacing:4px;color:#fff;text-align:center;margin-top:10px;position:relative;z-index:1;text-shadow:0 2px 12px rgba(0,0,0,.8)}
 #cent-sub{font-size:13px;color:rgba(255,220,100,.85);text-align:center;letter-spacing:2px;text-transform:uppercase;margin-top:3px;position:relative;z-index:1}
 #cent-close{position:absolute;top:12px;right:12px;z-index:10;background:rgba(0,0,0,.4);border:none;color:rgba(255,255,255,.7);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 #cent-body{flex:1;overflow-y:auto;padding:18px 18px 30px}
-.cent-date-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.35);border-radius:8px;padding:6px 13px;margin-bottom:14px;font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:16px;letter-spacing:2px;color:#F0A090}
+.cent-date-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.35);border-radius:8px;padding:6px 13px;margin-bottom:14px;font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:16px;letter-spacing:2px;color:#F0A090}
 .cent-intro{font-size:14px;color:rgba(240,232,213,.7);line-height:1.65;margin-bottom:18px}
-.cent-intro strong{color:var(–cream)}
-.cent-intro .warn{display:block;margin-top:10px;background:rgba(192,57,43,.12);border-left:3px solid var(–rust);padding:9px 12px;border-radius:0 6px 6px 0;font-size:13px}
+.cent-intro strong{color:var(--cream)}
+.cent-intro .warn{display:block;margin-top:10px;background:rgba(192,57,43,.12);border-left:3px solid var(--rust);padding:9px 12px;border-radius:0 6px 6px 0;font-size:13px}
 .cent-intro .warn strong{color:#F0A090}
-.evt-main-link{display:flex;align-items:center;background:rgba(192,57,43,.1);border:1.5px solid rgba(192,57,43,.35);border-radius:12px;text-decoration:none;color:var(–cream);overflow:hidden;margin-bottom:12px}
+.evt-main-link{display:flex;align-items:center;background:rgba(192,57,43,.1);border:1.5px solid rgba(192,57,43,.35);border-radius:12px;text-decoration:none;color:var(--cream);overflow:hidden;margin-bottom:12px}
 .evt-main-flag{width:6px;flex-shrink:0}
 .evt-main-body{flex:1;padding:13px 14px}
-.evt-main-name{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:18px;letter-spacing:1.5px;color:#F0A090;margin-bottom:3px}
-.evt-main-desc{font-size:13px;color:var(–mu);line-height:1.5}
+.evt-main-name{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:18px;letter-spacing:1.5px;color:#F0A090;margin-bottom:3px}
+.evt-main-desc{font-size:13px;color:var(--mu);line-height:1.5}
 .evt-main-arr{display:flex;align-items:center;padding:0 16px;font-size:20px;color:rgba(192,57,43,.5);flex-shrink:0}
 .state-evts{margin-top:5px}
-.state-evt-row{display:flex;align-items:center;border-bottom:1px solid var(–bd);padding:10px 0;text-decoration:none}
+.state-evt-row{display:flex;align-items:center;border-bottom:1px solid var(--bd);padding:10px 0;text-decoration:none}
 .state-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-right:13px}
 .state-evt-info{flex:1}
-.state-evt-name{font-size:15px;font-weight:700;color:var(–cream)}
-.state-evt-hint{font-size:13px;color:var(–mu);line-height:1.4;margin-top:2px}
-.state-evt-link{font-size:13px;font-weight:700;color:var(–gold);text-decoration:none;flex-shrink:0;padding:6px 12px;border:1.5px solid rgba(212,160,23,.2);border-radius:8px;background:rgba(212,160,23,.06)}
-.evt-why-box{font-size:13px;color:var(–mu);line-height:1.6;background:rgba(255,255,255,.025);border-left:3px solid rgba(212,160,23,.3);padding:11px 13px;border-radius:0 6px 6px 0;margin-top:16px}
+.state-evt-name{font-size:15px;font-weight:700;color:var(--cream)}
+.state-evt-hint{font-size:13px;color:var(--mu);line-height:1.4;margin-top:2px}
+.state-evt-link{font-size:13px;font-weight:700;color:var(--gold);text-decoration:none;flex-shrink:0;padding:6px 12px;border:1.5px solid rgba(212,160,23,.2);border-radius:8px;background:rgba(212,160,23,.06)}
+.evt-why-box{font-size:13px;color:var(--mu);line-height:1.6;background:rgba(255,255,255,.025);border-left:3px solid rgba(212,160,23,.3);padding:11px 13px;border-radius:0 6px 6px 0;margin-top:16px}
 .evt-why-box strong{color:rgba(212,160,23,.7)}
 
 /* ══ DESKTOP (≥1024px) ══ */
 @media(min-width:1024px){
-:root{–hh:82px}
-#hdr{height:82px;padding:8px 16px 0;flex-direction:column;align-items:stretch;gap:6px}
-#hdr-title{display:none}
-#hdr-btns{display:none}
-#hdr-desktop{display:flex;align-items:center;gap:10px}
-.shield{width:36px;height:44px}
-.tb h1{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:19px;letter-spacing:3px;line-height:1}
-.tb p{font-size:9px;letter-spacing:2px;color:var(–gold)}
-.sep{display:block;width:1px;height:30px;background:var(–bd2);margin:0 6px}
-.hstat{display:flex;flex-direction:column;align-items:center}
-.hstat .v{font-family:‘Bebas Neue’,‘Arial Narrow’,Impact,sans-serif;font-size:18px;color:var(–gold);line-height:1}
-.hstat .l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(–mu);margin-top:1px}
-#irow{display:flex;flex-wrap:nowrap;overflow-x:auto;align-items:center;gap:4px;padding-bottom:6px;scrollbar-width:none}
-.il{display:inline;font-size:9px;letter-spacing:1.5px;color:var(–mu);text-transform:uppercase;margin-right:4px}
-.vsep{display:block;width:1px;height:16px;background:var(–bd2)}
-.ib{display:inline-block;background:transparent;border:1px solid var(–bd2);color:var(–mu);padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer;border-radius:3px;font-family:‘DM Sans’,sans-serif}
-.ib.on{background:rgba(192,57,43,.18);border-color:var(–rust);color:#F0A090}
-.hbtn{width:auto;height:auto;padding:3px 9px;font-size:9.5px;border-radius:3px;border-width:1px}
-#hdr-btns{display:flex;gap:4px}
-#body{display:grid;grid-template-columns:1fr 340px;height:calc(100% - 82px)}
-#map-panel{display:flex !important}
-#list-panel{display:flex !important;border-left:1px solid var(–bd)}
-#view-toggle{display:none}
-#list-itin{display:none}
-#itin-bar{display:none}
-.tab{padding:7px 2px;font-size:9px}
-.stbtn{padding:2px 9px;font-size:9.5px;border-radius:2px;border-width:1px;margin-right:4px}
-#rt{font-size:17px}#sc{font-size:9.5px}#rph-sub{font-size:10px}#rph{padding:8px 12px 6px}
-.si{padding:7px 11px}
-.nm{font-size:12px;font-weight:600;line-height:1.3;letter-spacing:0}
-.cy{font-size:10px}.ds{font-size:10.5px;margin-top:5px}.sb{font-size:8px;padding:2px 5px;border-radius:2px}
-.sna{font-size:10px;margin-top:6px;padding:4px 8px;border-radius:3px}
-.lodge-name{font-size:13px}.lodge-addr{font-size:11px}.lodge-note{font-size:11px}.lodge-nav{font-size:11px;padding:5px 10px;border-radius:4px}
-#dlpanel{width:380px;top:82px}
-#cent-panel{width:400px;top:82px}
-#mh{padding:7px 14px 5px}
-#state-title{font-size:20px}#state-miles{font-size:8.5px;padding:2px 7px}
-.pnv{padding:8px;font-size:10px;border-radius:4px}
-.lgi{font-size:10px}
-#gnav{padding:7px;font-size:10px;border-radius:3px}
+  :root{--hh:82px}
+  #hdr{height:82px;padding:8px 16px 0;flex-direction:column;align-items:stretch;gap:6px}
+  #hdr-title{display:none}
+  #hdr-btns{display:none}
+  #hdr-desktop{display:flex;align-items:center;gap:10px}
+  .shield{width:36px;height:44px}
+  .tb h1{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:19px;letter-spacing:3px;line-height:1}
+  .tb p{font-size:9px;letter-spacing:2px;color:var(--gold)}
+  .sep{display:block;width:1px;height:30px;background:var(--bd2);margin:0 6px}
+  .hstat{display:flex;flex-direction:column;align-items:center}
+  .hstat .v{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:18px;color:var(--gold);line-height:1}
+  .hstat .l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-top:1px}
+  #irow{display:flex;flex-wrap:nowrap;overflow-x:auto;align-items:center;gap:4px;padding-bottom:6px;scrollbar-width:none}
+  .il{display:inline;font-size:9px;letter-spacing:1.5px;color:var(--mu);text-transform:uppercase;margin-right:4px}
+  .vsep{display:block;width:1px;height:16px;background:var(--bd2)}
+  .ib{display:inline-block;background:transparent;border:1px solid var(--bd2);color:var(--mu);padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer;border-radius:3px;font-family:'DM Sans',sans-serif}
+  .ib.on{background:rgba(192,57,43,.18);border-color:var(--rust);color:#F0A090}
+  .hbtn{width:auto;height:auto;padding:3px 9px;font-size:9.5px;border-radius:3px;border-width:1px}
+  #hdr-btns{display:flex;gap:4px}
+  #body{display:grid;grid-template-columns:1fr 340px;height:calc(100% - 82px)}
+  #map-panel{display:flex !important}
+  #list-panel{display:flex !important;border-left:1px solid var(--bd)}
+  #view-toggle{display:none}
+  #list-itin{display:none}
+  #itin-bar{display:none}
+  .tab{padding:7px 2px;font-size:9px}
+  .stbtn{padding:2px 9px;font-size:9.5px;border-radius:2px;border-width:1px;margin-right:4px}
+  #rt{font-size:17px}#sc{font-size:9.5px}#rph-sub{font-size:10px}#rph{padding:8px 12px 6px}
+  .si{padding:7px 11px}
+  .nm{font-size:12px;font-weight:600;line-height:1.3;letter-spacing:0}
+  .cy{font-size:10px}.ds{font-size:10.5px;margin-top:5px}.sb{font-size:8px;padding:2px 5px;border-radius:2px}
+  .sna{font-size:10px;margin-top:6px;padding:4px 8px;border-radius:3px}
+  .lodge-name{font-size:13px}.lodge-addr{font-size:11px}.lodge-note{font-size:11px}.lodge-nav{font-size:11px;padding:5px 10px;border-radius:4px}
+  #dlpanel{width:380px;top:82px}
+  #cent-panel{width:400px;top:82px}
+  #mh{padding:7px 14px 5px}
+  #state-title{font-size:20px}#state-miles{font-size:8.5px;padding:2px 7px}
+  .pnv{padding:8px;font-size:10px;border-radius:4px}
+  .lgi{font-size:10px}
+  #gnav{padding:7px;font-size:10px;border-radius:3px}
 }
 
 /* ══ LANDSCAPE MOBILE ══ */
 @media(orientation:landscape)and(max-height:500px){
-/* ── Single-row 46px header ── */
-#hdr{
-height:46px !important;
-flex-direction:row !important;
-align-items:center !important;
-padding:0 10px !important;
-gap:8px !important;
+  /* ── Single-row 46px header ── */
+  #hdr{
+    height:46px !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    padding:0 10px !important;
+    gap:8px !important;
+  }
+  #hdr-title p{display:none !important}
+  #hdr-title h1{font-size:14px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hbtn{min-width:36px !important;height:36px !important;padding:0 6px !important;gap:1px !important;border-radius:8px !important}
+  .hbtn-label{display:none !important}
+  /* JS syncLayout handles body/panel layout — these are fallbacks */
+  #view-toggle{display:none !important}
+  /* Compact list in landscape */
+  #list-itin{display:none !important}
+  #list-panel #stsel{padding:5px 10px !important}
+  .stbtn{padding:5px 11px !important;font-size:12px !important;border-radius:8px !important;margin-right:4px !important}
+  .tab{padding:8px 3px !important;font-size:11px !important}
+  #rph{padding:6px 12px 4px !important}
+  #rt{font-size:15px !important}
+  #rph-sub{display:none !important}
+  /* Stops 2-column grid in landscape */
+  #pane-stops.active{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    align-content:start !important;
+    overflow-y:auto !important;
+  }
+  .si{padding:9px 12px !important}
+  .nm{font-size:14px !important;line-height:1.2 !important}
+  .cy{font-size:12px !important}
+  .ds{font-size:12px !important}
+  .sb{font-size:10px !important;padding:3px 6px !important}
+  /* Map footer compact */
+  #mh{padding:5px 10px !important}
+  #state-title{font-size:16px !important}
+  #mf{padding:5px 10px !important;gap:5px !important}
+  #itin-bar{display:none !important}
+  #leg{gap:8px !important}
+  .lgi{font-size:11px !important}
+  #gnav{padding:7px !important;font-size:11px !important}
+  /* Panels offset for 46px header */
+  #dlpanel,#cent-panel{top:46px !important}
 }
-#hdr-title p{display:none !important}
-#hdr-title h1{font-size:14px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hbtn{min-width:36px !important;height:36px !important;padding:0 6px !important;gap:1px !important;border-radius:8px !important}
-.hbtn-label{display:none !important}
-/* JS syncLayout handles body/panel layout — these are fallbacks */
-#view-toggle{display:none !important}
-/* Compact list in landscape */
-#list-itin{display:none !important}
-#list-panel #stsel{padding:5px 10px !important}
-.stbtn{padding:5px 11px !important;font-size:12px !important;border-radius:8px !important;margin-right:4px !important}
-.tab{padding:8px 3px !important;font-size:11px !important}
-#rph{padding:6px 12px 4px !important}
-#rt{font-size:15px !important}
-#rph-sub{display:none !important}
-/* Stops 2-column grid in landscape */
-#pane-stops.active{
-display:grid !important;
-grid-template-columns:1fr 1fr !important;
-align-content:start !important;
-overflow-y:auto !important;
-}
-.si{padding:9px 12px !important}
-.nm{font-size:14px !important;line-height:1.2 !important}
-.cy{font-size:12px !important}
-.ds{font-size:12px !important}
-.sb{font-size:10px !important;padding:3px 6px !important}
-/* Map footer compact */
-#mh{padding:5px 10px !important}
-#state-title{font-size:16px !important}
-#mf{padding:5px 10px !important;gap:5px !important}
-#itin-bar{display:none !important}
-#leg{gap:8px !important}
-.lgi{font-size:11px !important}
-#gnav{padding:7px !important;font-size:11px !important}
-/* Panels offset for 46px header */
-#dlpanel,#cent-panel{top:46px !important}
-}
+
 
 </style>
 
@@ -463,45 +463,43 @@ overflow-y:auto !important;
       <div class="tip">&#9888;&#65039; <strong>2026 Centennial:</strong> Grand Canyon entry sells out months ahead. Book via recreation.gov before your trip.</div>
     </div>
 
-```
-<div class="pane" id="pane-road">
-  <div class="ra-hdr">
-    <div style="font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:13px;letter-spacing:2px;color:var(--rust);margin-bottom:5px">NAVIGATION TRAPS &amp; CHECKPOINTS — CHICAGO → SANTA MONICA</div>
-    <div style="font-size:10.5px;color:rgba(240,232,213,.65);line-height:1.6">Spots that trip up first-timers: missing signs, rough alignments, major forks. <strong style="color:var(--cream)">Visitor Centers</strong> are ground-truth checkpoints — free maps, current road conditions, locals who actually know.</div>
+    <div class="pane" id="pane-road">
+      <div class="ra-hdr">
+        <div style="font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:13px;letter-spacing:2px;color:var(--rust);margin-bottom:5px">NAVIGATION TRAPS &amp; CHECKPOINTS — CHICAGO → SANTA MONICA</div>
+        <div style="font-size:10.5px;color:rgba(240,232,213,.65);line-height:1.6">Spots that trip up first-timers: missing signs, rough alignments, major forks. <strong style="color:var(--cream)">Visitor Centers</strong> are ground-truth checkpoints — free maps, current road conditions, locals who actually know.</div>
+      </div>
+      <p class="lodge-state">Illinois</p>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Springfield One-Way Grid</span><span class="ra-loc">📍 Downtown Springfield, IL</span><span class="ra-note">Historic Route 66 threads through Springfield one-way streets with zero highway signs. The correct path jogs 6th to 9th Street. Use GPS through here.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Illinois Route 66 Welcome Center</span><span class="ra-loc">📍 1900 W Jefferson St, Springfield, IL</span><span class="ra-note">Pick up the official Illinois strip maps here — the best paper navigation tool for the state. Staffed, free, stocked with current detour info.</span><a class="ra-nav" href="javascript:smartNav(39.7992,-89.6663,'Illinois Route 66 Welcome Center')">&#10148; Navigate</a></div>
+      <p class="lodge-state">Missouri</p>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">St. Louis Chain of Rocks Approach</span><span class="ra-loc">📍 Near I-270 / Madison IL border</span><span class="ra-note">The historic Chain of Rocks Bridge has no Route 66 signs on approach from I-270. It's a pedestrian bridge — cross on foot, then rejoin south. Search "Chain of Rocks Bridge St. Louis."</span></div>
+      <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Devil's Elbow — MO-Z Turnoff</span><span class="ra-loc">📍 Near Hazelgreen, MO</span><span class="ra-note">The turn onto MO-Z toward Devil's Elbow is unsigned. Old alignment is paved but narrow. One of the most scenic stretches in Missouri — don't skip it, don't rush it.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Rolla Visitor Center</span><span class="ra-loc">📍 I-44 Exit 184, Rolla, MO</span><span class="ra-note">Mid-Missouri checkpoint. Good maps, current I-44 construction alerts, and confirmation you're on the correct Ozarks alignment.</span><a class="ra-nav" href="javascript:smartNav(37.9514,-91.7723,'Rolla Missouri Visitor Center')">&#10148; Navigate</a></div>
+      <p class="lodge-state">Oklahoma</p>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Tulsa — 11th St / Skelly Dr Split</span><span class="ra-loc">📍 Tulsa, OK</span><span class="ra-note">Route 66 becomes 11th Street heading west through Tulsa, then briefly Skelly Drive near the fairgrounds. Two turns in a row, no markers. Use GPS through Tulsa.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Creek Turnpike Crossing</span><span class="ra-loc">📍 Near Kellyville, OK</span><span class="ra-note">Short unpaved section (~0.4 mi) where old alignment crosses under the Creek Turnpike. Passable dry. After rain, skip it — use the frontage road instead.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Oklahoma Route 66 Welcome Center</span><span class="ra-loc">📍 US-69, Afton, OK</span><span class="ra-note">Reliably stocked with Oklahoma strip maps. Staff can tell you which segments have active construction between here and the Texas border.</span><a class="ra-nav" href="javascript:smartNav(36.6942,-94.9721,'Route 66 Welcome Center Afton Oklahoma')">&#10148; Navigate</a></div>
+      <p class="lodge-state">Texas</p>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Amarillo Airport Zone — Missing Signs</span><span class="ra-loc">📍 Near Rick Husband Amarillo International Airport</span><span class="ra-note">Old Route 66 runs along Amarillo Blvd parallel to the airport. The alignment splits near Hollywood Rd with no signs. Stay on Amarillo Blvd heading west — that's the historic road.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Texas Welcome Center — near Shamrock</span><span class="ra-loc">📍 I-40, near Shamrock, TX</span><span class="ra-note">Last well-staffed Texas checkpoint. Ask about current NM road conditions. Last reliable restrooms for a long stretch west.</span><a class="ra-nav" href="javascript:smartNav(35.2231,-100.2421,'Texas Welcome Center Shamrock I-40')">&#10148; Navigate</a></div>
+      <p class="lodge-state">New Mexico</p>
+      <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Glenrio to San Jon — Unpaved</span><span class="ra-loc">📍 Near TX/NM state line</span><span class="ra-note">~6 miles unpaved between the Texas border and San Jon. Passable dry at low speed. After rain skip it entirely — clay goes slick fast. Not worth a breakdown.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Albuquerque — Central Ave to 4th Street</span><span class="ra-loc">📍 Downtown Albuquerque, NM</span><span class="ra-note">Route 66 is Central Avenue through ABQ — well signed. But north of Old Town it briefly becomes 4th Street with no highway signs at the transition. Take your time on the intact neon motel row.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Santa Rosa — Blue Hole Visitor Center</span><span class="ra-loc">📍 Blue Hole Rd, Santa Rosa, NM</span><span class="ra-note">Staff know current I-40 and frontage road conditions. The Blue Hole itself is worth 20 minutes — artesian pool in the desert, free.</span><a class="ra-nav" href="javascript:smartNav(34.9413,-104.6753,'Blue Hole Santa Rosa New Mexico')">&#10148; Navigate</a></div>
+      <p class="lodge-state">Arizona</p>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Ash Fork Westbound Exit</span><span class="ra-loc">📍 Ash Fork, AZ</span><span class="ra-note">Leaving Ash Fork west toward Seligman, old Route 66 diverges from AZ-89 with no marker. Head west on Lewis Ave out of town — becomes Route 66 within half a mile.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-fork">⇌ MAJOR FORK</span><span class="ra-name">Kingman — Oatman vs. Needles</span><span class="ra-loc">📍 Kingman, AZ — decide before you leave</span><span class="ra-note">Historic 66 goes through Oatman via narrow mountain hairpins — spectacular, wild burros, Gold Rush ghost town. RVs and towed vehicles cannot make it. Standard car: take Oatman. RV/towing: take US-93 to Needles.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Kingman Powerhouse Visitor Center</span><span class="ra-loc">📍 120 W Andy Devine Ave, Kingman, AZ</span><span class="ra-note">Best visitor center west of Oklahoma. Oatman road conditions, California desert fuel warnings, strip maps. Stop here before deciding Oatman vs. Needles.</span><a class="ra-nav" href="javascript:smartNav(35.1895,-114.0561,'Kingman Powerhouse Visitor Center Arizona')">&#10148; Navigate</a></div>
+      <p class="lodge-state">California</p>
+      <div class="ra-item"><span class="ra-badge rb-dirt">⛽ FUEL WARNING</span><span class="ra-name">Needles to Barstow — 70+ Miles No Services</span><span class="ra-loc">📍 Needles, CA → Barstow, CA</span><span class="ra-note">Fill up in Needles. Roy's in Amboy is intermittent — don't count on it. Next reliable fuel is Barstow, 75+ miles away. Never start this section under half a tank. Carry water regardless of season.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">San Bernardino to Pasadena — Foothill Blvd</span><span class="ra-loc">📍 San Bernardino → Pasadena, CA</span><span class="ra-note">Old Route 66 follows Foothill Blvd through the Inland Empire — signed in some cities, unsigned in others. You'll pass through half a dozen municipalities. GPS mandatory here.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Santa Monica Pier — Easy to Overshoot</span><span class="ra-loc">📍 Santa Monica, CA</span><span class="ra-note">GPS often dumps you on the wrong side of the pier. Head to Ocean Ave, turn south, park near the pier entrance. The "End of the Trail" sign is at the pier's west end, overlooking the Pacific.</span></div>
+      <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">California Route 66 Museum</span><span class="ra-loc">📍 16825 S D St, Victorville, CA</span><span class="ra-note">Last Route 66 museum before the LA basin. California strip maps, Foothill Blvd conditions. Volunteer-run — call ahead to confirm hours before detouring.</span><a class="ra-nav" href="javascript:smartNav(34.5133,-117.3086,'California Route 66 Museum Victorville')">&#10148; Navigate</a></div>
+    </div>
+    </div>
   </div>
-  <p class="lodge-state">Illinois</p>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Springfield One-Way Grid</span><span class="ra-loc">📍 Downtown Springfield, IL</span><span class="ra-note">Historic Route 66 threads through Springfield one-way streets with zero highway signs. The correct path jogs 6th to 9th Street. Use GPS through here.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Illinois Route 66 Welcome Center</span><span class="ra-loc">📍 1900 W Jefferson St, Springfield, IL</span><span class="ra-note">Pick up the official Illinois strip maps here — the best paper navigation tool for the state. Staffed, free, stocked with current detour info.</span><a class="ra-nav" href="javascript:smartNav(39.7992,-89.6663,'Illinois Route 66 Welcome Center')">&#10148; Navigate</a></div>
-  <p class="lodge-state">Missouri</p>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">St. Louis Chain of Rocks Approach</span><span class="ra-loc">📍 Near I-270 / Madison IL border</span><span class="ra-note">The historic Chain of Rocks Bridge has no Route 66 signs on approach from I-270. It's a pedestrian bridge — cross on foot, then rejoin south. Search "Chain of Rocks Bridge St. Louis."</span></div>
-  <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Devil's Elbow — MO-Z Turnoff</span><span class="ra-loc">📍 Near Hazelgreen, MO</span><span class="ra-note">The turn onto MO-Z toward Devil's Elbow is unsigned. Old alignment is paved but narrow. One of the most scenic stretches in Missouri — don't skip it, don't rush it.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Rolla Visitor Center</span><span class="ra-loc">📍 I-44 Exit 184, Rolla, MO</span><span class="ra-note">Mid-Missouri checkpoint. Good maps, current I-44 construction alerts, and confirmation you're on the correct Ozarks alignment.</span><a class="ra-nav" href="javascript:smartNav(37.9514,-91.7723,'Rolla Missouri Visitor Center')">&#10148; Navigate</a></div>
-  <p class="lodge-state">Oklahoma</p>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Tulsa — 11th St / Skelly Dr Split</span><span class="ra-loc">📍 Tulsa, OK</span><span class="ra-note">Route 66 becomes 11th Street heading west through Tulsa, then briefly Skelly Drive near the fairgrounds. Two turns in a row, no markers. Use GPS through Tulsa.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Creek Turnpike Crossing</span><span class="ra-loc">📍 Near Kellyville, OK</span><span class="ra-note">Short unpaved section (~0.4 mi) where old alignment crosses under the Creek Turnpike. Passable dry. After rain, skip it — use the frontage road instead.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Oklahoma Route 66 Welcome Center</span><span class="ra-loc">📍 US-69, Afton, OK</span><span class="ra-note">Reliably stocked with Oklahoma strip maps. Staff can tell you which segments have active construction between here and the Texas border.</span><a class="ra-nav" href="javascript:smartNav(36.6942,-94.9721,'Route 66 Welcome Center Afton Oklahoma')">&#10148; Navigate</a></div>
-  <p class="lodge-state">Texas</p>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Amarillo Airport Zone — Missing Signs</span><span class="ra-loc">📍 Near Rick Husband Amarillo International Airport</span><span class="ra-note">Old Route 66 runs along Amarillo Blvd parallel to the airport. The alignment splits near Hollywood Rd with no signs. Stay on Amarillo Blvd heading west — that's the historic road.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Texas Welcome Center — near Shamrock</span><span class="ra-loc">📍 I-40, near Shamrock, TX</span><span class="ra-note">Last well-staffed Texas checkpoint. Ask about current NM road conditions. Last reliable restrooms for a long stretch west.</span><a class="ra-nav" href="javascript:smartNav(35.2231,-100.2421,'Texas Welcome Center Shamrock I-40')">&#10148; Navigate</a></div>
-  <p class="lodge-state">New Mexico</p>
-  <div class="ra-item"><span class="ra-badge rb-dirt">🛤 ROUGH ROAD</span><span class="ra-name">Glenrio to San Jon — Unpaved</span><span class="ra-loc">📍 Near TX/NM state line</span><span class="ra-note">~6 miles unpaved between the Texas border and San Jon. Passable dry at low speed. After rain skip it entirely — clay goes slick fast. Not worth a breakdown.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Albuquerque — Central Ave to 4th Street</span><span class="ra-loc">📍 Downtown Albuquerque, NM</span><span class="ra-note">Route 66 is Central Avenue through ABQ — well signed. But north of Old Town it briefly becomes 4th Street with no highway signs at the transition. Take your time on the intact neon motel row.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Santa Rosa — Blue Hole Visitor Center</span><span class="ra-loc">📍 Blue Hole Rd, Santa Rosa, NM</span><span class="ra-note">Staff know current I-40 and frontage road conditions. The Blue Hole itself is worth 20 minutes — artesian pool in the desert, free.</span><a class="ra-nav" href="javascript:smartNav(34.9413,-104.6753,'Blue Hole Santa Rosa New Mexico')">&#10148; Navigate</a></div>
-  <p class="lodge-state">Arizona</p>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Ash Fork Westbound Exit</span><span class="ra-loc">📍 Ash Fork, AZ</span><span class="ra-note">Leaving Ash Fork west toward Seligman, old Route 66 diverges from AZ-89 with no marker. Head west on Lewis Ave out of town — becomes Route 66 within half a mile.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-fork">⇌ MAJOR FORK</span><span class="ra-name">Kingman — Oatman vs. Needles</span><span class="ra-loc">📍 Kingman, AZ — decide before you leave</span><span class="ra-note">Historic 66 goes through Oatman via narrow mountain hairpins — spectacular, wild burros, Gold Rush ghost town. RVs and towed vehicles cannot make it. Standard car: take Oatman. RV/towing: take US-93 to Needles.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">Kingman Powerhouse Visitor Center</span><span class="ra-loc">📍 120 W Andy Devine Ave, Kingman, AZ</span><span class="ra-note">Best visitor center west of Oklahoma. Oatman road conditions, California desert fuel warnings, strip maps. Stop here before deciding Oatman vs. Needles.</span><a class="ra-nav" href="javascript:smartNav(35.1895,-114.0561,'Kingman Powerhouse Visitor Center Arizona')">&#10148; Navigate</a></div>
-  <p class="lodge-state">California</p>
-  <div class="ra-item"><span class="ra-badge rb-dirt">⛽ FUEL WARNING</span><span class="ra-name">Needles to Barstow — 70+ Miles No Services</span><span class="ra-loc">📍 Needles, CA → Barstow, CA</span><span class="ra-note">Fill up in Needles. Roy's in Amboy is intermittent — don't count on it. Next reliable fuel is Barstow, 75+ miles away. Never start this section under half a tank. Carry water regardless of season.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">San Bernardino to Pasadena — Foothill Blvd</span><span class="ra-loc">📍 San Bernardino → Pasadena, CA</span><span class="ra-note">Old Route 66 follows Foothill Blvd through the Inland Empire — signed in some cities, unsigned in others. You'll pass through half a dozen municipalities. GPS mandatory here.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Santa Monica Pier — Easy to Overshoot</span><span class="ra-loc">📍 Santa Monica, CA</span><span class="ra-note">GPS often dumps you on the wrong side of the pier. Head to Ocean Ave, turn south, park near the pier entrance. The "End of the Trail" sign is at the pier's west end, overlooking the Pacific.</span></div>
-  <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">California Route 66 Museum</span><span class="ra-loc">📍 16825 S D St, Victorville, CA</span><span class="ra-note">Last Route 66 museum before the LA basin. California strip maps, Foothill Blvd conditions. Volunteer-run — call ahead to confirm hours before detouring.</span><a class="ra-nav" href="javascript:smartNav(34.5133,-117.3086,'California Route 66 Museum Victorville')">&#10148; Navigate</a></div>
-</div>
-</div>
-```
+  </div>
 
-  </div>
-  </div>
 
 <div id="dlpanel">
   <div id="dlhdr">
@@ -526,33 +524,33 @@ overflow-y:auto !important;
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
       </button>
 
-```
-</div>
-<div class="dls">
-  <div class="dls-t">How to Import — By App</div>
-  <div class="appgrid">
-    <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Gaia GPS</div><div class="appc-s">iOS/Android. Open GPX → tap Share → "Open in Gaia GPS". Works 100% offline.</div></div>
-    <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">OsmAnd</div><div class="appc-s">iOS/Android. Import via Files app. Download US region maps for offline.</div></div>
-    <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Apple Maps</div><div class="appc-s">Settings → Maps → Offline Maps. Download area for each state before you go.</div></div>
-    <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Google Maps</div><div class="appc-s">Profile → Offline maps. Draw area per state. Download on WiFi before departing.</div></div>
-    <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Maps.me</div><div class="appc-s">Download offline maps per state. Import GPX via "+" → Import. Fully offline.</div></div>
-    <div class="appc"><span class="appc-b paid">~$9.99</span><div class="appc-n">EZ66 App</div><div class="appc-s">Purpose-built Route 66 GPS. Turn-by-turn on all historic alignments. Best dedicated app.</div></div>
-  </div>
-  <div class="dtip"><strong>Critical:</strong> Download offline maps for all 8 states on WiFi before leaving home. Cell service disappears in TX Panhandle, NM desert, and CA Mojave.</div>
-</div>
+      
+      
+      
+    </div>
+    <div class="dls">
+      <div class="dls-t">How to Import — By App</div>
+      <div class="appgrid">
+        <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Gaia GPS</div><div class="appc-s">iOS/Android. Open GPX → tap Share → "Open in Gaia GPS". Works 100% offline.</div></div>
+        <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">OsmAnd</div><div class="appc-s">iOS/Android. Import via Files app. Download US region maps for offline.</div></div>
+        <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Apple Maps</div><div class="appc-s">Settings → Maps → Offline Maps. Download area for each state before you go.</div></div>
+        <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Google Maps</div><div class="appc-s">Profile → Offline maps. Draw area per state. Download on WiFi before departing.</div></div>
+        <div class="appc"><span class="appc-b free">FREE</span><div class="appc-n">Maps.me</div><div class="appc-s">Download offline maps per state. Import GPX via "+" → Import. Fully offline.</div></div>
+        <div class="appc"><span class="appc-b paid">~$9.99</span><div class="appc-n">EZ66 App</div><div class="appc-s">Purpose-built Route 66 GPS. Turn-by-turn on all historic alignments. Best dedicated app.</div></div>
+      </div>
+      <div class="dtip"><strong>Critical:</strong> Download offline maps for all 8 states on WiFi before leaving home. Cell service disappears in TX Panhandle, NM desert, and CA Mojave.</div>
+    </div>
+    
 
-
-<div class="dls">
-  <div class="dls-t">&#9981; Fuel Stops — Remote Stretches</div>
-  <div class="fuel-list" id="dl-fuel-list"></div>
-</div>
-<div class="dls">
-  <div class="dls-t">&#8596; Alignment Choice Points</div>
-  <div class="dtip">Route 66 splits into pre-1937 and post-1937 alignments at several points. Each entry links directly to Google Maps directions for that segment. The GPX files follow the recommended alignment automatically.</div>
-  <div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Chain of Rocks Bridge (MO)</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Follow the 1936 alignment. The 1929 bridge with its famous 22° bend is the authentic experience — the most photographed spot on Missouri's Route 66.</div><a class="lodge-nav" href="https://maps.google.com/?q=Chain%20of%20Rocks%20Bridge%2C%20Mitchell%2C%20IL" target="_blank" rel="noopener">&#9654; Navigate to Bridge</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Albuquerque — Central Avenue</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Stay on Central Avenue (Route 66) through the city east to west. Do NOT take I-40. El Vado, Old Town, the neon corridor, and the University district are all on Central.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Tijeras%20Ave%20%26%20Central%20Ave%2C%20Albuquerque%20NM/Rio%20Grande%20Blvd%20%26%20Central%20Ave%20SW%2C%20Albuquerque%20NM" target="_blank" rel="noopener">&#9654; See Central Ave route</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Seligman → Oatman (AZ)</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Pre-1952 alignment through the Black Mountains via Oatman. Steep switchbacks, narrow — but Oatman with its wild burros is worth it. Post-1952 uses US-93 direct: faster, forgettable.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Seligman%2C%20AZ/Oatman%2C%20AZ" target="_blank" rel="noopener">&#9654; Directions Seligman → Oatman</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Mojave (CA) — National Trails Hwy</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Follow the National Trails Highway south of I-40 through Amboy and Roy's Motel. This IS Route 66. The interstate cuts through nothing worth seeing.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Needles%2C%20CA/Amboy%2C%20CA" target="_blank" rel="noopener">&#9654; Directions Needles → Amboy</a></div></div>
-</div>
-```
-
+    <div class="dls">
+      <div class="dls-t">&#9981; Fuel Stops — Remote Stretches</div>
+      <div class="fuel-list" id="dl-fuel-list"></div>
+    </div>
+    <div class="dls">
+      <div class="dls-t">&#8596; Alignment Choice Points</div>
+      <div class="dtip">Route 66 splits into pre-1937 and post-1937 alignments at several points. Each entry links directly to Google Maps directions for that segment. The GPX files follow the recommended alignment automatically.</div>
+      <div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Chain of Rocks Bridge (MO)</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Follow the 1936 alignment. The 1929 bridge with its famous 22° bend is the authentic experience — the most photographed spot on Missouri's Route 66.</div><a class="lodge-nav" href="https://maps.google.com/?q=Chain%20of%20Rocks%20Bridge%2C%20Mitchell%2C%20IL" target="_blank" rel="noopener">&#9654; Navigate to Bridge</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Albuquerque — Central Avenue</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Stay on Central Avenue (Route 66) through the city east to west. Do NOT take I-40. El Vado, Old Town, the neon corridor, and the University district are all on Central.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Tijeras%20Ave%20%26%20Central%20Ave%2C%20Albuquerque%20NM/Rio%20Grande%20Blvd%20%26%20Central%20Ave%20SW%2C%20Albuquerque%20NM" target="_blank" rel="noopener">&#9654; See Central Ave route</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Seligman → Oatman (AZ)</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Pre-1952 alignment through the Black Mountains via Oatman. Steep switchbacks, narrow — but Oatman with its wild burros is worth it. Post-1952 uses US-93 direct: faster, forgettable.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Seligman%2C%20AZ/Oatman%2C%20AZ" target="_blank" rel="noopener">&#9654; Directions Seligman → Oatman</a></div><div style="border-bottom:1px solid var(--bd);padding:6px 0"><strong style="color:var(--cream);font-size:10.5px">Mojave (CA) — National Trails Hwy</strong><div style="font-size:10px;color:var(--mu);line-height:1.6;margin:2px 0 5px">Follow the National Trails Highway south of I-40 through Amboy and Roy's Motel. This IS Route 66. The interstate cuts through nothing worth seeing.</div><a class="lodge-nav" href="https://www.google.com/maps/dir/Needles%2C%20CA/Amboy%2C%20CA" target="_blank" rel="noopener">&#9654; Directions Needles → Amboy</a></div></div>
+    </div>
   </div>
 </div>
 
@@ -566,48 +564,43 @@ overflow-y:auto !important;
   </div>
   <div id="cent-body">
 
-```
-<div class="cent-date-badge">🎉 &nbsp;100 YEARS &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; ALL 8 STATES</div>
+    <div class="cent-date-badge">🎉 &nbsp;100 YEARS &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; ALL 8 STATES</div>
 
-<div class="cent-intro">
-  Route 66 turns 100 on <strong>November 11, 2026</strong> — but the full centennial year runs January through November with hundreds of events across all eight states. <strong>This will be the most crowded Route 66 has ever been.</strong> Motor courts, hotels, and festival events sell out months in advance.
-  <span class="warn"><strong>⚠️ Check these calendars before you finalize any dates.</strong> Events are being added and updated continuously. The links below go directly to the official live calendars maintained by the Route 66 associations — they are always current.</span>
-</div>
+    <div class="cent-intro">
+      Route 66 turns 100 on <strong>November 11, 2026</strong> — but the full centennial year runs January through November with hundreds of events across all eight states. <strong>This will be the most crowded Route 66 has ever been.</strong> Motor courts, hotels, and festival events sell out months in advance.
+      <span class="warn"><strong>⚠️ Check these calendars before you finalize any dates.</strong> Events are being added and updated continuously. The links below go directly to the official live calendars maintained by the Route 66 associations — they are always current.</span>
+    </div>
 
-<!-- Main official calendars -->
-<div class="dls-t" style="margin-bottom:7px">Official Centennial Calendars</div>
+    <!-- Main official calendars -->
+    <div class="dls-t" style="margin-bottom:7px">Official Centennial Calendars</div>
 
-<a class="evt-main-link" href="https://route66centennial.org/index.php/calendar/upcoming-events-all" target="_blank" rel="noopener">
-  <div class="evt-main-flag" style="background:#C0392B"></div>
-  <div class="evt-main-body">
-    <div class="evt-main-name">🗓 Full Centennial Calendar — All States</div>
-    <div class="evt-main-desc">The master calendar from the official U.S. Route 66 Centennial Commission. Every confirmed event, all 8 states, updated in real time. Start here.</div>
-  </div>
-  <div class="evt-main-arr">›</div>
-</a>
+    <a class="evt-main-link" href="https://route66centennial.org/index.php/calendar/upcoming-events-all" target="_blank" rel="noopener">
+      <div class="evt-main-flag" style="background:#C0392B"></div>
+      <div class="evt-main-body">
+        <div class="evt-main-name">🗓 Full Centennial Calendar — All States</div>
+        <div class="evt-main-desc">The master calendar from the official U.S. Route 66 Centennial Commission. Every confirmed event, all 8 states, updated in real time. Start here.</div>
+      </div>
+      <div class="evt-main-arr">›</div>
+    </a>
 
-<a class="evt-main-link" href="https://route66centennial.org/index.php/calendar/events-archive/national-events" target="_blank" rel="noopener">
-  <div class="evt-main-flag" style="background:#8B0000"></div>
-  <div class="evt-main-body">
-    <div class="evt-main-name">🏆 National Anchor Events Only</div>
-    <div class="evt-main-desc">The Official Caravan, National Kickoff Springfield MO Apr 30, Speaker Series (monthly). These are the events that will cause crowd surges everywhere.</div>
-  </div>
-  <div class="evt-main-arr">›</div>
-</a>
+    <a class="evt-main-link" href="https://route66centennial.org/index.php/calendar/events-archive/national-events" target="_blank" rel="noopener">
+      <div class="evt-main-flag" style="background:#8B0000"></div>
+      <div class="evt-main-body">
+        <div class="evt-main-name">🏆 National Anchor Events Only</div>
+        <div class="evt-main-desc">The Official Caravan, National Kickoff Springfield MO Apr 30, Speaker Series (monthly). These are the events that will cause crowd surges everywhere.</div>
+      </div>
+      <div class="evt-main-arr">›</div>
+    </a>
 
-<!-- State by state -->
-<div class="dls-t" style="margin-top:12px;margin-bottom:7px">By State — Direct Links</div>
-<div class="state-evts">
-```
-
+    <!-- State by state -->
+    <div class="dls-t" style="margin-top:12px;margin-bottom:7px">By State — Direct Links</div>
+    <div class="state-evts">
 <div class="state-evt-row"><div class="state-dot" style="background:#7A9E3B"></div><div class="state-evt-info"><div class="state-evt-name">Illinois</div><div class="state-evt-hint">Chicago Navy Pier sign (Feb), Pontiac centennial, Springfield Sep 25–27, Caravan Jun 23–24</div></div><a class="state-evt-link" href="https://www.illinoisroute66.org/events/" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#3D7A55"></div><div class="state-evt-info"><div class="state-evt-name">Missouri</div><div class="state-evt-hint">National Kickoff Springfield Apr 30 ★, Lebanon speaker series (monthly), Missouri History exhibit April at Route 66 State Park</div></div><a class="state-evt-link" href="https://www.missouriroute66.com/events" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#C9983A"></div><div class="state-evt-info"><div class="state-evt-name">Kansas</div><div class="state-evt-hint">Baxter Springs Heritage events, Galena centennial celebrations along the 13-mile stretch</div></div><a class="state-evt-link" href="https://www.kansasroute66.org/events" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#B5522A"></div><div class="state-evt-info"><div class="state-evt-name">Oklahoma</div><div class="state-evt-hint">Big Band Hangar Dance Apr 25 ★, Hall of Fame Clinton Jul 25 ★, Car Show & Cars Movie Sep 26 ★</div></div><a class="state-evt-link" href="https://oklahomaroute66.com/centennial" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#2E72B8"></div><div class="state-evt-info"><div class="state-evt-name">Texas</div><div class="state-evt-hint">Shamrock, McLean, Amarillo centennial events throughout the year</div></div><a class="state-evt-link" href="https://www.route66tx.com/events" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#2A9090"></div><div class="state-evt-info"><div class="state-evt-name">New Mexico</div><div class="state-evt-hint">Tucumcari neon events, Albuquerque Central Ave centennial, Gallup celebrations</div></div><a class="state-evt-link" href="https://www.rt66nm.org/events" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#C4622E"></div><div class="state-evt-info"><div class="state-evt-name">Arizona</div><div class="state-evt-hint">Fun Run Seligman May 1–3 ★, Flagstaff Jun 6, Holbrook May 29–30, Winslow Sep 25–26 ★, Kingman Oct 9–11</div></div><a class="state-evt-link" href="https://www.historic66az.com/events/" target="_blank" rel="noopener">Events ›</a></div><div class="state-evt-row"><div class="state-dot" style="background:#2A7FB5"></div><div class="state-evt-info"><div class="state-evt-name">California</div><div class="state-evt-hint">Amboy car show Mar 7, Pasadena parade, Santa Monica pier arrival events</div></div><a class="state-evt-link" href="https://www.visitcalifornia.com/experience/celebrate-route-66-centennial/" target="_blank" rel="noopener">Events ›</a></div>
     </div>
 
-```
-<div class="evt-why-box">
-  <strong>Why this section links out instead of listing events directly:</strong> Events cancel, reschedule, and get added throughout the year. A hardcoded list would be wrong within weeks. These calendars are maintained by the Route 66 associations themselves — always current. Bookmark the Full Centennial Calendar before you leave home and check it the week before entering each state. Events marked ★ in the state hints above are confirmed with fixed dates as of March 2026.
-</div>
-```
+    <div class="evt-why-box">
+      <strong>Why this section links out instead of listing events directly:</strong> Events cancel, reschedule, and get added throughout the year. A hardcoded list would be wrong within weeks. These calendars are maintained by the Route 66 associations themselves — always current. Bookmark the Full Centennial Calendar before you leave home and check it the week before entering each state. Events marked ★ in the state hints above are confirmed with fixed dates as of March 2026.
+    </div>
 
   </div>
 </div>
@@ -1721,19 +1714,17 @@ window.addEventListener('orientationchange', function(){
 </script>
 
 <!-- Landscape floating map button -->
-
 <button id="ls-map-btn" onclick="lsToggleMap()" style="
-display:none;
-position:fixed;bottom:20px;right:20px;z-index:800;
-width:54px;height:54px;border-radius:50%;
-background:linear-gradient(135deg,#C0392B,#8B0000);
-border:2px solid rgba(255,255,255,.25);
-color:#fff;font-size:24px;
-align-items:center;justify-content:center;
-box-shadow:0 6px 24px rgba(0,0,0,.8);
-cursor:pointer;
+  display:none;
+  position:fixed;bottom:20px;right:20px;z-index:800;
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,#C0392B,#8B0000);
+  border:2px solid rgba(255,255,255,.25);
+  color:#fff;font-size:24px;
+  align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(0,0,0,.8);
+  cursor:pointer;
 " title="Show map">🗺</button>
-
 <div id="stop-tip">
   <div class="tip-name" id="tip-name"></div>
   <div class="tip-city" id="tip-city"></div>
