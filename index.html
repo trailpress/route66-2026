@@ -400,7 +400,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v39</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v40</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -1282,7 +1282,13 @@ function switchTab(id, el){
   document.querySelectorAll('.pane').forEach(function(p){ p.classList.remove('active'); });
   el.classList.add('on');
   document.getElementById('pane-'+id).classList.add('active');
-  if(id==='gems' && typeof updateGems === 'function') updateGems();
+  // Hide state selector and route header when showing Gems (irrelevant + confusing)
+  var stsel = document.getElementById('stsel');
+  var rph   = document.getElementById('rph');
+  var isGems = id === 'gems';
+  if(stsel) stsel.style.display = isGems ? 'none' : '';
+  if(rph)   rph.style.display   = isGems ? 'none' : '';
+  if(isGems && typeof updateGems === 'function') updateGems();
 }
 
 function smartNav(lat, lng, dest){
