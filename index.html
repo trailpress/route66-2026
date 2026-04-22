@@ -140,6 +140,29 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 .ra-nav{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:6px 12px;background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.3);border-radius:6px;color:#2ECC71;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:.5px}
 #tabs{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 #tabs::-webkit-scrollbar{display:none}
+/* ══ HIDDEN GEMS ══ */
+.gem-intro{padding:10px 14px 8px;background:rgba(212,160,23,.04);border-bottom:2px solid rgba(212,160,23,.15)}
+.gem-intro-label{font-family:'Bebas Neue','Arial Narrow',Impact,sans-serif;font-size:12px;letter-spacing:2px;color:var(--gold);margin-bottom:4px}
+.gem-intro-text{font-size:10.5px;color:rgba(240,232,213,.55);line-height:1.6}
+.gem-card{margin:12px 14px;background:var(--sur2);border-radius:12px;overflow:hidden;border:1px solid var(--bd2)}
+.gem-card.hidden{display:none}
+.gem-card-head{padding:12px 14px 8px;border-bottom:1px solid var(--bd)}
+.gem-card-label{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.gem-badge{font-size:10px;font-weight:700;letter-spacing:.8px;padding:3px 8px;border-radius:4px;background:rgba(212,160,23,.15);color:var(--gold);border:1px solid rgba(212,160,23,.25)}
+.gem-badge-strong{background:rgba(39,174,96,.15);color:#2ECC71;border-color:rgba(39,174,96,.3)}
+.gem-title{font-size:15px;font-weight:700;color:var(--cream);line-height:1.3}
+.gem-state{font-size:11px;color:var(--mu);margin-top:1px}
+.gem-meta{display:flex;gap:14px;margin-top:6px}
+.gem-meta-item{font-size:11px;color:rgba(240,232,213,.5)}
+.gem-meta-item strong{color:rgba(240,232,213,.8);font-weight:600}
+.gem-card-body{padding:10px 14px 12px}
+.gem-context{font-size:11.5px;color:rgba(240,232,213,.5);font-style:italic;margin-bottom:8px}
+.gem-stops{margin-bottom:10px}
+.gem-stop{font-size:12.5px;color:rgba(240,232,213,.75);padding:3px 0;display:flex;align-items:baseline;gap:6px}
+.gem-stop::before{content:"·";color:var(--gold);flex-shrink:0}
+.gem-open-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 16px;background:var(--gold);color:#0F0C07;font-size:13px;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.3px;transition:opacity .15s}
+.gem-open-btn:active{opacity:.85}
+.gem-svg{flex-shrink:0}
 /* Stop tooltip (desktop hover) */
 #stop-tip{
   position:fixed;z-index:9000;pointer-events:none;
@@ -377,7 +400,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
 <div id="hdr">
   <div class="shield"><span>US<br>66</span></div>
   <div id="hdr-title">
-    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v37</span></h1>
+    <h1>ROUTE 66 COMPANION <span style="opacity:.3;font-size:9px;font-weight:400;font-family:'DM Sans',sans-serif;letter-spacing:0">v38</span></h1>
     <p>Centennial 2026 · No-BS Survival Guide</p>
   </div>
   <div id="hdr-btns">
@@ -430,6 +453,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
       <div class="tab"    onclick="switchTab('museums',this)">Museums</div>
       <div class="tab"    onclick="switchTab('road',this)">Road</div>
       <div class="tab"    onclick="switchTab('method',this)">Method</div>
+      <div class="tab"    onclick="switchTab('gems',this)">Gems</div>
     </div>
     <div id="stsel">
       <button class="stbtn" onclick="selectState('IL',this)">IL</button>
@@ -495,6 +519,125 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--cream);fo
       <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">San Bernardino to Pasadena — Foothill Blvd</span><span class="ra-loc">📍 San Bernardino → Pasadena, CA</span><span class="ra-note">Old Route 66 follows Foothill Blvd through the Inland Empire — signed in some cities, unsigned in others. You'll pass through half a dozen municipalities. GPS mandatory here.</span></div>
       <div class="ra-item"><span class="ra-badge rb-trap">⚠ NAV TRAP</span><span class="ra-name">Santa Monica Pier — Easy to Overshoot</span><span class="ra-loc">📍 Santa Monica, CA</span><span class="ra-note">GPS often dumps you on the wrong side of the pier. Head to Ocean Ave, turn south, park near the pier entrance. The "End of the Trail" sign is at the pier's west end, overlooking the Pacific.</span></div>
       <div class="ra-item"><span class="ra-badge rb-vc">✓ CHECKPOINT</span><span class="ra-name">California Route 66 Museum</span><span class="ra-loc">📍 16825 S D St, Victorville, CA</span><span class="ra-note">Last Route 66 museum before the LA basin. California strip maps, Foothill Blvd conditions. Volunteer-run — call ahead to confirm hours before detouring.</span><a class="ra-nav" href="javascript:smartNav(34.5133,-117.3086,'California Route 66 Museum Victorville')">&#10148; Navigate</a></div>
+    <div class="pane" id="pane-gems">
+
+      <!-- Intro header -->
+      <div class="gem-intro">
+        <div class="gem-intro-label">Hidden Gems — Chapter 22</div>
+        <div class="gem-intro-text">These clusters correspond to Chapter 22 of your guidebook. Detour loops worth leaving the main route for — grouped to minimize backtracking.</div>
+      </div>
+
+      <!-- Cluster 1: Meramec River Valley (MO) — 7/14/21-day -->
+      <div class="gem-card" data-min="7" id="gem-1">
+        <div class="gem-card-head">
+          <div class="gem-card-label">
+            <span class="gem-badge" id="gem-1-badge">HIGH VALUE · SHORT DETOUR</span>
+          </div>
+          <div class="gem-title">The Meramec River Valley</div>
+          <div class="gem-state">Missouri · Pacific → Stanton</div>
+          <div class="gem-meta">
+            <span class="gem-meta-item"><strong>3–4 hrs</strong> with stops</span>
+            <span class="gem-meta-item"><strong>~35 mi</strong> round trip</span>
+          </div>
+        </div>
+        <div class="gem-card-body">
+          <div class="gem-context">Best taken on Day 3 of your Missouri stretch, between St. Louis and Springfield.</div>
+          <div class="gem-stops">
+            <div class="gem-stop">Meramec Caverns — Route 66 cave attraction since the 1930s</div>
+            <div class="gem-stop">Onondaga Cave State Park — pristine cave system, less touristy</div>
+            <div class="gem-stop">Meramec State Park — river valley scenery and hiking</div>
+          </div>
+          <button class="gem-open-btn" onclick="window.open('https://www.google.com/maps/dir/Pacific,+MO/Meramec+Caverns,+1135+Hwy+W,+Sullivan,+MO/Onondaga+Cave+State+Park,+7556+Highway+H,+Leasburg,+MO/Meramec+State+Park,+Sullivan,+MO/Stanton,+MO','_blank')">
+            <svg class="gem-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Open in Maps
+          </button>
+        </div>
+      </div>
+
+      <!-- Cluster 2: NE Oklahoma Tribal Lands — 7/14/21-day -->
+      <div class="gem-card" data-min="7" id="gem-2">
+        <div class="gem-card-head">
+          <div class="gem-card-label">
+            <span class="gem-badge" id="gem-2-badge">HIGH VALUE · SHORT DETOUR</span>
+          </div>
+          <div class="gem-title">Northeast Oklahoma Tribal Lands</div>
+          <div class="gem-state">Oklahoma · Miami → Afton</div>
+          <div class="gem-meta">
+            <span class="gem-meta-item"><strong>2–3 hrs</strong> with stops</span>
+            <span class="gem-meta-item"><strong>~25 mi</strong> round trip</span>
+          </div>
+        </div>
+        <div class="gem-card-body">
+          <div class="gem-context">Best taken early in your Oklahoma day, before Tulsa. Adds almost no time to the drive.</div>
+          <div class="gem-stops">
+            <div class="gem-stop">Quapaw Tribal Museum — authentic tribal heritage, rarely visited</div>
+            <div class="gem-stop">Picher/Cardin mining district — haunting industrial ghost landscape</div>
+            <div class="gem-stop">Narcissa Sears house — forgotten homestead on the original alignment</div>
+          </div>
+          <button class="gem-open-btn" onclick="window.open('https://www.google.com/maps/dir/Miami,+OK/Quapaw+Tribal+Museum,+5681+S+630+Rd,+Quapaw,+OK+74363/Peoria,+OK/Narcissa,+OK/Afton,+OK','_blank')">
+            <svg class="gem-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Open in Maps
+          </button>
+        </div>
+      </div>
+
+      <!-- Cluster 3: Sandia Mountains NM — 14/21-day only -->
+      <div class="gem-card" data-min="14" id="gem-3">
+        <div class="gem-card-head">
+          <div class="gem-card-label">
+            <span class="gem-badge" id="gem-3-badge">14+ DAYS RECOMMENDED</span>
+          </div>
+          <div class="gem-title">The Sandia Mountains &amp; East Mountains</div>
+          <div class="gem-state">New Mexico · Albuquerque loop</div>
+          <div class="gem-meta">
+            <span class="gem-meta-item"><strong>4–5 hrs</strong> with stops</span>
+            <span class="gem-meta-item"><strong>~60 mi</strong> round trip</span>
+          </div>
+        </div>
+        <div class="gem-card-body">
+          <div class="gem-context">Best taken as a morning loop from Albuquerque before continuing west on Central Ave.</div>
+          <div class="gem-stops">
+            <div class="gem-stop">Sandia Peak Tramway — longest aerial tramway in North America</div>
+            <div class="gem-stop">Tinkertown Museum — eccentric folk art village built over 40 years</div>
+            <div class="gem-stop">Turquoise Trail scenic byway — historic mining towns and high desert</div>
+          </div>
+          <button class="gem-open-btn" onclick="window.open('https://www.google.com/maps/dir/Albuquerque,+NM/Sandia+Peak+Tramway,+30+Tramway+Rd+NE,+Albuquerque,+NM/Tinkertown+Museum,+121+Sandia+Crest+Rd,+Sandia+Park,+NM/Albuquerque,+NM','_blank')">
+            <svg class="gem-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Open in Maps
+          </button>
+        </div>
+      </div>
+
+      <!-- Cluster 4: Verde Valley & Jerome AZ — 14/21-day only -->
+      <div class="gem-card" data-min="14" id="gem-4">
+        <div class="gem-card-head">
+          <div class="gem-card-label">
+            <span class="gem-badge" id="gem-4-badge">14+ DAYS RECOMMENDED</span>
+          </div>
+          <div class="gem-title">The Verde Valley &amp; Jerome</div>
+          <div class="gem-state">Arizona · Williams → Flagstaff</div>
+          <div class="gem-meta">
+            <span class="gem-meta-item"><strong>5–6 hrs</strong> with stops</span>
+            <span class="gem-meta-item"><strong>~90 mi</strong> round trip</span>
+          </div>
+        </div>
+        <div class="gem-card-body">
+          <div class="gem-context">Best taken between Williams and Flagstaff. Skip if you're doing the Grand Canyon detour the same day.</div>
+          <div class="gem-stops">
+            <div class="gem-stop">Jerome — historic copper mining town clinging to a mountainside</div>
+            <div class="gem-stop">Montezuma Castle National Monument — 5-story cliff dwelling, 700 years old</div>
+            <div class="gem-stop">Oak Creek Canyon — red rock scenic drive between Sedona and Flagstaff</div>
+            <div class="gem-stop">Sedona red rock formations — optional extension, 20 min further</div>
+          </div>
+          <button class="gem-open-btn" onclick="window.open('https://www.google.com/maps/dir/Williams,+AZ/Jerome,+AZ/Montezuma+Castle+National+Monument,+527+S+Montezuma+Castle+Hwy,+Camp+Verde,+AZ+86322/Sedona,+AZ/Flagstaff,+AZ','_blank')">
+            <svg class="gem-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            Open in Maps
+          </button>
+        </div>
+      </div>
+
+      <div style="height:16px"></div>
+    </div>
     </div>
     </div>
   </div>
@@ -1131,6 +1274,7 @@ function setItin(d, btn){
   });
   if(btn) btn.classList.add('on');
   if(curState){ clearMarkers(); renderStops(); }
+  if(typeof updateGems==='function') updateGems();
 }
 
 function switchTab(id, el){
@@ -1138,6 +1282,7 @@ function switchTab(id, el){
   document.querySelectorAll('.pane').forEach(function(p){ p.classList.remove('active'); });
   el.classList.add('on');
   document.getElementById('pane-'+id).classList.add('active');
+  if(id==='gems' && typeof updateGems === 'function') updateGems();
 }
 
 function smartNav(lat, lng, dest){
@@ -1682,6 +1827,32 @@ function syncHdrH(){
   var cp=document.getElementById('cent-panel');
   if(dlp) dlp.style.top=h+'px';
   if(cp)  cp.style.top=h+'px';
+}
+
+// ── Hidden Gems filter — reads existing curItin, no state modification ──
+function updateGems(){
+  var itin = curItin || 7;
+  document.querySelectorAll('.gem-card').forEach(function(card){
+    var min = parseInt(card.getAttribute('data-min')||'7', 10);
+    var show = itin >= min;
+    card.classList.toggle('hidden', !show);
+    // 21-day: flag as strongly recommended
+    var badge = card.querySelector('[id$="-badge"]');
+    if(badge){
+      if(itin >= 21 && min <= 7){
+        badge.textContent = 'STRONGLY RECOMMENDED';
+        badge.classList.add('gem-badge-strong');
+      } else if(itin >= 21 && min === 14){
+        badge.textContent = 'STRONGLY RECOMMENDED';
+        badge.classList.add('gem-badge-strong');
+      } else if(itin >= 14 && min === 14){
+        badge.textContent = '14+ DAYS RECOMMENDED';
+        badge.classList.remove('gem-badge-strong');
+      } else {
+        badge.classList.remove('gem-badge-strong');
+      }
+    }
+  });
 }
 
 window.addEventListener('load',function(){
